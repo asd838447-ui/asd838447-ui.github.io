@@ -33,5 +33,85 @@
             <li><a href="tickets/ticket19.html">19. Теорема о композиции непрерывных функций. Два замечательных предела. Примеры их использования.</a></li>
         </ul>
     </div>
+    <!-- Падающие цифры и формулы -->
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        // Набор символов (цифры и простые формулы)
+        const symbols = [
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'π', 'e', '∞', '∑', '∫', '√', 'Δ', 'α', 'β', 'γ',
+            'sin', 'cos', 'tan', 'lim', 'dx', 'dy',
+            '≈', '≠', '≤', '≥', '→', '↗', '↘',
+            'x²', 'y³', 'n!', '(n+1)', '1/n', 'ε', 'δ'
+        ];
+        
+        // Функция для генерации случайного числа в диапазоне
+        function random(min, max) {
+            return min + Math.random() * (max - min);
+        }
+        
+        // Создаём падающие элементы
+        function createFallingSymbols() {
+            const container = document.getElementById('falling-symbols');
+            if (!container) return;
+            
+            // Количество символов (зависит от ширины экрана)
+            const symbolCount = Math.floor(window.innerWidth / 35) + 20;
+            
+            for (let i = 0; i < symbolCount; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                
+                // Выбираем случайный символ
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.textContent = randomSymbol;
+                
+                // Случайная позиция по горизонтали (0% - 100%)
+                const leftPos = random(0, 100);
+                symbol.style.left = leftPos + '%';
+                
+                // Случайная задержка начала анимации
+                const delay = random(0, 20);
+                symbol.style.animationDelay = delay + 's';
+                
+                // Случайная продолжительность падения (6-15 секунд)
+                const duration = random(6, 15);
+                symbol.style.animationDuration = duration + 's';
+                
+                // Случайный размер (0.8rem - 1.8rem)
+                const size = random(0.8, 1.8);
+                symbol.style.fontSize = size + 'rem';
+                
+                // Некоторые символы будут светящимися (примерно 25%)
+                if (Math.random() < 0.25) {
+                    symbol.classList.add('glowing');
+                }
+                
+                // Случайная прозрачность для обычных символов (0.2 - 0.6)
+                if (!symbol.classList.contains('glowing')) {
+                    const opacity = random(0.2, 0.5);
+                    symbol.style.opacity = opacity;
+                }
+                
+                container.appendChild(symbol);
+            }
+        }
+        
+        // Запускаем при загрузке страницы
+        createFallingSymbols();
+        
+        // При изменении размера окна пересоздаём (чтобы адаптироваться)
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('falling-symbols');
+                if (container) {
+                    container.innerHTML = '';
+                    createFallingSymbols();
+                }
+            }, 500);
+        });
+    </script>
 </body>
 </html>
