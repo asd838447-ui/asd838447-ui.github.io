@@ -172,12 +172,13 @@ a:hover {
     animation: fall linear infinite;
 }
 
-/* Символы только в левой и правой зонах */
+/* Символы только слева (0-15%) */
 .symbol.left {
     left: 0;
     right: auto;
 }
 
+/* Символы только справа (85-100%) */
 .symbol.right {
     left: auto;
     right: 0;
@@ -206,9 +207,11 @@ a:hover {
     }
 }
 
-/* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
     .symbol {
+        font-size: 0.9rem;
+    }
+}
         font-size: 0.9rem;
     }
 }
