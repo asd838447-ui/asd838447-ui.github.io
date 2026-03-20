@@ -191,10 +191,10 @@ Get-ChildItem -Path "ticket*.html" | ForEach-Object {
                 const isLeft = i < symbolsPerSide;
                 if (isLeft) {
                     symbol.classList.add('left');
-                    symbol.style.left = random(0, 15) + '%';
+                    symbol.style.left = random(0, 24) + '%';
                 } else {
                     symbol.classList.add('right');
-                    symbol.style.left = random(85, 100) + '%';
+                    symbol.style.left = random(74, 100) + '%';
                 }
                 
                 const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
