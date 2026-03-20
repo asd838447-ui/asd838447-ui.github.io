@@ -149,7 +149,7 @@ a:hover {
         text-align: center;
     }
 }
-/* ========== Падающие цифры и формулы ========== */
+/* ========== Падающие цифры и формулы (только по краям) ========== */
 .falling-symbols {
     position: fixed;
     top: 0;
@@ -172,10 +172,21 @@ a:hover {
     animation: fall linear infinite;
 }
 
+/* Символы только в левой и правой зонах */
+.symbol.left {
+    left: 0;
+    right: auto;
+}
+
+.symbol.right {
+    left: auto;
+    right: 0;
+}
+
+/* Светящиеся символы */
 .symbol.glowing {
     color: rgba(187, 134, 252, 0.8);
     text-shadow: 0 0 8px rgba(187, 134, 252, 0.6), 0 0 12px rgba(187, 134, 252, 0.4);
-    animation-duration: calc(8s + var(--random, 0s));
 }
 
 @keyframes fall {
@@ -195,7 +206,7 @@ a:hover {
     }
 }
 
-/* Адаптация для мобильных устройств (уменьшаем количество) */
+/* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
     .symbol {
         font-size: 0.9rem;
