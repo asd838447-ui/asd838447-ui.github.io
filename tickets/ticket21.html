@@ -6,331 +6,495 @@
     <title>Билет 21. Формулы для построения графиков функций</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Дополнительные стили для графиков */
-        .graph-demo {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 20px;
+        /* ========== СТИЛИ ДЛЯ ИНТЕРАКТИВНЫХ ГРАФИКОВ ========== */
+        .graph-section {
+            margin: 45px 0;
+        }
+        
+        .graph-section > h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #bb86fc, #9b59b6);
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 40px;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
+        }
+        
+        .graph-card {
+            background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%);
+            border-radius: 28px;
+            padding: 25px;
             margin: 30px 0;
-            border: 1px solid #3a3a3a;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .graph-demo h3 {
-            text-align: center;
-            color: #bb86fc;
+        
+        .graph-card:hover {
+            border-color: #bb86fc;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(187, 134, 252, 0.2);
+        }
+        
+        .graph-card h3 {
+            color: #ffffff;
+            font-size: 1.6rem;
             margin-bottom: 20px;
-        }
-        .graph-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .graph-canvas {
-            background: #0a0a0a;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #2a2a2a;
-        }
-        .graph-controls {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        .graph-controls button {
-            background: #2a2a2a;
-            border: 1px solid #bb86fc;
-            color: #bb86fc;
-            padding: 8px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        .graph-controls button:hover {
-            background: #bb86fc;
-            color: #121212;
-        }
-        .graph-controls button.active {
-            background: #bb86fc;
-            color: #121212;
-        }
-        .graph-param {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 15px;
             align-items: center;
             flex-wrap: wrap;
+            gap: 15px;
+            border-left: 5px solid #bb86fc;
+            padding-left: 20px;
         }
-        .graph-param label {
-            color: #e0e0e0;
-        }
-        .graph-param input {
-            background: #2a2a2a;
+        
+        .func-formula {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #2a2a2a, #252525);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            color: #ffb86b;
             border: 1px solid #bb86fc;
-            border-radius: 8px;
-            padding: 6px 12px;
+            box-shadow: 0 0 8px rgba(187, 134, 252, 0.3);
+        }
+        
+        .graph-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        
+        .graph-canvas-box {
+            flex: 2;
+            min-width: 280px;
+            background: #0a0a0a;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .graph-canvas {
+            background: #0a0a0a;
+            border-radius: 16px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .controls-box {
+            flex: 1;
+            min-width: 200px;
+            background: #2a2a2a;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .controls-box h4 {
+            color: #bb86fc;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .param-slider {
+            margin-bottom: 20px;
+        }
+        
+        .param-slider label {
+            display: block;
+            margin-bottom: 8px;
             color: #e0e0e0;
-            width: 80px;
+            font-weight: 500;
+        }
+        
+        .param-slider input {
+            width: 100%;
+            background: #1e1e1e;
+            height: 4px;
+            border-radius: 5px;
+            -webkit-appearance: none;
+        }
+        
+        .param-slider input:focus {
+            outline: none;
+        }
+        
+        .param-slider input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #bb86fc;
+            cursor: pointer;
+            box-shadow: 0 0 8px #bb86fc;
+        }
+        
+        .param-value {
+            display: inline-block;
+            background: #1e1e1e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: monospace;
+            color: #ffb86b;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .formulas-list {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #3a3a3a;
+        }
+        
+        .formulas-list .formula-item {
+            font-size: 0.95rem;
+            padding: 8px 0;
+        }
+        
+        .glowing-text {
+            text-shadow: 0 0 5px rgba(187, 134, 252, 0.5);
+            color: #bb86fc;
+        }
+        
+        .big-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .graph-layout {
+                flex-direction: column;
+            }
+            .graph-card h3 {
+                font-size: 1.3rem;
+            }
+            .func-formula {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📈 Билет 21. Формулы для построения графиков функций</h1>
-
+        
         <div class="content">
-            <!-- ========== ИНТЕРАКТИВНЫЙ ГРАФИК ========== -->
-            <div class="graph-demo">
-                <h3>📊 Интерактивный график функции</h3>
-                <div class="graph-container">
-                    <canvas id="functionGraph" class="graph-canvas" width="800" height="400" style="width:100%; height:auto; max-width:800px; aspect-ratio:800/400"></canvas>
+            <p style="font-size: 1.1rem; text-align: center; margin-bottom: 30px;">
+                <span class="glowing-text">✨ Интерактивные графики</span> — изменяйте параметры и наблюдайте, как меняется функция в реальном времени
+            </p>
+
+            <!-- ========== 1. ЛИНЕЙНАЯ ФУНКЦИЯ ========== -->
+            <div class="graph-section">
+                <h2>📐 Линейная функция</h2>
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = k·x + b</span>
+                        <span style="font-size: 0.9rem;">прямая линия</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphLinear" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>📈 Угловой коэффициент <span class="glowing-text">k</span> = <span id="kValue" class="param-value">1.00</span></label>
+                                <input type="range" id="kSlider" min="-3" max="3" step="0.1" value="1">
+                            </div>
+                            <div class="param-slider">
+                                <label>📍 Сдвиг по Oy <span class="glowing-text">b</span> = <span id="bValue" class="param-value">0.00</span></label>
+                                <input type="range" id="bSlider" min="-3" max="3" step="0.1" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 k = tg α</span> — угловой коэффициент (тангенс угла наклона)</div>
+                        <div class="formula-item"><span class="big-text">📌 b</span> — точка пересечения с Oy: <span class="glowing-text">(0; b)</span></div>
+                        <div class="formula-item">📌 При k > 0 — функция возрастает, при k < 0 — убывает</div>
+                    </div>
                 </div>
-                <div class="graph-controls">
-                    <button data-func="linear" class="active">y = x</button>
-                    <button data-func="quadratic">y = x²</button>
-                    <button data-func="cubic">y = x³</button>
-                    <button data-func="sin">y = sin(x)</button>
-                    <button data-func="cos">y = cos(x)</button>
-                    <button data-func="exp">y = eˣ</button>
-                    <button data-func="log">y = ln(x)</button>
-                    <button data-func="reciprocal">y = 1/x</button>
+            </div>
+
+            <!-- ========== 2. КВАДРАТИЧНАЯ ФУНКЦИЯ ========== -->
+            <div class="graph-section">
+                <h2>🔄 Квадратичная функция</h2>
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = a·x² + b·x + c</span>
+                        <span style="font-size: 0.9rem;">парабола</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphQuadratic" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>🎢 Коэффициент <span class="glowing-text">a</span> = <span id="aValue" class="param-value">1.00</span></label>
+                                <input type="range" id="aSlider" min="-3" max="3" step="0.1" value="1">
+                            </div>
+                            <div class="param-slider">
+                                <label>📍 Коэффициент <span class="glowing-text">b</span> = <span id="quadBValue" class="param-value">0.00</span></label>
+                                <input type="range" id="quadBSlider" min="-5" max="5" step="0.5" value="0">
+                            </div>
+                            <div class="param-slider">
+                                <label>📍 Коэффициент <span class="glowing-text">c</span> = <span id="cValue" class="param-value">0.00</span></label>
+                                <input type="range" id="cSlider" min="-5" max="5" step="0.5" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 Вершина:</span> x₀ = -b/(2a), y₀ = c - b²/(4a)</div>
+                        <div class="formula-item"><span class="big-text">📌 Дискриминант:</span> D = b² - 4ac</div>
+                        <div class="formula-item"><span class="big-text">📌 Корни:</span> x₁,₂ = (-b ± √D)/(2a)</div>
+                        <div class="formula-item"><span class="big-text">📌 Канонический вид:</span> y = a(x - x₀)² + y₀</div>
+                    </div>
                 </div>
-                <div class="graph-param" id="paramControl" style="display: none;">
-                    <label>k = <input type="number" id="paramK" value="1" step="0.5"></label>
-                    <label>b = <input type="number" id="paramB" value="0" step="0.5"></label>
+            </div>
+
+            <!-- ========== 3. ПОКАЗАТЕЛЬНАЯ ФУНКЦИЯ ========== -->
+            <div class="graph-section">
+                <h2>📈 Показательная функция</h2>
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = aˣ</span>
+                        <span style="font-size: 0.9rem;">экспоненциальный рост/убывание</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphExp" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>🔢 Основание <span class="glowing-text">a</span> = <span id="expAValue" class="param-value">2.00</span></label>
+                                <input type="range" id="expASlider" min="0.1" max="5" step="0.1" value="2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 При a > 1:</span> возрастает, lim_{x→-∞} aˣ = 0, lim_{x→+∞} aˣ = +∞</div>
+                        <div class="formula-item"><span class="big-text">📌 При 0 < a < 1:</span> убывает, lim_{x→-∞} aˣ = +∞, lim_{x→+∞} aˣ = 0</div>
+                        <div class="formula-item"><span class="big-text">📌 Горизонтальная асимптота:</span> y = 0</div>
+                        <div class="formula-item"><span class="big-text">📌 Пересечение с Oy:</span> (0; 1)</div>
+                        <div class="formula-item">⭐ <span class="glowing-text">Натуральная экспонента:</span> y = eˣ (e ≈ 2.718)</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ========== 1. ПРЕОБРАЗОВАНИЯ ГРАФИКОВ ========== -->
-            <h2>1. Преобразования графиков</h2>
-            
-            <h3>Перенос (сдвиг)</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = f(x) + a &nbsp;→&nbsp; сдвиг вдоль Oy на a</div>
-                <div class="formula-item">y = f(x - a) &nbsp;→&nbsp; сдвиг вдоль Ox на a</div>
+            <!-- ========== 4. ЛОГАРИФМИЧЕСКАЯ ФУНКЦИЯ ========== -->
+            <div class="graph-section">
+                <h2>📊 Логарифмическая функция</h2>
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = log_a x</span>
+                        <span style="font-size: 0.9rem;">обратная к показательной</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphLog" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>🔢 Основание <span class="glowing-text">a</span> = <span id="logAValue" class="param-value">2.00</span></label>
+                                <input type="range" id="logASlider" min="0.1" max="5" step="0.1" value="2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 При a > 1:</span> возрастает, lim_{x→0⁺} log_a x = -∞, lim_{x→+∞} log_a x = +∞</div>
+                        <div class="formula-item"><span class="big-text">📌 При 0 < a < 1:</span> убывает, lim_{x→0⁺} log_a x = +∞, lim_{x→+∞} log_a x = -∞</div>
+                        <div class="formula-item"><span class="big-text">📌 Вертикальная асимптота:</span> x = 0</div>
+                        <div class="formula-item"><span class="big-text">📌 Пересечение с Ox:</span> (1; 0)</div>
+                        <div class="formula-item">⭐ <span class="glowing-text">Натуральный логарифм:</span> y = ln x, <span class="glowing-text">Десятичный:</span> y = lg x</div>
+                    </div>
+                </div>
             </div>
 
-            <h3>Растяжение/сжатие</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = k f(x) &nbsp;→&nbsp; растяжение вдоль Oy в k раз при k>1, сжатие при 0&lt;k&lt;1</div>
-                <div class="formula-item">y = f(kx) &nbsp;→&nbsp; сжатие вдоль Ox в k раз при k>1, растяжение при 0&lt;k&lt;1</div>
+            <!-- ========== 5. ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
+            <div class="graph-section">
+                <h2>🌀 Тригонометрические функции</h2>
+                
+                <!-- Синус -->
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = sin x</span>
+                        <span style="font-size: 0.9rem;">синусоида</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphSin" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>📏 Амплитуда <span class="glowing-text">A</span> = <span id="ampValue" class="param-value">1.00</span></label>
+                                <input type="range" id="ampSlider" min="0" max="3" step="0.1" value="1">
+                            </div>
+                            <div class="param-slider">
+                                <label>🔄 Частота <span class="glowing-text">ω</span> = <span id="freqValue" class="param-value">1.00</span></label>
+                                <input type="range" id="freqSlider" min="0.5" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> R</div>
+                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> [-1; 1]</div>
+                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = 2π</div>
+                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> sin(-x) = -sin x</div>
+                    </div>
+                </div>
+
+                <!-- Косинус -->
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = cos x</span>
+                        <span style="font-size: 0.9rem;">косинусоида</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphCos" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <h4>🎛️ Параметры</h4>
+                            <div class="param-slider">
+                                <label>📏 Амплитуда <span class="glowing-text">A</span> = <span id="cosAmpValue" class="param-value">1.00</span></label>
+                                <input type="range" id="cosAmpSlider" min="0" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> R</div>
+                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> [-1; 1]</div>
+                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = 2π</div>
+                        <div class="formula-item"><span class="big-text">📌 Чётная:</span> cos(-x) = cos x</div>
+                    </div>
+                </div>
+
+                <!-- Тангенс -->
+                <div class="graph-card">
+                    <h3>
+                        <span class="func-formula">y = tg x</span>
+                        <span style="font-size: 0.9rem;">тангенсоида</span>
+                    </h3>
+                    <div class="graph-layout">
+                        <div class="graph-canvas-box">
+                            <canvas id="graphTan" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                        </div>
+                        <div class="controls-box">
+                            <p style="color:#aaa; text-align:center;">Вертикальные асимптоты при x = π/2 + πn</p>
+                        </div>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> x ≠ π/2 + πn, n ∈ Z</div>
+                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> R</div>
+                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = π</div>
+                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> tg(-x) = -tg x</div>
+                        <div class="formula-item"><span class="big-text">📌 Вертикальные асимптоты:</span> x = π/2 + πn</div>
+                    </div>
+                </div>
             </div>
 
-            <h3>Отражение (симметрия)</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = -f(x) &nbsp;→&nbsp; симметрия относительно Ox</div>
-                <div class="formula-item">y = f(-x) &nbsp;→&nbsp; симметрия относительно Oy</div>
-                <div class="formula-item">y = -f(-x) &nbsp;→&nbsp; симметрия относительно начала координат</div>
+            <!-- ========== 6. ОБРАТНЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ========== -->
+            <div class="graph-section">
+                <h2>🔄 Обратные тригонометрические функции</h2>
+                
+                <div class="graph-card">
+                    <h3><span class="func-formula">y = arcsin x</span> <span>арксинус</span></h3>
+                    <div class="graph-canvas-box" style="text-align:center">
+                        <canvas id="graphArcsin" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 D = [-1; 1]</span>, <span class="big-text">E = [-π/2; π/2]</span></div>
+                        <div class="formula-item">Нечётная: arcsin(-x) = -arcsin x</div>
+                    </div>
+                </div>
+                
+                <div class="graph-card">
+                    <h3><span class="func-formula">y = arccos x</span> <span>арккосинус</span></h3>
+                    <div class="graph-canvas-box" style="text-align:center">
+                        <canvas id="graphArccos" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 D = [-1; 1]</span>, <span class="big-text">E = [0; π]</span></div>
+                        <div class="formula-item">arccos(-x) = π - arccos x</div>
+                    </div>
+                </div>
+                
+                <div class="graph-card">
+                    <h3><span class="func-formula">y = arctan x</span> <span>арктангенс</span></h3>
+                    <div class="graph-canvas-box" style="text-align:center">
+                        <canvas id="graphArctan" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 D = R</span>, <span class="big-text">E = (-π/2; π/2)</span></div>
+                        <div class="formula-item">Горизонтальные асимптоты: y = π/2 (x→+∞), y = -π/2 (x→-∞)</div>
+                        <div class="formula-item">Нечётная: arctan(-x) = -arctan x</div>
+                    </div>
+                </div>
             </div>
 
-            <h3>Модуль</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = |f(x)| &nbsp;→&nbsp; часть графика при f(x) ≥ 0 остаётся, при f(x) &lt; 0 отражается вверх относительно Ox</div>
-                <div class="formula-item">y = f(|x|) &nbsp;→&nbsp; график при x ≥ 0 остаётся, при x &lt; 0 строится симметрично относительно Oy</div>
+            <!-- ========== 7. ГИПЕРБОЛИЧЕСКИЕ ФУНКЦИИ ========== -->
+            <div class="graph-section">
+                <h2>🌀 Гиперболические функции</h2>
+                
+                <div class="graph-card">
+                    <h3><span class="func-formula">y = sh x = (eˣ - e⁻ˣ)/2</span> <span>гиперболический синус</span></h3>
+                    <div class="graph-canvas-box" style="text-align:center">
+                        <canvas id="graphSh" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 D = R, E = R</span>, нечётная</div>
+                    </div>
+                </div>
+                
+                <div class="graph-card">
+                    <h3><span class="func-formula">y = ch x = (eˣ + e⁻ˣ)/2</span> <span>гиперболический косинус (цепная линия)</span></h3>
+                    <div class="graph-canvas-box" style="text-align:center">
+                        <canvas id="graphCh" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                    </div>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 D = R, E = [1; +∞)</span>, чётная</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- ========== 2. ЛИНЕЙНАЯ ФУНКЦИЯ ========== -->
-            <h2>2. Линейная функция</h2>
-            <div class="formula-block">
-                <div class="formula-item">y = kx + b</div>
-                <div class="formula-item">k = tg α &nbsp;— угловой коэффициент</div>
-                <div class="formula-item">b &nbsp;— точка пересечения с Oy (0; b)</div>
-            </div>
-
-            <!-- ========== 3. КВАДРАТИЧНАЯ ФУНКЦИЯ ========== -->
-            <h2>3. Квадратичная функция</h2>
-            <div class="formula-block">
-                <div class="formula-item">y = ax² + bx + c, a ≠ 0</div>
-                <div class="formula-item">x₀ = -b/(2a) &nbsp;— вершина (абсцисса)</div>
-                <div class="formula-item">y₀ = c - b²/(4a) &nbsp;— вершина (ордината)</div>
-                <div class="formula-item">D = b² - 4ac</div>
-                <div class="formula-item">x₁,₂ = (-b ± √D)/(2a) &nbsp;— корни при D ≥ 0</div>
-                <div class="formula-item">y = a(x - x₀)² + y₀ &nbsp;— канонический вид</div>
-            </div>
-
-            <!-- ========== 4. СТЕПЕННАЯ ФУНКЦИЯ ========== -->
-            <h2>4. Степенная функция</h2>
-            <div class="formula-block">
-                <div class="formula-item">y = xⁿ, n ∈ Z</div>
-                <div class="formula-item">y = x^{2k} &nbsp;— чётная, возрастает при x>0, убывает при x&lt;0</div>
-                <div class="formula-item">y = x^{2k+1} &nbsp;— нечётная, возрастает на R</div>
-                <div class="formula-item">y = x^{-2k} &nbsp;— чётная, убывает при x>0, возрастает при x&lt;0</div>
-                <div class="formula-item">y = x^{-(2k+1)} &nbsp;— нечётная, убывает на (-∞;0) ∪ (0;+∞)</div>
-                <div class="formula-item">y = x^{1/n} = ⁿ√x &nbsp;— обратная к y = xⁿ</div>
-            </div>
-
-            <!-- ========== 5. ПОКАЗАТЕЛЬНАЯ ФУНКЦИЯ ========== -->
-            <h2>5. Показательная функция</h2>
-            <div class="formula-block">
-                <div class="formula-item">y = aˣ, a > 0, a ≠ 1</div>
-                <div class="formula-item">y = eˣ &nbsp;— натуральная</div>
-                <div class="formula-item">При a > 1: возрастает, lim_{x→-∞} aˣ = 0, lim_{x→+∞} aˣ = +∞</div>
-                <div class="formula-item">При 0 &lt; a &lt; 1: убывает, lim_{x→-∞} aˣ = +∞, lim_{x→+∞} aˣ = 0</div>
-                <div class="formula-item">Горизонтальная асимптота: y = 0</div>
-                <div class="formula-item">Пересечение с Oy: (0; 1)</div>
-            </div>
-
-            <!-- ========== 6. ЛОГАРИФМИЧЕСКАЯ ФУНКЦИЯ ========== -->
-            <h2>6. Логарифмическая функция</h2>
-            <div class="formula-block">
-                <div class="formula-item">y = log_a x, a > 0, a ≠ 1</div>
-                <div class="formula-item">y = ln x &nbsp;— натуральный</div>
-                <div class="formula-item">y = lg x &nbsp;— десятичный</div>
-                <div class="formula-item">При a > 1: возрастает, lim_{x→0⁺} log_a x = -∞, lim_{x→+∞} log_a x = +∞</div>
-                <div class="formula-item">При 0 &lt; a &lt; 1: убывает, lim_{x→0⁺} log_a x = +∞, lim_{x→+∞} log_a x = -∞</div>
-                <div class="formula-item">Вертикальная асимптота: x = 0</div>
-                <div class="formula-item">Пересечение с Ox: (1; 0)</div>
-            </div>
-
-            <!-- ========== 7. ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
-            <h2>7. Тригонометрические функции</h2>
-            
-            <h3>Синус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = sin x</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: [-1; 1]</div>
-                <div class="formula-item">Период: T = 2π</div>
-                <div class="formula-item">Нули: x = πn, n ∈ Z</div>
-                <div class="formula-item">Максимумы: x = π/2 + 2πn, y = 1</div>
-                <div class="formula-item">Минимумы: x = -π/2 + 2πn, y = -1</div>
-                <div class="formula-item">Нечётная: sin(-x) = -sin x</div>
-            </div>
-
-            <h3>Косинус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = cos x</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: [-1; 1]</div>
-                <div class="formula-item">Период: T = 2π</div>
-                <div class="formula-item">Нули: x = π/2 + πn, n ∈ Z</div>
-                <div class="formula-item">Максимумы: x = 2πn, y = 1</div>
-                <div class="formula-item">Минимумы: x = π + 2πn, y = -1</div>
-                <div class="formula-item">Чётная: cos(-x) = cos x</div>
-            </div>
-
-            <h3>Тангенс</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = tan x</div>
-                <div class="formula-item">Область определения: x ≠ π/2 + πn, n ∈ Z</div>
-                <div class="formula-item">Область значений: R</div>
-                <div class="formula-item">Период: T = π</div>
-                <div class="formula-item">Нули: x = πn</div>
-                <div class="formula-item">Вертикальные асимптоты: x = π/2 + πn</div>
-                <div class="formula-item">Нечётная: tan(-x) = -tan x</div>
-            </div>
-
-            <h3>Котангенс</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = cot x</div>
-                <div class="formula-item">Область определения: x ≠ πn, n ∈ Z</div>
-                <div class="formula-item">Область значений: R</div>
-                <div class="formula-item">Период: T = π</div>
-                <div class="formula-item">Нули: x = π/2 + πn</div>
-                <div class="formula-item">Вертикальные асимптоты: x = πn</div>
-                <div class="formula-item">Нечётная: cot(-x) = -cot x</div>
-            </div>
-
-            <!-- ========== 8. ОБРАТНЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
-            <h2>8. Обратные тригонометрические функции</h2>
-            
-            <h3>Арксинус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = arcsin x</div>
-                <div class="formula-item">Область определения: [-1; 1]</div>
-                <div class="formula-item">Область значений: [-π/2; π/2]</div>
-                <div class="formula-item">Нечётная: arcsin(-x) = -arcsin x</div>
-            </div>
-
-            <h3>Арккосинус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = arccos x</div>
-                <div class="formula-item">Область определения: [-1; 1]</div>
-                <div class="formula-item">Область значений: [0; π]</div>
-                <div class="formula-item">arccos(-x) = π - arccos x</div>
-            </div>
-
-            <h3>Арктангенс</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = arctan x</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: (-π/2; π/2)</div>
-                <div class="formula-item">Горизонтальные асимптоты: y = π/2 (x → +∞), y = -π/2 (x → -∞)</div>
-                <div class="formula-item">Нечётная: arctan(-x) = -arctan x</div>
-            </div>
-
-            <h3>Арккотангенс</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = arccot x</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: (0; π)</div>
-                <div class="formula-item">Горизонтальные асимптоты: y = π (x → -∞), y = 0 (x → +∞)</div>
-                <div class="formula-item">arccot(-x) = π - arccot x</div>
-            </div>
-
-            <!-- ========== 9. ГИПЕРБОЛИЧЕСКИЕ ФУНКЦИИ ========== -->
-            <h2>9. Гиперболические функции</h2>
-            
-            <h3>Гиперболический синус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = sh x = (eˣ - e⁻ˣ)/2</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: R</div>
-                <div class="formula-item">Нечётная: sh(-x) = -sh x</div>
-            </div>
-
-            <h3>Гиперболический косинус</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = ch x = (eˣ + e⁻ˣ)/2</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: [1; +∞)</div>
-                <div class="formula-item">Чётная: ch(-x) = ch x</div>
-            </div>
-
-            <h3>Гиперболический тангенс</h3>
-            <div class="formula-block">
-                <div class="formula-item">y = th x = sh x / ch x = (eˣ - e⁻ˣ)/(eˣ + e⁻ˣ)</div>
-                <div class="formula-item">Область определения: R</div>
-                <div class="formula-item">Область значений: (-1; 1)</div>
-                <div class="formula-item">Горизонтальные асимптоты: y = 1 (x → +∞), y = -1 (x → -∞)</div>
-                <div class="formula-item">Нечётная: th(-x) = -th x</div>
-            </div>
-
-            <!-- ========== 10. АСИМПТОТЫ ========== -->
-            <h2>10. Асимптоты</h2>
-            
-            <h3>Вертикальные</h3>
-            <div class="formula-block">
-                <div class="formula-item">lim_{x→a⁺} f(x) = ±∞ или lim_{x→a⁻} f(x) = ±∞ → прямая x = a</div>
-            </div>
-
-            <h3>Горизонтальные</h3>
-            <div class="formula-block">
-                <div class="formula-item">lim_{x→+∞} f(x) = b → y = b</div>
-                <div class="formula-item">lim_{x→-∞} f(x) = b → y = b</div>
-            </div>
-
-            <h3>Наклонные</h3>
-            <div class="formula-block">
-                <div class="formula-item">k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) - kx) → прямая y = kx + b</div>
-            </div>
-
-            <!-- ========== 11. ЧЁТНОСТЬ И НЕЧЁТНОСТЬ ========== -->
-            <h2>11. Чётность и нечётность</h2>
-            <div class="formula-block">
-                <div class="formula-item">Чётная: f(-x) = f(x) — симметрия относительно Oy</div>
-                <div class="formula-item">Нечётная: f(-x) = -f(x) — симметрия относительно начала координат</div>
-            </div>
-
-            <!-- ========== 12. ПЕРИОДИЧНОСТЬ ========== -->
-            <h2>12. Периодичность</h2>
-            <div class="formula-block">
-                <div class="formula-item">f(x + T) = f(x), T > 0 — наименьший положительный период</div>
-                <div class="formula-item">sin x, cos x, sec x, csc x: T = 2π</div>
-                <div class="formula-item">tan x, cot x: T = π</div>
+            <!-- ========== 8. АСИМПТОТЫ, ЧЁТНОСТЬ, ПЕРИОДИЧНОСТЬ ========== -->
+            <div class="graph-section">
+                <h2>📐 Асимптоты, чётность и периодичность</h2>
+                <div class="graph-card">
+                    <h3>🔹 Вертикальные асимптоты</h3>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 x = a</span>, если lim_{x→a⁺} f(x) = ±∞ или lim_{x→a⁻} f(x) = ±∞</div>
+                    </div>
+                    <h3>🔹 Горизонтальные асимптоты</h3>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 y = b</span>, если lim_{x→±∞} f(x) = b</div>
+                    </div>
+                    <h3>🔹 Наклонные асимптоты</h3>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 y = kx + b</span>, где k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) - kx)</div>
+                    </div>
+                    <h3>🔹 Чётность и нечётность</h3>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 Чётная:</span> f(-x) = f(x) — симметрия относительно Oy</div>
+                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> f(-x) = -f(x) — симметрия относительно начала координат</div>
+                    </div>
+                    <h3>🔹 Периодичность</h3>
+                    <div class="formulas-list">
+                        <div class="formula-item"><span class="big-text">📌 f(x + T) = f(x)</span>, T > 0 — наименьший положительный период</div>
+                        <div class="formula-item">📌 sin x, cos x: <span class="glowing-text">T = 2π</span> &nbsp;|&nbsp; tan x, cot x: <span class="glowing-text">T = π</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -340,186 +504,151 @@
         </nav>
     </div>
 
-    <!-- Скрипт для построения графиков -->
     <script>
-        const canvas = document.getElementById('functionGraph');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.clientWidth;
-        let height = canvas.clientHeight;
-        
-        function resizeCanvas() {
-            width = canvas.clientWidth;
-            height = canvas.clientHeight;
+        // Общая функция для рисования графика
+        function drawGraph(canvasId, func, xMin = -5, xMax = 5, yMin = -3, yMax = 3, params = {}) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
             canvas.width = width;
             canvas.height = height;
-            drawGraph(currentFunc, currentK, currentB);
-        }
-        
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Настройки осей
-        let xMin = -5, xMax = 5, yMin = -3, yMax = 3;
-        let currentFunc = 'linear';
-        let currentK = 1;
-        let currentB = 0;
-        
-        function toScreenX(x) {
-            return ((x - xMin) / (xMax - xMin)) * width;
-        }
-        
-        function toScreenY(y) {
-            return height - ((y - yMin) / (yMax - yMin)) * height;
-        }
-        
-        function drawAxes() {
-            ctx.beginPath();
-            ctx.strokeStyle = '#666';
-            ctx.lineWidth = 1;
             
-            // Ось X
+            function toScreenX(x) { return ((x - xMin) / (xMax - xMin)) * width; }
+            function toScreenY(y) { return height - ((y - yMin) / (yMax - yMin)) * height; }
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            // Рисуем сетку
+            ctx.beginPath();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 0.5;
+            for (let x = -5; x <= 5; x += 1) {
+                const sx = toScreenX(x);
+                ctx.moveTo(sx, 0);
+                ctx.lineTo(sx, height);
+                ctx.stroke();
+            }
+            for (let y = -3; y <= 3; y += 1) {
+                const sy = toScreenY(y);
+                ctx.moveTo(0, sy);
+                ctx.lineTo(width, sy);
+                ctx.stroke();
+            }
+            
+            // Оси
+            ctx.beginPath();
+            ctx.strokeStyle = '#888';
+            ctx.lineWidth = 1.5;
             const y0 = toScreenY(0);
+            const x0 = toScreenX(0);
             ctx.moveTo(0, y0);
             ctx.lineTo(width, y0);
-            ctx.stroke();
-            
-            // Ось Y
-            const x0 = toScreenX(0);
             ctx.moveTo(x0, 0);
             ctx.lineTo(x0, height);
             ctx.stroke();
             
-            // Стрелки
-            ctx.fillStyle = '#888';
-            // Стрелка X
-            ctx.beginPath();
-            ctx.moveTo(width-10, y0-4);
-            ctx.lineTo(width, y0);
-            ctx.lineTo(width-10, y0+4);
-            ctx.fill();
-            // Стрелка Y
-            ctx.beginPath();
-            ctx.moveTo(x0-4, 10);
-            ctx.lineTo(x0, 0);
-            ctx.lineTo(x0+4, 10);
-            ctx.fill();
-            
-            // Подписи осей
-            ctx.font = '12px "Segoe UI"';
-            ctx.fillStyle = '#aaa';
-            ctx.fillText('x', width-15, y0-5);
-            ctx.fillText('y', x0+8, 15);
-            
-            // Деления
-            for (let x = -5; x <= 5; x++) {
-                if (Math.abs(x) < 0.1) continue;
-                const screenX = toScreenX(x);
-                ctx.beginPath();
-                ctx.moveTo(screenX, y0-3);
-                ctx.lineTo(screenX, y0+3);
-                ctx.stroke();
-                ctx.fillText(x, screenX-5, y0-5);
-            }
-            for (let y = -3; y <= 3; y++) {
-                if (Math.abs(y) < 0.1) continue;
-                const screenY = toScreenY(y);
-                ctx.beginPath();
-                ctx.moveTo(x0-3, screenY);
-                ctx.lineTo(x0+3, screenY);
-                ctx.stroke();
-                ctx.fillText(y, x0+8, screenY+3);
-            }
-        }
-        
-        function getY(x, func, k, b) {
-            switch(func) {
-                case 'linear': return k*x + b;
-                case 'quadratic': return x*x;
-                case 'cubic': return x*x*x;
-                case 'sin': return Math.sin(x);
-                case 'cos': return Math.cos(x);
-                case 'exp': return Math.exp(x);
-                case 'log': return x > 0 ? Math.log(x) : NaN;
-                case 'reciprocal': return Math.abs(x) < 0.01 ? NaN : 1/x;
-                default: return x;
-            }
-        }
-        
-        function drawGraph(func, k, b) {
-            ctx.clearRect(0, 0, width, height);
-            drawAxes();
-            
+            // График
             ctx.beginPath();
             ctx.strokeStyle = '#bb86fc';
             ctx.lineWidth = 2.5;
-            
-            let firstPoint = true;
+            let first = true;
             for (let px = 0; px <= width; px++) {
                 const x = xMin + (px / width) * (xMax - xMin);
-                const y = getY(x, func, k, b);
-                
-                if (isNaN(y) || Math.abs(y) > 100) {
-                    firstPoint = true;
-                    continue;
-                }
-                
-                const screenX = px;
-                const screenY = toScreenY(y);
-                
-                if (screenY < 0 || screenY > height) {
-                    firstPoint = true;
-                    continue;
-                }
-                
-                if (firstPoint) {
-                    ctx.moveTo(screenX, screenY);
-                    firstPoint = false;
-                } else {
-                    ctx.lineTo(screenX, screenY);
-                }
+                let y = func(x, params);
+                if (isNaN(y) || Math.abs(y) > 100) { first = true; continue; }
+                const sy = toScreenY(y);
+                if (sy < 0 || sy > height) { first = true; continue; }
+                if (first) { ctx.moveTo(px, sy); first = false; }
+                else { ctx.lineTo(px, sy); }
             }
             ctx.stroke();
         }
         
-        // Обработчики кнопок
-        const buttons = document.querySelectorAll('.graph-controls button');
-        const paramControl = document.getElementById('paramControl');
-        const paramK = document.getElementById('paramK');
-        const paramB = document.getElementById('paramB');
+        // Определения функций
+        const linear = (x, p) => p.k * x + p.b;
+        const quadratic = (x, p) => p.a * x * x + p.b * x + p.c;
+        const expFunc = (x, p) => Math.pow(p.a, x);
+        const logFunc = (x, p) => x > 0 ? Math.log(x) / Math.log(p.a) : NaN;
+        const sinFunc = (x, p) => p.A * Math.sin(p.freq * x);
+        const cosFunc = (x, p) => p.A * Math.cos(x);
+        const tanFunc = (x) => Math.tan(x);
+        const arcsinFunc = (x) => Math.asin(x);
+        const arccosFunc = (x) => Math.acos(x);
+        const arctanFunc = (x) => Math.atan(x);
+        const shFunc = (x) => Math.sinh(x);
+        const chFunc = (x) => Math.cosh(x);
         
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                buttons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFunc = btn.dataset.func;
-                
-                if (currentFunc === 'linear') {
-                    paramControl.style.display = 'flex';
-                    currentK = parseFloat(paramK.value);
-                    currentB = parseFloat(paramB.value);
-                } else {
-                    paramControl.style.display = 'none';
-                    currentK = 1;
-                    currentB = 0;
-                }
-                drawGraph(currentFunc, currentK, currentB);
-            });
+        // Инициализация всех графиков
+        let k = 1, b = 0;
+        let a = 1, quadB = 0, c = 0;
+        let expA = 2, logA = 2;
+        let amp = 1, freq = 1, cosAmp = 1;
+        
+        // Линейная
+        function updateLinear() {
+            drawGraph('graphLinear', linear, -5, 5, -4, 4, {k, b});
+        }
+        document.getElementById('kSlider').oninput = (e) => { k = parseFloat(e.target.value); document.getElementById('kValue').innerText = k.toFixed(2); updateLinear(); };
+        document.getElementById('bSlider').oninput = (e) => { b = parseFloat(e.target.value); document.getElementById('bValue').innerText = b.toFixed(2); updateLinear(); };
+        
+        // Квадратичная
+        function updateQuadratic() {
+            drawGraph('graphQuadratic', quadratic, -5, 5, -8, 8, {a, b: quadB, c});
+        }
+        document.getElementById('aSlider').oninput = (e) => { a = parseFloat(e.target.value); document.getElementById('aValue').innerText = a.toFixed(2); updateQuadratic(); };
+        document.getElementById('quadBSlider').oninput = (e) => { quadB = parseFloat(e.target.value); document.getElementById('quadBValue').innerText = quadB.toFixed(2); updateQuadratic(); };
+        document.getElementById('cSlider').oninput = (e) => { c = parseFloat(e.target.value); document.getElementById('cValue').innerText = c.toFixed(2); updateQuadratic(); };
+        
+        // Показательная
+        function updateExp() {
+            drawGraph('graphExp', expFunc, -2, 2, 0, 5, {a: expA});
+        }
+        document.getElementById('expASlider').oninput = (e) => { expA = parseFloat(e.target.value); document.getElementById('expAValue').innerText = expA.toFixed(2); updateExp(); };
+        
+        // Логарифмическая
+        function updateLog() {
+            drawGraph('graphLog', logFunc, 0.1, 5, -3, 3, {a: logA});
+        }
+        document.getElementById('logASlider').oninput = (e) => { logA = parseFloat(e.target.value); document.getElementById('logAValue').innerText = logA.toFixed(2); updateLog(); };
+        
+        // Синус
+        function updateSin() {
+            drawGraph('graphSin', sinFunc, -6, 6, -3, 3, {A: amp, freq});
+        }
+        document.getElementById('ampSlider').oninput = (e) => { amp = parseFloat(e.target.value); document.getElementById('ampValue').innerText = amp.toFixed(2); updateSin(); };
+        document.getElementById('freqSlider').oninput = (e) => { freq = parseFloat(e.target.value); document.getElementById('freqValue').innerText = freq.toFixed(2); updateSin(); };
+        
+        // Косинус
+        function updateCos() {
+            drawGraph('graphCos', cosFunc, -6, 6, -3, 3, {A: cosAmp});
+        }
+        document.getElementById('cosAmpSlider').oninput = (e) => { cosAmp = parseFloat(e.target.value); document.getElementById('cosAmpValue').innerText = cosAmp.toFixed(2); updateCos(); };
+        
+        // Тангенс
+        function updateTan() {
+            drawGraph('graphTan', tanFunc, -6, 6, -5, 5, {});
+        }
+        
+        // Арксинус, арккосинус, арктангенс
+        function updateArcsin() { drawGraph('graphArcsin', arcsinFunc, -1.2, 1.2, -1.8, 1.8, {}); }
+        function updateArccos() { drawGraph('graphArccos', arccosFunc, -1.2, 1.2, -0.5, 3.5, {}); }
+        function updateArctan() { drawGraph('graphArctan', arctanFunc, -5, 5, -2, 2, {}); }
+        
+        // Гиперболические
+        function updateSh() { drawGraph('graphSh', shFunc, -3, 3, -5, 5, {}); }
+        function updateCh() { drawGraph('graphCh', chFunc, -3, 3, 0.5, 5, {}); }
+        
+        // Запуск всех графиков
+        updateLinear(); updateQuadratic(); updateExp(); updateLog(); updateSin(); updateCos(); updateTan();
+        updateArcsin(); updateArccos(); updateArctan(); updateSh(); updateCh();
+        
+        // Адаптация при изменении размера
+        window.addEventListener('resize', () => {
+            updateLinear(); updateQuadratic(); updateExp(); updateLog(); updateSin(); updateCos(); updateTan();
+            updateArcsin(); updateArccos(); updateArctan(); updateSh(); updateCh();
         });
-        
-        paramK.addEventListener('input', () => {
-            if (currentFunc === 'linear') {
-                currentK = parseFloat(paramK.value);
-                drawGraph(currentFunc, currentK, currentB);
-            }
-        });
-        
-        paramB.addEventListener('input', () => {
-            if (currentFunc === 'linear') {
-                currentB = parseFloat(paramB.value);
-                drawGraph(currentFunc, currentK, currentB);
-            }
-        });
-        
-        resizeCanvas();
     </script>
 </body>
 </html>
