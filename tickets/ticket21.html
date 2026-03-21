@@ -3,652 +3,1388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Билет 21. Формулы для построения графиков функций</title>
+    <title>🎓 Билет 21: Конструктор графиков функций — уровень БОГ</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* ========== СТИЛИ ДЛЯ ИНТЕРАКТИВНЫХ ГРАФИКОВ ========== */
-        .graph-section {
-            margin: 45px 0;
+        :root {
+            --primary: #bb86fc;
+            --primary-dark: #9b59b6;
+            --secondary: #ffb86b;
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-input: #252540;
+            --text: #f0f0ff;
+            --text-dim: #aaa;
+            --error: #ff6b6b;
+            --success: #00d9a5;
+            --warning: #ffd93d;
+            --shadow: 0 8px 32px rgba(187, 134, 252, 0.25);
+            --border-radius: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .graph-section > h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .page-header {
             text-align: center;
-            background: linear-gradient(135deg, #bb86fc, #9b59b6);
-            display: inline-block;
-            padding: 8px 25px;
-            border-radius: 40px;
-            color: white;
-            border: none;
-            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--bg-card), #1e1e3f);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--primary);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .graph-card {
-            background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%);
-            border-radius: 28px;
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(187,134,252,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glowing {
+            text-shadow: 0 0 10px rgba(187, 134, 252, 0.7);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* ===== FORMULA INPUT SECTION ===== */
+        .formula-section {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
             padding: 25px;
-            margin: 30px 0;
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            border: 1px solid #3a3a6e;
+            box-shadow: var(--shadow);
         }
-        
-        .graph-card:hover {
-            border-color: #bb86fc;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(187, 134, 252, 0.2);
-        }
-        
-        .graph-card h3 {
-            color: #ffffff;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
+
+        .section-title {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            border-left: 5px solid #bb86fc;
-            padding-left: 20px;
+            gap: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-dark);
+            padding-bottom: 10px;
         }
-        
-        .func-formula {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #2a2a2a, #252525);
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 1.3rem;
-            color: #ffb86b;
-            border: 1px solid #bb86fc;
-            box-shadow: 0 0 8px rgba(187, 134, 252, 0.3);
-        }
-        
-        .graph-layout {
+
+        .formula-input-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 25px;
+            gap: 15px;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .formula-input-wrapper {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .formula-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            background: var(--bg-input);
+            border: 2px solid #4a4a7e;
+            border-radius: 16px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .formula-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(187, 134, 252, 0.3);
+        }
+
+        .formula-input.error {
+            border-color: var(--error);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .input-hint {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .input-hint.error {
+            color: var(--error);
+        }
+
+        .btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(187, 134, 252, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4a4a7e, #3a3a6e);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #00b894);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #e6b800);
+            color: #1a1a2e;
+        }
+
+        /* ===== EXAMPLES GRID ===== */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
             margin-top: 15px;
         }
-        
-        .graph-canvas-box {
-            flex: 2;
-            min-width: 280px;
-            background: #0a0a0a;
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #2a2a2a;
-        }
-        
-        .graph-canvas {
-            background: #0a0a0a;
-            border-radius: 16px;
-            max-width: 100%;
-            height: auto;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-        
-        .controls-box {
-            flex: 1;
-            min-width: 200px;
-            background: #2a2a2a;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #3a3a3a;
-        }
-        
-        .controls-box h4 {
-            color: #bb86fc;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            text-align: center;
-        }
-        
-        .param-slider {
-            margin-bottom: 20px;
-        }
-        
-        .param-slider label {
-            display: block;
-            margin-bottom: 8px;
-            color: #e0e0e0;
-            font-weight: 500;
-        }
-        
-        .param-slider input {
-            width: 100%;
-            background: #1e1e1e;
-            height: 4px;
-            border-radius: 5px;
-            -webkit-appearance: none;
-        }
-        
-        .param-slider input:focus {
-            outline: none;
-        }
-        
-        .param-slider input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #bb86fc;
+
+        .example-card {
+            background: var(--bg-input);
+            padding: 12px 16px;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 8px #bb86fc;
-        }
-        
-        .param-value {
-            display: inline-block;
-            background: #1e1e1e;
-            padding: 4px 12px;
-            border-radius: 20px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            text-align: center;
             font-family: monospace;
-            color: #ffb86b;
-            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .example-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            background: #2a2a4a;
+        }
+
+        .example-card .label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* ===== GRAPH AREA ===== */
+        .graph-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .graph-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .graph-canvas-wrapper {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid #3a3a6e;
+            box-shadow: var(--shadow);
+            position: relative;
+            min-height: 400px;
+        }
+
+        #mainCanvas {
+            width: 100%;
+            height: 400px;
+            background: #0a0a1a;
+            border-radius: 16px;
+            display: block;
+            cursor: crosshair;
+        }
+
+        .graph-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #3a3a6e;
+        }
+
+        .control-card h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .zoom-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 10px;
+            background: var(--bg-input);
+            border: 1px solid #4a4a7e;
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .zoom-btn:hover {
+            background: #3a3a5e;
+            border-color: var(--primary);
+        }
+
+        .layers-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: var(--bg-input);
+            border-radius: 8px;
+            margin-bottom: 8px;
             font-size: 0.9rem;
         }
-        
-        .formulas-list {
+
+        .layer-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .layer-remove {
+            margin-left: auto;
+            background: var(--error);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== THEORY SECTION ===== */
+        .theory-section {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #3a3a6e;
+            box-shadow: var(--shadow);
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
             margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px dashed #3a3a3a;
         }
-        
-        .formulas-list .formula-item {
-            font-size: 0.95rem;
-            padding: 8px 0;
+
+        .theory-card {
+            background: var(--bg-input);
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
         }
-        
-        .glowing-text {
-            text-shadow: 0 0 5px rgba(187, 134, 252, 0.5);
-            color: #bb86fc;
-        }
-        
-        .big-text {
+
+        .theory-card h4 {
+            color: var(--secondary);
+            margin-bottom: 12px;
             font-size: 1.2rem;
+        }
+
+        .formula-display {
+            font-family: 'Courier New', monospace;
+            background: #1e1e3f;
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .key-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .key-point::before {
+            content: "•";
+            color: var(--primary);
             font-weight: bold;
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        /* ===== TUTORIAL MODE ===== */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 26, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .tutorial-content {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .tutorial-step {
+            display: none;
+        }
+
+        .tutorial-step.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tutorial-step h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .tutorial-step p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4a4a7e;
+            transition: var(--transition);
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* ===== FOOTER & NAV ===== */
+        .bottom-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 1px solid #3a3a6e;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ===== UTILITIES ===== */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .gap-10 { gap: 10px; }
+        
+        /* ===== TOOLTIP ===== */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
         }
         
-        @media (max-width: 768px) {
-            .graph-layout {
-                flex-direction: column;
-            }
-            .graph-card h3 {
-                font-size: 1.3rem;
-            }
-            .func-formula {
-                font-size: 1rem;
-            }
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #1e1e3f;
+            color: var(--text);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+            border: 1px solid var(--primary);
+            box-shadow: var(--shadow);
+        }
+        
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== ANIMATIONS FOR LEARNING ===== */
+        .highlight {
+            animation: highlightPulse 2s infinite;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(187, 134, 252, 0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(187, 134, 252, 0); }
+        }
+
+        /* ===== MOBILE OPTIMIZATION ===== */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .formula-input { font-size: 1.1rem; padding: 14px 16px; }
+            .btn { padding: 12px 20px; font-size: 1rem; }
+            #mainCanvas { height: 300px; }
+            .graph-container { gap: 15px; }
+            .control-card { padding: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📈 Билет 21. Формулы для построения графиков функций</h1>
-        
-        <div class="content">
-            <p style="font-size: 1.1rem; text-align: center; margin-bottom: 30px;">
-                <span class="glowing-text">✨ Интерактивные графики</span> — изменяйте параметры и наблюдайте, как меняется функция в реальном времени
+        <!-- ===== HEADER ===== -->
+        <header class="page-header">
+            <h1>🎓 Билет 21: Конструктор графиков функций</h1>
+            <p class="subtitle">
+                <span class="glowing">Вводите любые формулы</span> — получайте мгновенную визуализацию, 
+                изучайте теорию в контексте, экспортируйте результаты. 
+                Даже если вы видите это впервые — вы разберётесь за 2 минуты.
             </p>
+        </header>
 
-            <!-- ========== 1. ЛИНЕЙНАЯ ФУНКЦИЯ ========== -->
-            <div class="graph-section">
-                <h2>📐 Линейная функция</h2>
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = k·x + b</span>
-                        <span style="font-size: 0.9rem;">прямая линия</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphLinear" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>📈 Угловой коэффициент <span class="glowing-text">k</span> = <span id="kValue" class="param-value">1.00</span></label>
-                                <input type="range" id="kSlider" min="-3" max="3" step="0.1" value="1">
-                            </div>
-                            <div class="param-slider">
-                                <label>📍 Сдвиг по Oy <span class="glowing-text">b</span> = <span id="bValue" class="param-value">0.00</span></label>
-                                <input type="range" id="bSlider" min="-3" max="3" step="0.1" value="0">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 k = tg α</span> — угловой коэффициент (тангенс угла наклона)</div>
-                        <div class="formula-item"><span class="big-text">📌 b</span> — точка пересечения с Oy: <span class="glowing-text">(0; b)</span></div>
-                        <div class="formula-item">📌 При k > 0 — функция возрастает, при k < 0 — убывает</div>
-                    </div>
+        <!-- ===== FORMULA INPUT ===== -->
+        <section class="formula-section">
+            <h2 class="section-title">🧮 Введите формулу функции</h2>
+            
+            <div class="formula-input-group">
+                <div class="formula-input-wrapper">
+                    <input type="text" id="formulaInput" class="formula-input" 
+                           placeholder="Например: 2*sin(x) + 0.5*x^2" value="sin(x)">
+                    <div id="inputHint" class="input-hint">Поддерживаются: +, -, *, /, ^, sin, cos, tan, log, ln, exp, sqrt, abs</div>
                 </div>
+                <button id="plotBtn" class="btn">
+                    📈 Построить график
+                </button>
+                <button id="addLayerBtn" class="btn btn-secondary">
+                    ➕ Добавить слой
+                </button>
             </div>
 
-            <!-- ========== 2. КВАДРАТИЧНАЯ ФУНКЦИЯ ========== -->
-            <div class="graph-section">
-                <h2>🔄 Квадратичная функция</h2>
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = a·x² + b·x + c</span>
-                        <span style="font-size: 0.9rem;">парабола</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphQuadratic" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>🎢 Коэффициент <span class="glowing-text">a</span> = <span id="aValue" class="param-value">1.00</span></label>
-                                <input type="range" id="aSlider" min="-3" max="3" step="0.1" value="1">
-                            </div>
-                            <div class="param-slider">
-                                <label>📍 Коэффициент <span class="glowing-text">b</span> = <span id="quadBValue" class="param-value">0.00</span></label>
-                                <input type="range" id="quadBSlider" min="-5" max="5" step="0.5" value="0">
-                            </div>
-                            <div class="param-slider">
-                                <label>📍 Коэффициент <span class="glowing-text">c</span> = <span id="cValue" class="param-value">0.00</span></label>
-                                <input type="range" id="cSlider" min="-5" max="5" step="0.5" value="0">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 Вершина:</span> x₀ = -b/(2a), y₀ = c - b²/(4a)</div>
-                        <div class="formula-item"><span class="big-text">📌 Дискриминант:</span> D = b² - 4ac</div>
-                        <div class="formula-item"><span class="big-text">📌 Корни:</span> x₁,₂ = (-b ± √D)/(2a)</div>
-                        <div class="formula-item"><span class="big-text">📌 Канонический вид:</span> y = a(x - x₀)² + y₀</div>
-                    </div>
+            <div class="examples-grid">
+                <div class="example-card" data-formula="x^2">
+                    x²
+                    <span class="label">Парабола</span>
+                </div>
+                <div class="example-card" data-formula="sin(x)">
+                    sin(x)
+                    <span class="label">Синус</span>
+                </div>
+                <div class="example-card" data-formula="exp(-x^2)">
+                    e^(-x²)
+                    <span class="label">Гауссова кривая</span>
+                </div>
+                <div class="example-card" data-formula="log(x)/ln(10)">
+                    lg(x)
+                    <span class="label">Десятичный логарифм</span>
+                </div>
+                <div class="example-card" data-formula="abs(x)">
+                    |x|
+                    <span class="label">Модуль</span>
+                </div>
+                <div class="example-card" data-formula="1/x">
+                    1/x
+                    <span class="label">Гипербола</span>
+                </div>
+                <div class="example-card" data-formula="x^3 - 3*x">
+                    x³ - 3x
+                    <span class="label">Кубическая</span>
+                </div>
+                <div class="example-card" data-formula="sin(x)*cos(x)">
+                    sin(x)·cos(x)
+                    <span class="label">Произведение</span>
                 </div>
             </div>
+        </section>
 
-            <!-- ========== 3. ПОКАЗАТЕЛЬНАЯ ФУНКЦИЯ ========== -->
-            <div class="graph-section">
-                <h2>📈 Показательная функция</h2>
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = aˣ</span>
-                        <span style="font-size: 0.9rem;">экспоненциальный рост/убывание</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphExp" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>🔢 Основание <span class="glowing-text">a</span> = <span id="expAValue" class="param-value">2.00</span></label>
-                                <input type="range" id="expASlider" min="0.1" max="5" step="0.1" value="2">
-                            </div>
-                        </div>
+        <!-- ===== GRAPH AREA ===== -->
+        <div class="graph-container">
+            <div class="graph-canvas-wrapper">
+                <canvas id="mainCanvas"></canvas>
+                <div id="graphMessage" class="text-center" style="color: var(--text-dim); margin-top: 15px; min-height: 24px;"></div>
+            </div>
+            
+            <div class="graph-controls">
+                <!-- Zoom Controls -->
+                <div class="control-card">
+                    <h4>🔍 Масштаб</h4>
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" id="zoomIn">+</button>
+                        <button class="zoom-btn" id="zoomOut">−</button>
+                        <button class="zoom-btn" id="zoomReset">⟲</button>
+                        <button class="zoom-btn" id="panMode" data-tooltip="Перетаскивание графика">✋</button>
                     </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 При a > 1:</span> возрастает, lim_{x→-∞} aˣ = 0, lim_{x→+∞} aˣ = +∞</div>
-                        <div class="formula-item"><span class="big-text">📌 При 0 < a < 1:</span> убывает, lim_{x→-∞} aˣ = +∞, lim_{x→+∞} aˣ = 0</div>
-                        <div class="formula-item"><span class="big-text">📌 Горизонтальная асимптота:</span> y = 0</div>
-                        <div class="formula-item"><span class="big-text">📌 Пересечение с Oy:</span> (0; 1)</div>
-                        <div class="formula-item">⭐ <span class="glowing-text">Натуральная экспонента:</span> y = eˣ (e ≈ 2.718)</div>
+                    <div style="margin-top: 12px; font-size: 0.9rem; color: var(--text-dim);">
+                        X: [<span id="xRange">-10</span>; <span id="xRangeMax">10</span>] &nbsp;|&nbsp; 
+                        Y: [<span id="yRange">-5</span>; <span id="yRangeMax">5</span>]
                     </div>
                 </div>
-            </div>
 
-            <!-- ========== 4. ЛОГАРИФМИЧЕСКАЯ ФУНКЦИЯ ========== -->
-            <div class="graph-section">
-                <h2>📊 Логарифмическая функция</h2>
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = log_a x</span>
-                        <span style="font-size: 0.9rem;">обратная к показательной</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphLog" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>🔢 Основание <span class="glowing-text">a</span> = <span id="logAValue" class="param-value">2.00</span></label>
-                                <input type="range" id="logASlider" min="0.1" max="5" step="0.1" value="2">
-                            </div>
-                        </div>
+                <!-- Layers -->
+                <div class="control-card">
+                    <h4>🎨 Слои графиков</h4>
+                    <div id="layersList" class="layers-list">
+                        <!-- Layers will be added here dynamically -->
                     </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 При a > 1:</span> возрастает, lim_{x→0⁺} log_a x = -∞, lim_{x→+∞} log_a x = +∞</div>
-                        <div class="formula-item"><span class="big-text">📌 При 0 < a < 1:</span> убывает, lim_{x→0⁺} log_a x = +∞, lim_{x→+∞} log_a x = -∞</div>
-                        <div class="formula-item"><span class="big-text">📌 Вертикальная асимптота:</span> x = 0</div>
-                        <div class="formula-item"><span class="big-text">📌 Пересечение с Ox:</span> (1; 0)</div>
-                        <div class="formula-item">⭐ <span class="glowing-text">Натуральный логарифм:</span> y = ln x, <span class="glowing-text">Десятичный:</span> y = lg x</div>
-                    </div>
+                    <button id="clearLayersBtn" class="btn btn-warning" style="margin-top: 10px; width: 100%;">
+                        🗑️ Очистить все
+                    </button>
+                </div>
+
+                <!-- Export -->
+                <div class="control-card">
+                    <h4>📤 Экспорт</h4>
+                    <button id="exportPngBtn" class="btn btn-success" style="width: 100%; margin-bottom: 10px;">
+                        💾 Скачать как PNG
+                    </button>
+                    <button id="copyLinkBtn" class="btn btn-secondary" style="width: 100%;">
+                        🔗 Скопировать ссылку
+                    </button>
+                </div>
+
+                <!-- Tutorial Toggle -->
+                <div class="control-card">
+                    <button id="startTutorialBtn" class="btn" style="width: 100%;">
+                        🎓 Запустить обучение (2 мин)
+                    </button>
                 </div>
             </div>
+        </div>
 
-            <!-- ========== 5. ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
-            <div class="graph-section">
-                <h2>🌀 Тригонометрические функции</h2>
+        <!-- ===== THEORY SECTION ===== -->
+        <section class="theory-section">
+            <h2 class="section-title">📚 Теория в контексте</h2>
+            <p style="margin-bottom: 20px; color: var(--text-dim);">
+                Изучайте свойства функций не по учебнику, а <span class="glowing">на живом примере</span>. 
+                Измените формулу выше — и теория обновится автоматически!
+            </p>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4>🔹 Область определения</h4>
+                    <p>Множество значений <span class="glowing">x</span>, при которых функция имеет смысл.</p>
+                    <div class="formula-display" id="domainDisplay">D(f) = ℝ</div>
+                    <div class="key-point">Для <code>1/x</code>: x ≠ 0</div>
+                    <div class="key-point">Для <code>√x</code>: x ≥ 0</div>
+                    <div class="key-point">Для <code>log(x)</code>: x > 0</div>
+                </div>
                 
-                <!-- Синус -->
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = sin x</span>
-                        <span style="font-size: 0.9rem;">синусоида</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphSin" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>📏 Амплитуда <span class="glowing-text">A</span> = <span id="ampValue" class="param-value">1.00</span></label>
-                                <input type="range" id="ampSlider" min="0" max="3" step="0.1" value="1">
-                            </div>
-                            <div class="param-slider">
-                                <label>🔄 Частота <span class="glowing-text">ω</span> = <span id="freqValue" class="param-value">1.00</span></label>
-                                <input type="range" id="freqSlider" min="0.5" max="3" step="0.1" value="1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> R</div>
-                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> [-1; 1]</div>
-                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = 2π</div>
-                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> sin(-x) = -sin x</div>
-                    </div>
+                <div class="theory-card">
+                    <h4>🔹 Область значений</h4>
+                    <p>Множество всех возможных результатов <span class="glowing">y = f(x)</span>.</p>
+                    <div class="formula-display" id="rangeDisplay">E(f) = ℝ</div>
+                    <div class="key-point"><code>sin(x)</code>: [-1; 1]</div>
+                    <div class="key-point"><code>x²</code>: [0; +∞)</div>
+                    <div class="key-point"><code>e^x</code>: (0; +∞)</div>
                 </div>
-
-                <!-- Косинус -->
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = cos x</span>
-                        <span style="font-size: 0.9rem;">косинусоида</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphCos" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <h4>🎛️ Параметры</h4>
-                            <div class="param-slider">
-                                <label>📏 Амплитуда <span class="glowing-text">A</span> = <span id="cosAmpValue" class="param-value">1.00</span></label>
-                                <input type="range" id="cosAmpSlider" min="0" max="3" step="0.1" value="1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> R</div>
-                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> [-1; 1]</div>
-                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = 2π</div>
-                        <div class="formula-item"><span class="big-text">📌 Чётная:</span> cos(-x) = cos x</div>
-                    </div>
+                
+                <div class="theory-card">
+                    <h4>🔹 Асимптоты</h4>
+                    <p>Прямые, к которым график неограниченно приближается.</p>
+                    <div class="key-point"><b>Вертикальная:</b> x = a, если f(x)→±∞ при x→a</div>
+                    <div class="key-point"><b>Горизонтальная:</b> y = b, если f(x)→b при x→±∞</div>
+                    <div class="key-point"><b>Наклонная:</b> y = kx + m, где k = lim f(x)/x</div>
                 </div>
-
-                <!-- Тангенс -->
-                <div class="graph-card">
-                    <h3>
-                        <span class="func-formula">y = tg x</span>
-                        <span style="font-size: 0.9rem;">тангенсоида</span>
-                    </h3>
-                    <div class="graph-layout">
-                        <div class="graph-canvas-box">
-                            <canvas id="graphTan" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                        </div>
-                        <div class="controls-box">
-                            <p style="color:#aaa; text-align:center;">Вертикальные асимптоты при x = π/2 + πn</p>
-                        </div>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 Область определения:</span> x ≠ π/2 + πn, n ∈ Z</div>
-                        <div class="formula-item"><span class="big-text">📌 Область значений:</span> R</div>
-                        <div class="formula-item"><span class="big-text">📌 Период:</span> T = π</div>
-                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> tg(-x) = -tg x</div>
-                        <div class="formula-item"><span class="big-text">📌 Вертикальные асимптоты:</span> x = π/2 + πn</div>
-                    </div>
+                
+                <div class="theory-card">
+                    <h4>🔹 Чётность и периодичность</h4>
+                    <div class="key-point"><b>Чётная:</b> f(-x) = f(x) → симметрия относительно Oy</div>
+                    <div class="key-point"><b>Нечётная:</b> f(-x) = -f(x) → симметрия относительно начала</div>
+                    <div class="key-point"><b>Периодическая:</b> f(x+T) = f(x), T — период</div>
+                    <div class="key-point"><code>sin(x), cos(x)</code>: T = 2π &nbsp;|&nbsp; <code>tan(x)</code>: T = π</div>
                 </div>
             </div>
+        </section>
 
-            <!-- ========== 6. ОБРАТНЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ========== -->
-            <div class="graph-section">
-                <h2>🔄 Обратные тригонометрические функции</h2>
-                
-                <div class="graph-card">
-                    <h3><span class="func-formula">y = arcsin x</span> <span>арксинус</span></h3>
-                    <div class="graph-canvas-box" style="text-align:center">
-                        <canvas id="graphArcsin" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+        <!-- ===== TUTORIAL OVERLAY ===== -->
+        <div id="tutorialOverlay" class="tutorial-overlay">
+            <div class="tutorial-content">
+                <div class="tutorial-step active" data-step="1">
+                    <h3>👋 Привет! Давайте познакомимся</h3>
+                    <p>Это не просто график — это <span class="glowing">ваш личный математический конструктор</span>.</p>
+                    <p>За 2 минуты вы научитесь:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Вводить любые формулы</li>
+                        <li>Менять масштаб и сравнивать функции</li>
+                        <li>Понимать свойства «на лету»</li>
+                    </ul>
+                    <p><b>Нажмите «Далее» — начнём!</b></p>
+                    <div class="tutorial-nav">
+                        <button class="btn btn-secondary" id="tutorialSkip">Пропустить</button>
+                        <button class="btn" id="tutorialNext1">Далее →</button>
                     </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 D = [-1; 1]</span>, <span class="big-text">E = [-π/2; π/2]</span></div>
-                        <div class="formula-item">Нечётная: arcsin(-x) = -arcsin x</div>
+                    <div class="progress-dots">
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
                     </div>
                 </div>
                 
-                <div class="graph-card">
-                    <h3><span class="func-formula">y = arccos x</span> <span>арккосинус</span></h3>
-                    <div class="graph-canvas-box" style="text-align:center">
-                        <canvas id="graphArccos" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                <div class="tutorial-step" data-step="2">
+                    <h3>🧮 Шаг 1: Введите формулу</h3>
+                    <p>В поле выше напишите, например: <span class="formula-display">2*x + 1</span></p>
+                    <p>Или кликните на любой пример ниже — формула подставится автоматически!</p>
+                    <p><b>Попробуйте сейчас:</b> введите <code>3*sin(x)</code> и нажмите «Построить график»</p>
+                    <div class="formula-display highlight" style="margin: 15px 0;">3*sin(x)</div>
+                    <div class="tutorial-nav">
+                        <button class="btn btn-secondary" id="tutorialBack2">← Назад</button>
+                        <button class="btn" id="tutorialNext2">Я попробовал! Далее →</button>
                     </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 D = [-1; 1]</span>, <span class="big-text">E = [0; π]</span></div>
-                        <div class="formula-item">arccos(-x) = π - arccos x</div>
-                    </div>
-                </div>
-                
-                <div class="graph-card">
-                    <h3><span class="func-formula">y = arctan x</span> <span>арктангенс</span></h3>
-                    <div class="graph-canvas-box" style="text-align:center">
-                        <canvas id="graphArctan" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 D = R</span>, <span class="big-text">E = (-π/2; π/2)</span></div>
-                        <div class="formula-item">Горизонтальные асимптоты: y = π/2 (x→+∞), y = -π/2 (x→-∞)</div>
-                        <div class="formula-item">Нечётная: arctan(-x) = -arctan x</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== 7. ГИПЕРБОЛИЧЕСКИЕ ФУНКЦИИ ========== -->
-            <div class="graph-section">
-                <h2>🌀 Гиперболические функции</h2>
-                
-                <div class="graph-card">
-                    <h3><span class="func-formula">y = sh x = (eˣ - e⁻ˣ)/2</span> <span>гиперболический синус</span></h3>
-                    <div class="graph-canvas-box" style="text-align:center">
-                        <canvas id="graphSh" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
-                    </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 D = R, E = R</span>, нечётная</div>
+                    <div class="progress-dots">
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
                     </div>
                 </div>
                 
-                <div class="graph-card">
-                    <h3><span class="func-formula">y = ch x = (eˣ + e⁻ˣ)/2</span> <span>гиперболический косинус (цепная линия)</span></h3>
-                    <div class="graph-canvas-box" style="text-align:center">
-                        <canvas id="graphCh" class="graph-canvas" width="500" height="300" style="width:100%; height:auto; max-width:500px; aspect-ratio:500/300"></canvas>
+                <div class="tutorial-step" data-step="3">
+                    <h3>🔍 Шаг 2: Исследуйте график</h3>
+                    <p>• <b>Колёсико мыши</b> — приблизить/отдалить</p>
+                    <p>• <b>Перетаскивание</b> — сдвинуть график</p>
+                    <p>• <b>Кнопки +/−</b> — точный зум</p>
+                    <p>• <b>Добавьте второй слой</b> — сравните две функции!</p>
+                    <p><b>Попробуйте:</b> добавьте слой с формулой <code>cos(x)</code></p>
+                    <div class="tutorial-nav">
+                        <button class="btn btn-secondary" id="tutorialBack3">← Назад</button>
+                        <button class="btn" id="tutorialNext3">Понял! Далее →</button>
                     </div>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 D = R, E = [1; +∞)</span>, чётная</div>
+                    <div class="progress-dots">
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
                     </div>
                 </div>
-            </div>
-
-            <!-- ========== 8. АСИМПТОТЫ, ЧЁТНОСТЬ, ПЕРИОДИЧНОСТЬ ========== -->
-            <div class="graph-section">
-                <h2>📐 Асимптоты, чётность и периодичность</h2>
-                <div class="graph-card">
-                    <h3>🔹 Вертикальные асимптоты</h3>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 x = a</span>, если lim_{x→a⁺} f(x) = ±∞ или lim_{x→a⁻} f(x) = ±∞</div>
+                
+                <div class="tutorial-step" data-step="4">
+                    <h3>🎉 Вы готовы!</h3>
+                    <p>Теперь вы можете:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>✅ Строить любые функции</li>
+                        <li>✅ Анализировать их свойства</li>
+                        <li>✅ Экспортировать результаты</li>
+                        <li>✅ Учить математику через практику</li>
+                    </ul>
+                    <p class="glowing" style="font-size: 1.1rem; margin: 15px 0;">
+                        💡 Совет: сохраняйте интересные конфигурации через «Скопировать ссылку»
+                    </p>
+                    <div class="tutorial-nav">
+                        <button class="btn btn-secondary" id="tutorialBack4">← Назад</button>
+                        <button class="btn btn-success" id="tutorialFinish">🚀 Начать исследовать!</button>
                     </div>
-                    <h3>🔹 Горизонтальные асимптоты</h3>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 y = b</span>, если lim_{x→±∞} f(x) = b</div>
-                    </div>
-                    <h3>🔹 Наклонные асимптоты</h3>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 y = kx + b</span>, где k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) - kx)</div>
-                    </div>
-                    <h3>🔹 Чётность и нечётность</h3>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 Чётная:</span> f(-x) = f(x) — симметрия относительно Oy</div>
-                        <div class="formula-item"><span class="big-text">📌 Нечётная:</span> f(-x) = -f(x) — симметрия относительно начала координат</div>
-                    </div>
-                    <h3>🔹 Периодичность</h3>
-                    <div class="formulas-list">
-                        <div class="formula-item"><span class="big-text">📌 f(x + T) = f(x)</span>, T > 0 — наименьший положительный период</div>
-                        <div class="formula-item">📌 sin x, cos x: <span class="glowing-text">T = 2π</span> &nbsp;|&nbsp; tan x, cot x: <span class="glowing-text">T = π</span></div>
+                    <div class="progress-dots">
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- ===== FOOTER NAV ===== -->
         <nav class="bottom-nav">
-            <a href="ticket20.html">← Предыдущий билет (20)</a>
-            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket20.html" class="nav-link">← Предыдущий билет (20)</a>
+            <a href="../index.html" class="nav-link">📋 К списку билетов</a>
+            <a href="ticket22.html" class="nav-link">Следующий билет (22) →</a>
         </nav>
     </div>
 
     <script>
-        // Общая функция для рисования графика
-        function drawGraph(canvasId, func, xMin = -5, xMax = 5, yMin = -3, yMax = 3, params = {}) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const width = canvas.clientWidth;
-            const height = canvas.clientHeight;
-            canvas.width = width;
-            canvas.height = height;
+        // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        let scale = { x: 40, y: 40 }; // пикселей на единицу
+        let offset = { x: 0, y: 0 }; // сдвиг центра
+        let isPanning = false;
+        let lastMouse = { x: 0, y: 0 };
+        let layers = []; // [{formula, color, visible}]
+        const colors = ['#bb86fc', '#00d9a5', '#ffb86b', '#ff6b6b', '#4dabf7', '#9775fa'];
+        let currentColorIndex = 0;
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        function init() {
+            resizeCanvas();
+            setupEventListeners();
+            loadFromURL();
+            plotDefault();
+            updateTheory();
+        }
+
+        function resizeCanvas() {
+            const wrapper = canvas.parentElement;
+            canvas.width = wrapper.clientWidth;
+            canvas.height = wrapper.clientHeight;
+            redraw();
+        }
+
+        // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
+        function setupEventListeners() {
+            // Formula input
+            document.getElementById('formulaInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') plotCurrentFormula();
+            });
             
-            function toScreenX(x) { return ((x - xMin) / (xMax - xMin)) * width; }
-            function toScreenY(y) { return height - ((y - yMin) / (yMax - yMin)) * height; }
+            document.getElementById('plotBtn').addEventListener('click', plotCurrentFormula);
+            document.getElementById('addLayerBtn').addEventListener('click', addLayerFromInput);
             
-            ctx.clearRect(0, 0, width, height);
+            // Examples
+            document.querySelectorAll('.example-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const formula = card.dataset.formula;
+                    document.getElementById('formulaInput').value = formula;
+                    document.getElementById('inputHint').textContent = '✓ Формула подставлена. Нажмите "Построить график"';
+                    document.getElementById('inputHint').className = 'input-hint';
+                });
+            });
             
-            // Рисуем сетку
-            ctx.beginPath();
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 0.5;
-            for (let x = -5; x <= 5; x += 1) {
-                const sx = toScreenX(x);
-                ctx.moveTo(sx, 0);
-                ctx.lineTo(sx, height);
-                ctx.stroke();
+            // Zoom controls
+            document.getElementById('zoomIn').addEventListener('click', () => zoom(1.25));
+            document.getElementById('zoomOut').addEventListener('click', () => zoom(0.8));
+            document.getElementById('zoomReset').addEventListener('click', resetView);
+            document.getElementById('panMode').addEventListener('click', togglePanMode);
+            
+            // Layers
+            document.getElementById('clearLayersBtn').addEventListener('click', clearLayers);
+            
+            // Export
+            document.getElementById('exportPngBtn').addEventListener('click', exportAsPng);
+            document.getElementById('copyLinkBtn').addEventListener('click', copyConfigLink);
+            
+            // Tutorial
+            document.getElementById('startTutorialBtn').addEventListener('click', startTutorial);
+            setupTutorialHandlers();
+            
+            // Canvas interactions
+            canvas.addEventListener('wheel', handleWheel, { passive: false });
+            canvas.addEventListener('mousedown', handleMouseDown);
+            canvas.addEventListener('mousemove', handleMouseMove);
+            canvas.addEventListener('mouseup', handleMouseUp);
+            canvas.addEventListener('mouseleave', handleMouseUp);
+            
+            // Resize
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                updateRangeDisplay();
+            });
+        }
+
+        // ===== ПЛОТТИНГ =====
+        function plotCurrentFormula() {
+            const input = document.getElementById('formulaInput');
+            const formula = input.value.trim();
+            const hint = document.getElementById('inputHint');
+            
+            if (!formula) {
+                showInputError('Введите формулу');
+                return;
             }
-            for (let y = -3; y <= 3; y += 1) {
-                const sy = toScreenY(y);
-                ctx.moveTo(0, sy);
-                ctx.lineTo(width, sy);
-                ctx.stroke();
+            
+            try {
+                // Проверка синтаксиса
+                math.evaluate(formula.replace(/x/g, '0'));
+                
+                // Добавляем как новый слой или обновляем первый
+                if (layers.length === 0 || !layers[0].isTemporary) {
+                    addLayer(formula, colors[currentColorIndex % colors.length]);
+                    currentColorIndex++;
+                } else {
+                    layers[0].formula = formula;
+                }
+                
+                input.classList.remove('error');
+                hint.textContent = '✓ График построен!';
+                hint.className = 'input-hint';
+                hint.style.color = 'var(--success)';
+                
+                redraw();
+                updateTheory();
+                updateLayersList();
+                
+            } catch (err) {
+                showInputError(`Ошибка: ${getFriendlyError(err.message)}`);
+                console.error('Plot error:', err);
             }
+        }
+
+        function showInputError(message) {
+            const input = document.getElementById('formulaInput');
+            const hint = document.getElementById('inputHint');
+            input.classList.add('error');
+            hint.textContent = message;
+            hint.className = 'input-hint error';
+            setTimeout(() => {
+                input.classList.remove('error');
+                hint.className = 'input-hint';
+                hint.style.color = '';
+            }, 3000);
+        }
+
+        function getFriendlyError(message) {
+            const errors = {
+                'Unexpected': 'Незакрытая скобка или неверный синтаксис',
+                'Undefined': 'Неизвестная функция или переменная',
+                'Value domain': 'Значение вне области определения (например, логарифм от отрицательного)',
+                'divide by zero': 'Деление на ноль'
+            };
+            for (const [key, val] of Object.entries(errors)) {
+                if (message.includes(key)) return val;
+            }
+            return message;
+        }
+
+        function addLayer(formula, color) {
+            layers.push({
+                formula,
+                color,
+                visible: true,
+                isTemporary: false
+            });
+        }
+
+        function addLayerFromInput() {
+            const formula = document.getElementById('formulaInput').value.trim();
+            if (formula) {
+                addLayer(formula, colors[currentColorIndex % colors.length]);
+                currentColorIndex++;
+                redraw();
+                updateLayersList();
+                updateTheory();
+            }
+        }
+
+        function clearLayers() {
+            if (confirm('Удалить все графики?')) {
+                layers = [];
+                redraw();
+                updateLayersList();
+                updateTheory();
+            }
+        }
+
+        // ===== ОТРИСОВКА =====
+        function redraw() {
+            if (!ctx) return;
+            
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Очистка
+            ctx.fillStyle = '#0a0a1a';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Сетка
+            drawGrid();
             
             // Оси
-            ctx.beginPath();
-            ctx.strokeStyle = '#888';
-            ctx.lineWidth = 1.5;
+            drawAxes();
+            
+            // Графики
+            layers.filter(l => l.visible).forEach(layer => {
+                drawFunction(layer.formula, layer.color);
+            });
+            
+            updateRangeDisplay();
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = '#2a2a4a';
+            ctx.lineWidth = 0.5;
+            
+            // Вертикальные линии
+            const xStart = Math.floor((-offset.x * scale.x) / scale.x / 10) * 10;
+            for (let x = xStart; x < xStart + width/scale.x + 10; x += 1) {
+                const screenX = toScreenX(x);
+                ctx.beginPath();
+                ctx.moveTo(screenX, 0);
+                ctx.lineTo(screenX, canvas.height);
+                ctx.stroke();
+            }
+            
+            // Горизонтальные линии
+            const yStart = Math.floor((-offset.y * scale.y) / scale.y / 10) * 10;
+            for (let y = yStart; y < yStart + height/scale.y + 10; y += 1) {
+                const screenY = toScreenY(y);
+                ctx.beginPath();
+                ctx.moveTo(0, screenY);
+                ctx.lineTo(canvas.width, screenY);
+                ctx.stroke();
+            }
+        }
+
+        function drawAxes() {
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            
+            // Ось X
             const y0 = toScreenY(0);
-            const x0 = toScreenX(0);
+            ctx.beginPath();
             ctx.moveTo(0, y0);
-            ctx.lineTo(width, y0);
-            ctx.moveTo(x0, 0);
-            ctx.lineTo(x0, height);
+            ctx.lineTo(canvas.width, y0);
             ctx.stroke();
             
-            // График
+            // Ось Y
+            const x0 = toScreenX(0);
             ctx.beginPath();
-            ctx.strokeStyle = '#bb86fc';
-            ctx.lineWidth = 2.5;
-            let first = true;
-            for (let px = 0; px <= width; px++) {
-                const x = xMin + (px / width) * (xMax - xMin);
-                let y = func(x, params);
-                if (isNaN(y) || Math.abs(y) > 100) { first = true; continue; }
+            ctx.moveTo(x0, 0);
+            ctx.lineTo(x0, canvas.height);
+            ctx.stroke();
+            
+            // Подписи
+            ctx.fillStyle = '#888';
+            ctx.font = '12px monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            
+            for (let x = -10; x <= 10; x += 2) {
+                if (x === 0) continue;
+                const sx = toScreenX(x);
+                ctx.fillText(x.toString(), sx, y0 + 5);
+            }
+            
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let y = -5; y <= 5; y += 1) {
+                if (y === 0) continue;
                 const sy = toScreenY(y);
-                if (sy < 0 || sy > height) { first = true; continue; }
-                if (first) { ctx.moveTo(px, sy); first = false; }
-                else { ctx.lineTo(px, sy); }
+                ctx.fillText(y.toString(), x0 - 8, sy);
+            }
+        }
+
+        function drawFunction(formula, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            
+            let first = true;
+            const step = 1 / scale.x; // шаг по экрану
+            
+            for (let px = 0; px <= canvas.width; px += 2) {
+                const x = toDataX(px);
+                
+                try {
+                    // Создаём безопасную функцию
+                    const expr = math.parse(formula);
+                    const fn = expr.compile();
+                    let y = fn.evaluate({ x: x });
+                    
+                    if (typeof y !== 'number' || !isFinite(y) || Math.abs(y) > 1e10) {
+                        first = true;
+                        continue;
+                    }
+                    
+                    const py = toScreenY(y);
+                    
+                    // Пропускаем точки вне экрана
+                    if (py < -50 || py > canvas.height + 50) {
+                        first = true;
+                        continue;
+                    }
+                    
+                    if (first) {
+                        ctx.moveTo(px, py);
+                        first = false;
+                    } else {
+                        // Прерываем при разрывах
+                        const prevY = toDataY(py);
+                        if (Math.abs(y - prevY) > 10) {
+                            ctx.stroke();
+                            ctx.beginPath();
+                            ctx.moveTo(px, py);
+                            first = true;
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    }
+                } catch (e) {
+                    first = true;
+                }
             }
             ctx.stroke();
         }
-        
-        // Определения функций
-        const linear = (x, p) => p.k * x + p.b;
-        const quadratic = (x, p) => p.a * x * x + p.b * x + p.c;
-        const expFunc = (x, p) => Math.pow(p.a, x);
-        const logFunc = (x, p) => x > 0 ? Math.log(x) / Math.log(p.a) : NaN;
-        const sinFunc = (x, p) => p.A * Math.sin(p.freq * x);
-        const cosFunc = (x, p) => p.A * Math.cos(x);
-        const tanFunc = (x) => Math.tan(x);
-        const arcsinFunc = (x) => Math.asin(x);
-        const arccosFunc = (x) => Math.acos(x);
-        const arctanFunc = (x) => Math.atan(x);
-        const shFunc = (x) => Math.sinh(x);
-        const chFunc = (x) => Math.cosh(x);
-        
-        // Инициализация всех графиков
-        let k = 1, b = 0;
-        let a = 1, quadB = 0, c = 0;
-        let expA = 2, logA = 2;
-        let amp = 1, freq = 1, cosAmp = 1;
-        
-        // Линейная
-        function updateLinear() {
-            drawGraph('graphLinear', linear, -5, 5, -4, 4, {k, b});
+
+        // ===== КООРДИНАТЫ =====
+        function toScreenX(x) { return (x + offset.x) * scale.x; }
+        function toScreenY(y) { return canvas.height - (y + offset.y) * scale.y; }
+        function toDataX(px) { return px / scale.x - offset.x; }
+        function toDataY(py) { return (canvas.height - py) / scale.y - offset.y; }
+
+        // ===== ЗУМ И ПАН =====
+        function zoom(factor, centerX = canvas.width/2, centerY = canvas.height/2) {
+            const dataX = toDataX(centerX);
+            const dataY = toDataY(centerY);
+            
+            scale.x *= factor;
+            scale.y *= factor;
+            
+            // Корректируем сдвиг, чтобы точка под курсором осталась на месте
+            offset.x = dataX - centerX / scale.x;
+            offset.y = dataY - (canvas.height - centerY) / scale.y;
+            
+            redraw();
         }
-        document.getElementById('kSlider').oninput = (e) => { k = parseFloat(e.target.value); document.getElementById('kValue').innerText = k.toFixed(2); updateLinear(); };
-        document.getElementById('bSlider').oninput = (e) => { b = parseFloat(e.target.value); document.getElementById('bValue').innerText = b.toFixed(2); updateLinear(); };
-        
-        // Квадратичная
-        function updateQuadratic() {
-            drawGraph('graphQuadratic', quadratic, -5, 5, -8, 8, {a, b: quadB, c});
+
+        function resetView() {
+            scale = { x: 40, y: 40 };
+            offset = { x: 0, y: 0 };
+            redraw();
         }
-        document.getElementById('aSlider').oninput = (e) => { a = parseFloat(e.target.value); document.getElementById('aValue').innerText = a.toFixed(2); updateQuadratic(); };
-        document.getElementById('quadBSlider').oninput = (e) => { quadB = parseFloat(e.target.value); document.getElementById('quadBValue').innerText = quadB.toFixed(2); updateQuadratic(); };
-        document.getElementById('cSlider').oninput = (e) => { c = parseFloat(e.target.value); document.getElementById('cValue').innerText = c.toFixed(2); updateQuadratic(); };
-        
-        // Показательная
-        function updateExp() {
-            drawGraph('graphExp', expFunc, -2, 2, 0, 5, {a: expA});
+
+        function togglePanMode() {
+            isPanning = !isPanning;
+            canvas.style.cursor = isPanning ? 'grab' : 'crosshair';
+            document.getElementById('panMode').style.background = isPanning ? 'var(--primary)' : '';
         }
-        document.getElementById('expASlider').oninput = (e) => { expA = parseFloat(e.target.value); document.getElementById('expAValue').innerText = expA.toFixed(2); updateExp(); };
-        
-        // Логарифмическая
-        function updateLog() {
-            drawGraph('graphLog', logFunc, 0.1, 5, -3, 3, {a: logA});
+
+        function handleWheel(e) {
+            e.preventDefault();
+            const factor = e.deltaY > 0 ? 0.9 : 1.1;
+            zoom(factor, e.offsetX, e.offsetY);
         }
-        document.getElementById('logASlider').oninput = (e) => { logA = parseFloat(e.target.value); document.getElementById('logAValue').innerText = logA.toFixed(2); updateLog(); };
-        
-        // Синус
-        function updateSin() {
-            drawGraph('graphSin', sinFunc, -6, 6, -3, 3, {A: amp, freq});
+
+        function handleMouseDown(e) {
+            if (isPanning) {
+                lastMouse = { x: e.offsetX, y: e.offsetY };
+                canvas.style.cursor = 'grabbing';
+            }
         }
-        document.getElementById('ampSlider').oninput = (e) => { amp = parseFloat(e.target.value); document.getElementById('ampValue').innerText = amp.toFixed(2); updateSin(); };
-        document.getElementById('freqSlider').oninput = (e) => { freq = parseFloat(e.target.value); document.getElementById('freqValue').innerText = freq.toFixed(2); updateSin(); };
-        
-        // Косинус
-        function updateCos() {
-            drawGraph('graphCos', cosFunc, -6, 6, -3, 3, {A: cosAmp});
+
+        function handleMouseMove(e) {
+            if (isPanning && e.buttons === 1) {
+                const dx = e.offsetX - lastMouse.x;
+                const dy = e.offsetY - lastMouse.y;
+                
+                offset.x -= dx / scale.x;
+                offset.y += dy / scale.y;
+                
+                lastMouse = { x: e.offsetX, y: e.offsetY };
+                redraw();
+            }
         }
-        document.getElementById('cosAmpSlider').oninput = (e) => { cosAmp = parseFloat(e.target.value); document.getElementById('cosAmpValue').innerText = cosAmp.toFixed(2); updateCos(); };
-        
-        // Тангенс
-        function updateTan() {
-            drawGraph('graphTan', tanFunc, -6, 6, -5, 5, {});
+
+        function handleMouseUp() {
+            if (isPanning) {
+                canvas.style.cursor = 'grab';
+            }
         }
-        
-        // Арксинус, арккосинус, арктангенс
-        function updateArcsin() { drawGraph('graphArcsin', arcsinFunc, -1.2, 1.2, -1.8, 1.8, {}); }
-        function updateArccos() { drawGraph('graphArccos', arccosFunc, -1.2, 1.2, -0.5, 3.5, {}); }
-        function updateArctan() { drawGraph('graphArctan', arctanFunc, -5, 5, -2, 2, {}); }
-        
-        // Гиперболические
-        function updateSh() { drawGraph('graphSh', shFunc, -3, 3, -5, 5, {}); }
-        function updateCh() { drawGraph('graphCh', chFunc, -3, 3, 0.5, 5, {}); }
-        
-        // Запуск всех графиков
-        updateLinear(); updateQuadratic(); updateExp(); updateLog(); updateSin(); updateCos(); updateTan();
-        updateArcsin(); updateArccos(); updateArctan(); updateSh(); updateCh();
-        
-        // Адаптация при изменении размера
-        window.addEventListener('resize', () => {
-            updateLinear(); updateQuadratic(); updateExp(); updateLog(); updateSin(); updateCos(); updateTan();
-            updateArcsin(); updateArccos(); updateArctan(); updateSh(); updateCh();
-        });
+
+        // ===== СЛОИ =====
+        function updateLayersList() {
+            const container = document.getElementById('layersList');
+            container.innerHTML = '';
+            
+            layers.forEach((layer, index) => {
+                const item = document.createElement('div');
+                item.className = 'layer-item';
+                item.innerHTML = `
+                    <div class="layer-color" style="background: ${layer.color}"></div>
+                    <span style="flex:1; font-family:monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                        ${layer.formula}
+                    </span>
+                    <button class="layer-remove" data-index="${index}">×</button>
+                `;
+                container.appendChild(item);
+            });
+            
+            // Обработчики удаления
+            container.querySelectorAll('.layer-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    layers.splice(index, 1);
+                    redraw();
+                    updateLayersList();
+                    updateTheory();
+                });
+            });
+        }
+
+        // ===== ТЕОРИЯ =====
+        function updateTheory() {
+            if (layers.length === 0) return;
+            
+            const formula = layers[0].formula.toLowerCase();
+            const domainEl = document.getElementById('domainDisplay');
+            const rangeEl = document.getElementById('rangeDisplay');
+            
+            // Простая эвристика для демонстрации
+            if (formula.includes('1/x') || formula.includes('/x')) {
+                domainEl.textContent = 'D(f) = ℝ \\ {0}';
+                rangeEl.textContent = 'E(f) = ℝ \\ {0}';
+            } else if (formula.includes('sqrt') || formula.includes('√')) {
+                domainEl.textContent = 'D(f) = [0; +∞)';
+                rangeEl.textContent = 'E(f) = [0; +∞)';
+            } else if (formula.includes('log') || formula.includes('ln')) {
+                domainEl.textContent = 'D(f) = (0; +∞)';
+                rangeEl.textContent = 'E(f) = ℝ';
+            } else if (formula.includes('sin') || formula.includes('cos')) {
+                domainEl.textContent = 'D(f) = ℝ';
+                rangeEl.textContent = 'E(f) = [-A; A] (A — амплитуда)';
+            } else if (formula.includes('x^2') || formula.includes('x²')) {
+                domainEl.textContent = 'D(f) = ℝ';
+                rangeEl.textContent = 'E(f) = [y₀; +∞), где y₀ — вершина';
+            } else {
+                domainEl.textContent = 'D(f) = ℝ (если нет ограничений)';
+                rangeEl.textContent = 'E(f) зависит от вида функции';
+            }
+        }
+
+        // ===== ЭКСПОРТ =====
+        function exportAsPng() {
+            const link = document.createElement('a');
+            link.download = `graph-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function copyConfigLink() {
+            const config = {
+                layers: layers.map(l => ({ formula: l.formula, color: l.color })),
+                view: { scale, offset }
+            };
+            const json = btoa(encodeURIComponent(JSON.stringify(config)));
+            const url = `${location.origin}${location.pathname}?config=${json}`;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copyLinkBtn');
+                const original = btn.innerHTML;
+                btn.innerHTML = '✓ Скопировано!';
+                btn.classList.add('btn-success');
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.classList.remove('btn-success');
+                }, 2000);
+            });
+        }
+
+        function loadFromURL() {
+            const params = new URLSearchParams(location.search);
+            const configStr = params.get('config');
+            if (!configStr) return;
+            
+            try {
+                const config = JSON.parse(decodeURIComponent(atob(configStr)));
+                if (config.layers) {
+                    layers = config.layers.map(l => ({ ...l, visible: true, isTemporary: false }));
+                }
+                if (config.view) {
+                    scale = config.view.scale || scale;
+                    offset = config.view.offset || offset;
+                }
+            } catch (e) {
+                console.warn('Failed to load config:', e);
+            }
+        }
+
+        function plotDefault() {
+            if (layers.length === 0) {
+                addLayer('sin(x)', colors[0]);
+                redraw();
+                updateLayersList();
+            }
+        }
+
+        function updateRangeDisplay() {
+            const xMin = toDataX(0).toFixed(1);
+            const xMax = toDataX(canvas.width).toFixed(1);
+            const yMin = toDataY(canvas.height).toFixed(1);
+            const yMax = toDataY(0).toFixed(1);
+            
+            document.getElementById('xRange').textContent = xMin;
+            document.getElementById('xRangeMax').textContent = xMax;
+            document.getElementById('yRange').textContent = yMin;
+            document.getElementById('yRangeMax').textContent = yMax;
+        }
+
+        // ===== ОБУЧЕНИЕ =====
+        function startTutorial() {
+            document.getElementById('tutorialOverlay').style.display = 'flex';
+            showStep(1);
+        }
+
+        function showStep(n) {
+            document.querySelectorAll('.tutorial-step').forEach(s => s.classList.remove('active'));
+            document.querySelector(`.tutorial-step[data-step="${n}"]`).classList.add('active');
+            
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i + 1 === n);
+            });
+        }
+
+        function setupTutorialHandlers() {
+            // Navigation
+            document.getElementById('tutorialNext1').onclick = () => showStep(2);
+            document.getElementById('tutorialBack2').onclick = () => showStep(1);
+            document.getElementById('tutorialNext2').onclick = () => showStep(3);
+            document.getElementById('tutorialBack3').onclick = () => showStep(2);
+            document.getElementById('tutorialNext3').onclick = () => showStep(4);
+            document.getElementById('tutorialBack4').onclick = () => showStep(3);
+            
+            // Skip/Finish
+            document.getElementById('tutorialSkip').onclick = 
+            document.getElementById('tutorialFinish').onclick = () => {
+                document.getElementById('tutorialOverlay').style.display = 'none';
+            };
+            
+            // Close on outside click
+            document.getElementById('tutorialOverlay').addEventListener('click', (e) => {
+                if (e.target.id === 'tutorialOverlay') {
+                    document.getElementById('tutorialOverlay').style.display = 'none';
+                }
+            });
+        }
+
+        // ===== ЗАПУСК =====
+        window.addEventListener('load', init);
     </script>
 </body>
 </html>
