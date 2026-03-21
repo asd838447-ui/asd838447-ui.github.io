@@ -2,61 +2,51 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GraphPro 3.0 — Интеллектуальный График</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphPro 4.0 — Ультимативный График</title>
     <style>
         :root {
-            --bg: #0f0f13;
-            --card: rgba(30, 30, 40, 0.75);
-            --primary: #8257e5;
-            --accent: #00f2ff;
-            --text: #e1e1e6;
-            --danger: #ff5555;
-            --glass: rgba(255, 255, 255, 0.08);
-            --grid: rgba(255, 255, 255, 0.05);
+            --bg: #09090b;
+            --card: rgba(20, 20, 25, 0.85);
+            --primary: #3b82f6;
+            --accent: #10b981;
+            --text: #f4f4f5;
+            --danger: #ef4444;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
-            background-image: radial-gradient(circle at top right, #2a1b4d 0%, var(--bg) 60%);
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 70%);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
+            margin: 0; padding: 20px;
             min-height: 100vh;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1300px; margin: 0 auto; }
 
         .glass-panel {
             background: var(--card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .header-flex { display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 1.8rem; background: linear-gradient(90deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        h1 { 
-            font-size: 1.8rem; margin: 0; 
-            background: linear-gradient(90deg, var(--accent), var(--primary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
-
-        .input-group { display: flex; gap: 10px; margin-top: 20px; }
+        .input-group { display: flex; gap: 12px; margin-top: 20px; }
 
         input {
             flex: 1;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid #444;
-            border-radius: 12px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #3f3f46;
+            border-radius: 10px;
             padding: 14px 20px;
             color: white;
             font-family: 'Fira Code', monospace;
@@ -64,96 +54,60 @@
             transition: 0.3s;
         }
 
-        input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
 
         .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: 10px;
+            cursor: pointer; font-weight: 600; transition: 0.2s;
         }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-secondary { background: #27272a; }
+        .btn-secondary:hover { background: #3f3f46; }
+        .btn-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
 
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 5px 15px rgba(130, 87, 229, 0.4); }
-        .btn-secondary { background: #2a2a35; }
-
-        .main-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+        .main-layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
         @media (max-width: 900px) { .main-layout { grid-template-columns: 1fr; } }
 
         .canvas-container {
-            position: relative;
-            background: #050508;
-            border-radius: 20px;
-            border: 1px solid var(--glass);
-            overflow: hidden;
-            height: 550px;
-            cursor: crosshair;
+            position: relative; background: #000; border-radius: 16px;
+            border: 1px solid var(--glass); overflow: hidden; height: 600px; cursor: crosshair;
         }
 
         canvas { width: 100%; height: 100%; display: block; }
 
-        .stats-panel { display: flex; flex-direction: column; gap: 15px; }
-
-        .stat-card {
-            background: var(--card);
-            padding: 18px;
-            border-radius: 16px;
-            border: 1px solid var(--glass);
-        }
-
-        .stat-card h4 { margin: 0 0 12px 0; color: var(--accent); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 16px; border: 1px solid var(--glass); margin-bottom: 20px; }
+        .stat-card h4 { margin: 0 0 15px 0; color: #a1a1aa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
         .layer-item {
             display: flex; align-items: center; justify-content: space-between;
-            background: rgba(255,255,255,0.03);
-            padding: 10px 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-family: monospace;
-            border-left: 4px solid;
+            background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px;
+            margin-bottom: 8px; font-family: monospace; border-left: 4px solid;
         }
 
-        /* Tooltip для курсора */
         #tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.85);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            pointer-events: none;
-            border: 1px solid var(--glass);
-            display: none;
-            z-index: 10;
-            white-space: nowrap;
+            position: absolute; background: rgba(9, 9, 11, 0.9); color: #fff; padding: 10px 14px;
+            border-radius: 8px; font-family: monospace; font-size: 0.9rem; pointer-events: none;
+            border: 1px solid var(--glass); display: none; z-index: 10; white-space: nowrap;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        
-        .tooltip-row { margin: 2px 0; }
-        .formula-help { font-size: 0.85rem; color: #888; margin-top: 10px; }
+        .tooltip-row { margin: 4px 0; }
+        .tangent-info { font-size: 0.8rem; color: #a1a1aa; margin-left: 8px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="glass-panel">
-        <div class="header-flex">
-            <h1>GraphPro 3.0</h1>
-            <div id="status" style="font-size: 0.9rem; color: #aaa;">Движок активен</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>GraphPro 4.0</h1>
+            <span style="font-size: 0.85rem; color: #6ee7b7; background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 20px;">Автосохранение включено</span>
         </div>
         
         <div class="input-group">
-            <input type="text" id="formulaInput" placeholder="Например: sin(x) + cos(x) или e^(-x^2)" value="sin(x)">
-            <button class="btn" onclick="app.addLayer()">Построить</button>
-            <button class="btn btn-secondary" onclick="app.clear()">Очистить</button>
+            <input type="text" id="formulaInput" placeholder="Например: e^(-x) * sin(5*x)" value="">
+            <button class="btn" onclick="app.addLayer()">Добавить</button>
+            <button class="btn btn-danger" onclick="app.clear()">Очистить всё</button>
         </div>
-        <div class="formula-help">Поддерживается: + - * / ^ ( ) sin, cos, tan, log, exp, abs, sqrt. Константы: pi, e.</div>
     </div>
 
     <div class="main-layout">
@@ -162,68 +116,43 @@
             <div id="tooltip"></div>
         </div>
 
-        <div class="stats-panel">
+        <div>
             <div class="stat-card">
-                <h4>Активные графики</h4>
+                <h4>Функции (Layers)</h4>
                 <div id="layersList"></div>
             </div>
 
             <div class="stat-card">
-                <h4>Анализ текущего вида</h4>
-                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="app.calculateArea()">∑ Площадь (Интеграл)</button>
-                <div id="analysis-result" style="font-family: monospace; color: var(--accent); font-size: 0.9rem;"></div>
-            </div>
-
-            <div class="stat-card">
-                <h4>Навигация</h4>
-                <p style="font-size: 0.85rem; color: #aaa; margin-top: 0;">Колесико — масштаб. ЛКМ — перемещение.</p>
-                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="app.resetView()">Сбросить вид</button>
-                <button class="btn" style="width: 100%;" onclick="app.export()">Скачать PNG</button>
+                <h4>Управление и Анализ</h4>
+                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="app.resetView()">Сбросить масштаб</button>
+                <div style="font-size: 0.85rem; color: #71717a; margin-top: 15px; line-height: 1.5;">
+                    • <b>Скролл:</b> Масштаб (Зум)<br>
+                    • <b>ЛКМ + Движение:</b> Перемещение<br>
+                    • <b>Наведение:</b> Значения и касательная (производная)
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-/**
- * Улучшенный парсер: понимает константы и математические функции
- */
 const SmartParser = {
     prepare(str) {
         let s = str.toLowerCase().replace(/\s+/g, '');
-        
-        // Константы
-        s = s.replace(/\bpi\b/g, 'Math.PI');
-        s = s.replace(/\be\b/g, 'Math.E');
-        
-        // Скрытое умножение: 2x -> 2*x, 2sin -> 2*sin
+        s = s.replace(/\bpi\b/g, 'Math.PI').replace(/\be\b/g, 'Math.E');
         s = s.replace(/(\d)([a-z\(])/g, '$1*$2');
-        
-        // Степени: x^2 -> Math.pow(x,2) (простая реализация)
-        while (s.includes('^')) {
-            s = s.replace(/([a-zA-Z0-9\.]+)\^([a-zA-Z0-9\.\-]+)/g, 'Math.pow($1,$2)');
-        }
-        
-        // Функции
-        const mathFuncs = ['sin', 'cos', 'tan', 'sqrt', 'abs', 'exp', 'log', 'atan', 'acos', 'asin'];
-        mathFuncs.forEach(fn => {
-            const regex = new RegExp(`\\b${fn}\\(`, 'g');
-            s = s.replace(regex, `Math.${fn}(`);
+        while (s.includes('^')) s = s.replace(/([a-zA-Z0-9\.]+)\^([a-zA-Z0-9\.\-]+)/g, 'Math.pow($1,$2)');
+        ['sin', 'cos', 'tan', 'sqrt', 'abs', 'exp', 'log', 'asin', 'acos', 'atan'].forEach(fn => {
+            s = s.replace(new RegExp(`\\b${fn}\\(`, 'g'), `Math.${fn}(`);
         });
-        
         return s;
     },
-    
     compile(formula) {
         try {
             const body = this.prepare(formula);
-            // Проверка, что функция возвращает число
             const fn = new Function('x', `try { return ${body}; } catch(e) { return NaN; }`);
-            fn(1); // Тестовый запуск
-            return fn;
-        } catch (e) {
-            return null;
-        }
+            fn(1); return fn;
+        } catch (e) { return null; }
     }
 };
 
@@ -231,42 +160,53 @@ const app = {
     canvas: document.getElementById('graphCanvas'),
     ctx: null,
     layers: [],
-    zoom: 40,
-    offset: { x: 0, y: 0 },
+    zoom: 40, offset: { x: 0, y: 0 },
     mouse: { x: null, y: null, worldX: 0, worldY: 0 },
     isDragging: false,
     tooltip: document.getElementById('tooltip'),
-    
-    // Палитра киберпанк/неон
-    colors: ['#00f2ff', '#ff007f', '#a200ff', '#00ff88', '#ffaa00'],
+    colors: ['#3b82f6', '#10b981', '#f43f5e', '#a855f7', '#f59e0b'],
 
     init() {
         this.ctx = this.canvas.getContext('2d');
         this.resize();
         window.addEventListener('resize', () => this.resize());
         
-        this.canvas.addEventListener('wheel', (e) => this.handleWheel(e));
+        this.canvas.addEventListener('wheel', e => this.handleWheel(e));
         this.canvas.addEventListener('mousedown', () => { this.isDragging = true; this.canvas.style.cursor = 'grabbing'; });
         window.addEventListener('mouseup', () => { this.isDragging = false; this.canvas.style.cursor = 'crosshair'; });
-        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.canvas.addEventListener('mousemove', e => this.handleMouseMove(e));
         this.canvas.addEventListener('mouseleave', () => { this.mouse.x = null; this.tooltip.style.display = 'none'; this.scheduleRender(); });
 
-        // Добавим график по умолчанию
-        document.getElementById('formulaInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addLayer();
-        });
+        document.getElementById('formulaInput').addEventListener('keypress', e => { if (e.key === 'Enter') this.addLayer(); });
         
-        this.addLayer("sin(x)");
+        this.loadState();
+    },
+
+    saveState() {
+        const formulas = this.layers.map(l => l.text);
+        localStorage.setItem('graphpro_layers', JSON.stringify(formulas));
+    },
+
+    loadState() {
+        try {
+            const saved = JSON.parse(localStorage.getItem('graphpro_layers'));
+            if (saved && saved.length > 0) {
+                saved.forEach(f => this.addLayer(f, true));
+            } else {
+                this.addLayer("e^(-x/5) * sin(x)"); // Дефолтная красивая функция затухания
+            }
+        } catch (e) {
+            this.addLayer("x^2");
+        }
     },
 
     resize() {
         const rect = this.canvas.parentElement.getBoundingClientRect();
-        this.canvas.width = rect.width;
-        this.canvas.height = rect.height;
+        this.canvas.width = rect.width; this.canvas.height = rect.height;
         this.scheduleRender();
     },
 
-    addLayer(presetFormula) {
+    addLayer(presetFormula, noSave = false) {
         const input = document.getElementById('formulaInput');
         const fText = presetFormula || input.value;
         if (!fText) return;
@@ -274,32 +214,34 @@ const app = {
         const fn = SmartParser.compile(fText);
         if (fn) {
             const color = this.colors[this.layers.length % this.colors.length];
-            this.layers.push({ id: Date.now(), text: fText, fn, color });
+            this.layers.push({ id: Date.now() + Math.random(), text: fText, fn, color });
             this.updateUI();
             this.scheduleRender();
-            if (!presetFormula) input.value = ''; // Очищаем поле при ручном вводе
+            if (!presetFormula) input.value = '';
+            if (!noSave) this.saveState();
         } else {
-            alert("Ошибка в синтаксисе формулы.");
+            alert("Не удалось распознать формулу.");
         }
     },
 
     removeLayer(id) {
         this.layers = this.layers.filter(l => l.id !== id);
         this.updateUI();
+        this.saveState();
         this.scheduleRender();
     },
 
     clear() {
         this.layers = [];
         this.updateUI();
-        document.getElementById('analysis-result').innerText = '';
+        this.saveState();
         this.scheduleRender();
     },
 
     updateUI() {
         const list = document.getElementById('layersList');
         if (this.layers.length === 0) {
-            list.innerHTML = '<div style="color:#666; font-size:0.9rem;">Нет графиков</div>';
+            list.innerHTML = '<div style="color:#52525b; font-size:0.9rem;">Пусто. Напишите формулу выше.</div>';
             return;
         }
         list.innerHTML = this.layers.map(l => `
@@ -310,36 +252,19 @@ const app = {
         `).join('');
     },
 
-    toWorld(screenX, screenY) {
-        return {
-            x: (screenX - this.canvas.width / 2 - this.offset.x) / this.zoom,
-            y: (this.canvas.height / 2 - screenY + this.offset.y) / this.zoom
-        };
-    },
-
-    toScreen(worldX, worldY) {
-        return {
-            x: worldX * this.zoom + this.canvas.width / 2 + this.offset.x,
-            y: this.canvas.height / 2 - worldY * this.zoom + this.offset.y
-        };
-    },
+    toWorld(sX, sY) { return { x: (sX - this.canvas.width/2 - this.offset.x) / this.zoom, y: (this.canvas.height/2 - sY + this.offset.y) / this.zoom }; },
+    toScreen(wX, wY) { return { x: wX * this.zoom + this.canvas.width/2 + this.offset.x, y: this.canvas.height/2 - wY * this.zoom + this.offset.y }; },
 
     handleWheel(e) {
         e.preventDefault();
-        const zoomSpeed = 0.1;
-        const delta = Math.sign(e.deltaY) * -zoomSpeed;
+        const delta = Math.sign(e.deltaY) * -0.1;
         const newZoom = this.zoom * (1 + delta);
-        
-        // Ограничение масштаба
-        if (newZoom > 5 && newZoom < 2000) {
-            // Зумирование относительно курсора
-            const mouseWorldBefore = this.toWorld(this.mouse.x || this.canvas.width/2, this.mouse.y || this.canvas.height/2);
+        if (newZoom > 2 && newZoom < 5000) {
+            const mw1 = this.toWorld(this.mouse.x || this.canvas.width/2, this.mouse.y || this.canvas.height/2);
             this.zoom = newZoom;
-            const mouseWorldAfter = this.toWorld(this.mouse.x || this.canvas.width/2, this.mouse.y || this.canvas.height/2);
-            
-            this.offset.x += (mouseWorldAfter.x - mouseWorldBefore.x) * this.zoom;
-            this.offset.y -= (mouseWorldAfter.y - mouseWorldBefore.y) * this.zoom;
-            
+            const mw2 = this.toWorld(this.mouse.x || this.canvas.width/2, this.mouse.y || this.canvas.height/2);
+            this.offset.x += (mw2.x - mw1.x) * this.zoom;
+            this.offset.y -= (mw2.y - mw1.y) * this.zoom;
             this.scheduleRender();
         }
     },
@@ -350,66 +275,44 @@ const app = {
         this.mouse.y = e.clientY - rect.top;
 
         if (this.isDragging) {
-            this.offset.x += e.movementX;
-            this.offset.y += e.movementY;
+            this.offset.x += e.movementX; this.offset.y += e.movementY;
         }
 
         const world = this.toWorld(this.mouse.x, this.mouse.y);
-        this.mouse.worldX = world.x;
-        this.mouse.worldY = world.y;
-
+        this.mouse.worldX = world.x; this.mouse.worldY = world.y;
         this.scheduleRender();
     },
 
     drawGrid() {
         const { ctx, canvas, zoom } = this;
-        // Динамический шаг сетки в зависимости от зума
-        let step = 1;
-        if (zoom > 150) step = 0.2;
-        if (zoom < 20) step = 5;
-        if (zoom < 5) step = 20;
+        let step = zoom > 150 ? 0.2 : zoom > 50 ? 1 : zoom > 15 ? 5 : zoom > 5 ? 20 : 100;
 
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
         ctx.lineWidth = 1;
 
-        const leftWorld = this.toWorld(0, 0).x;
-        const rightWorld = this.toWorld(canvas.width, 0).x;
-        const topWorld = this.toWorld(0, 0).y;
-        const bottomWorld = this.toWorld(0, canvas.height).y;
-
-        const startX = Math.floor(leftWorld / step) * step;
-        const startY = Math.floor(bottomWorld / step) * step;
+        const lW = this.toWorld(0, 0).x, rW = this.toWorld(canvas.width, 0).x;
+        const tW = this.toWorld(0, 0).y, bW = this.toWorld(0, canvas.height).y;
 
         ctx.beginPath();
-        for (let x = startX; x <= rightWorld; x += step) {
-            const sx = this.toScreen(x, 0).x;
-            ctx.moveTo(sx, 0); ctx.lineTo(sx, canvas.height);
+        for (let x = Math.floor(lW / step) * step; x <= rW; x += step) {
+            const sx = this.toScreen(x, 0).x; ctx.moveTo(sx, 0); ctx.lineTo(sx, canvas.height);
         }
-        for (let y = startY; y <= topWorld; y += step) {
-            const sy = this.toScreen(0, y).y;
-            ctx.moveTo(0, sy); ctx.lineTo(canvas.width, sy);
+        for (let y = Math.floor(bW / step) * step; y <= tW; y += step) {
+            const sy = this.toScreen(0, y).y; ctx.moveTo(0, sy); ctx.lineTo(canvas.width, sy);
         }
         ctx.stroke();
 
-        // Главные оси
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.lineWidth = 2;
         const origin = this.toScreen(0, 0);
         ctx.beginPath();
-        if (origin.y >= 0 && origin.y <= canvas.height) {
-            ctx.moveTo(0, origin.y); ctx.lineTo(canvas.width, origin.y);
-        }
-        if (origin.x >= 0 && origin.x <= canvas.width) {
-            ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x, canvas.height);
-        }
+        if (origin.y >= 0 && origin.y <= canvas.height) { ctx.moveTo(0, origin.y); ctx.lineTo(canvas.width, origin.y); }
+        if (origin.x >= 0 && origin.x <= canvas.width) { ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x, canvas.height); }
         ctx.stroke();
 
-        // Подписи осей
-        ctx.fillStyle = '#888';
-        ctx.font = '12px monospace';
+        ctx.fillStyle = '#71717a'; ctx.font = '12px monospace';
         if (origin.y >= 0 && origin.y <= canvas.height) {
-            for (let x = startX; x <= rightWorld; x += step) {
-                if (x !== 0) ctx.fillText(parseFloat(x.toFixed(2)), this.toScreen(x, 0).x + 5, origin.y + 15);
+            for (let x = Math.floor(lW / step) * step; x <= rW; x += step) {
+                if (Math.abs(x) > 0.001) ctx.fillText(parseFloat(x.toFixed(2)), this.toScreen(x, 0).x + 5, origin.y + 15);
             }
         }
     },
@@ -418,60 +321,39 @@ const app = {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawGrid();
 
-        // Отрисовка графиков
         this.layers.forEach(layer => {
             this.ctx.beginPath();
             this.ctx.strokeStyle = layer.color;
             this.ctx.lineWidth = 2.5;
 
-            let first = true;
-            let prevScreenY = 0;
-
+            let first = true, prevScreenY = 0;
             for (let screenX = 0; screenX <= this.canvas.width; screenX += 2) {
-                const worldX = this.toWorld(screenX, 0).x;
-                const worldY = layer.fn(worldX);
+                const worldY = layer.fn(this.toWorld(screenX, 0).x);
                 const screenY = this.toScreen(0, worldY).y;
 
-                if (isNaN(screenY)) {
-                    first = true;
-                    continue;
-                }
+                if (isNaN(screenY)) { first = true; continue; }
+                if (!first && Math.abs(screenY - prevScreenY) > this.canvas.height) first = true;
 
-                // Защита от рисования асимптот (если Y скакнул слишком далеко за 1 пиксель)
-                if (!first && Math.abs(screenY - prevScreenY) > this.canvas.height) {
-                    first = true;
-                }
-
-                if (first) {
-                    this.ctx.moveTo(screenX, screenY);
-                    first = false;
-                } else {
-                    this.ctx.lineTo(screenX, screenY);
-                }
+                if (first) { this.ctx.moveTo(screenX, screenY); first = false; } 
+                else { this.ctx.lineTo(screenX, screenY); }
                 prevScreenY = screenY;
             }
             this.ctx.stroke();
         });
 
-        // Smart Cursor (Магнитные точки)
-        if (this.mouse.x !== null && !this.isDragging) {
-            this.drawTrackers();
-        }
+        if (this.mouse.x !== null && !this.isDragging) this.drawTrackers();
     },
 
     drawTrackers() {
-        const wX = this.mouse.worldX;
-        const sX = this.mouse.x;
+        const wX = this.mouse.worldX, sX = this.mouse.x;
         
-        // Вертикальная линия курсора
         this.ctx.beginPath();
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
         this.ctx.lineWidth = 1;
-        this.ctx.moveTo(sX, 0);
-        this.ctx.lineTo(sX, this.canvas.height);
+        this.ctx.moveTo(sX, 0); this.ctx.lineTo(sX, this.canvas.height);
         this.ctx.stroke();
 
-        let tooltipHTML = `<div style="border-bottom:1px solid #444; padding-bottom:4px; margin-bottom:4px;">x = ${wX.toFixed(3)}</div>`;
+        let tooltipHTML = `<div style="border-bottom:1px solid #3f3f46; padding-bottom:6px; margin-bottom:6px;">x = ${wX.toFixed(3)}</div>`;
         let hasPoints = false;
 
         this.layers.forEach(layer => {
@@ -479,8 +361,25 @@ const app = {
             if (!isNaN(wY)) {
                 const sY = this.toScreen(0, wY).y;
                 
-                // Рисуем кружок на графике
+                // Вычисление производной (численный метод: f(x+h) - f(x-h) / 2h)
+                const h = 0.0001;
+                const slope = (layer.fn(wX + h) - layer.fn(wX - h)) / (2 * h);
+                
+                // Отрисовка касательной (тангенса)
                 if (sY >= 0 && sY <= this.canvas.height) {
+                    const tangentLength = 60; // Длина линии в пикселях на экране
+                    // Переводим угол наклона на экран
+                    const screenSlope = -slope; // Минус, потому что ось Y на экране перевернута
+                    const angle = Math.atan(screenSlope);
+                    
+                    this.ctx.beginPath();
+                    this.ctx.strokeStyle = `rgba(255, 255, 255, 0.4)`;
+                    this.ctx.setLineDash([4, 4]); // Пунктир
+                    this.ctx.moveTo(sX - Math.cos(angle)*tangentLength, sY - Math.sin(angle)*tangentLength);
+                    this.ctx.lineTo(sX + Math.cos(angle)*tangentLength, sY + Math.sin(angle)*tangentLength);
+                    this.ctx.stroke();
+                    this.ctx.setLineDash([]); // Возвращаем сплошную линию
+
                     this.ctx.beginPath();
                     this.ctx.fillStyle = layer.color;
                     this.ctx.strokeStyle = '#000';
@@ -490,7 +389,7 @@ const app = {
                     this.ctx.stroke();
                 }
 
-                tooltipHTML += `<div class="tooltip-row" style="color: ${layer.color}">y = ${wY.toFixed(3)}</div>`;
+                tooltipHTML += `<div class="tooltip-row" style="color: ${layer.color}">y = ${wY.toFixed(3)} <span class="tangent-info">dy/dx ≈ ${slope.toFixed(2)}</span></div>`;
                 hasPoints = true;
             }
         });
@@ -499,15 +398,11 @@ const app = {
             this.tooltip.innerHTML = tooltipHTML;
             this.tooltip.style.display = 'block';
             
-            // Позиционируем тултип, чтобы не уходил за экран
-            let tipX = this.mouse.x + 15;
-            let tipY = this.mouse.y + 15;
+            let tipX = this.mouse.x + 20, tipY = this.mouse.y + 20;
+            if (tipX + this.tooltip.offsetWidth > this.canvas.width) tipX = this.mouse.x - this.tooltip.offsetWidth - 20;
+            if (tipY + this.tooltip.offsetHeight > this.canvas.height) tipY = this.mouse.y - this.tooltip.offsetHeight - 20;
             
-            if (tipX + this.tooltip.offsetWidth > this.canvas.width) tipX = this.mouse.x - this.tooltip.offsetWidth - 15;
-            if (tipY + this.tooltip.offsetHeight > this.canvas.height) tipY = this.mouse.y - this.tooltip.offsetHeight - 15;
-            
-            this.tooltip.style.left = tipX + 'px';
-            this.tooltip.style.top = tipY + 'px';
+            this.tooltip.style.left = tipX + 'px'; this.tooltip.style.top = tipY + 'px';
         } else {
             this.tooltip.style.display = 'none';
         }
@@ -516,63 +411,11 @@ const app = {
     scheduleRender() {
         if (!this.renderPending) {
             this.renderPending = true;
-            requestAnimationFrame(() => {
-                this.render();
-                this.renderPending = false;
-            });
+            requestAnimationFrame(() => { this.render(); this.renderPending = false; });
         }
     },
 
-    calculateArea() {
-        if (this.layers.length === 0) {
-            document.getElementById('analysis-result').innerText = 'Нет графиков для расчета';
-            return;
-        }
-
-        const layer = this.layers[this.layers.length - 1]; // Берем последний добавленный
-        const left = this.toWorld(0, 0).x;
-        const right = this.toWorld(this.canvas.width, 0).x;
-        
-        // Метод прямоугольников для интегрирования
-        const steps = 1000;
-        const dx = (right - left) / steps;
-        let sum = 0;
-        
-        for (let i = 0; i < steps; i++) {
-            const x = left + i * dx + dx / 2;
-            const y = layer.fn(x);
-            if (!isNaN(y)) sum += y * dx;
-        }
-        
-        document.getElementById('analysis-result').innerHTML = `
-            <div>Интеграл на видимом участке:</div>
-            <div style="color: white; margin-top: 5px;">∫ ${layer.text} dx ≈ ${sum.toFixed(4)}</div>
-            <div style="color: #666; font-size: 0.8rem;">(От x=${left.toFixed(1)} до x=${right.toFixed(1)})</div>
-        `;
-    },
-
-    resetView() {
-        this.zoom = 40;
-        this.offset = { x: 0, y: 0 };
-        this.scheduleRender();
-    },
-
-    export() {
-        // Создаем временный канвас с непрозрачным фоном для сохранения
-        const tmpCanvas = document.createElement('canvas');
-        tmpCanvas.width = this.canvas.width;
-        tmpCanvas.height = this.canvas.height;
-        const tCtx = tmpCanvas.getContext('2d');
-        
-        tCtx.fillStyle = '#050508';
-        tCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
-        tCtx.drawImage(this.canvas, 0, 0);
-        
-        const link = document.createElement('a');
-        link.download = 'graphpro_export.png';
-        link.href = tmpCanvas.toDataURL('image/png');
-        link.click();
-    }
+    resetView() { this.zoom = 40; this.offset = { x: 0, y: 0 }; this.scheduleRender(); }
 };
 
 app.init();
