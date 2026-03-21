@@ -3,81 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Билет 21. Формулы для построения графиков</title>
+    <title>Билет 21. Формулы для построения графиков функций</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Дополнительные стили для графиков */
+        .graph-demo {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #3a3a3a;
+        }
+        .graph-demo h3 {
+            text-align: center;
+            color: #bb86fc;
+            margin-bottom: 20px;
+        }
+        .graph-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .graph-canvas {
+            background: #0a0a0a;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #2a2a2a;
+        }
+        .graph-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .graph-controls button {
+            background: #2a2a2a;
+            border: 1px solid #bb86fc;
+            color: #bb86fc;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .graph-controls button:hover {
+            background: #bb86fc;
+            color: #121212;
+        }
+        .graph-controls button.active {
+            background: #bb86fc;
+            color: #121212;
+        }
+        .graph-param {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .graph-param label {
+            color: #e0e0e0;
+        }
+        .graph-param input {
+            background: #2a2a2a;
+            border: 1px solid #bb86fc;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #e0e0e0;
+            width: 80px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>📈 Билет 21. Формулы для построения графиков функций</h1>
 
         <div class="content">
-            <!-- Преобразования графиков -->
-            <h2>🔹 Преобразования графиков</h2>
+            <!-- ========== ИНТЕРАКТИВНЫЙ ГРАФИК ========== -->
+            <div class="graph-demo">
+                <h3>📊 Интерактивный график функции</h3>
+                <div class="graph-container">
+                    <canvas id="functionGraph" class="graph-canvas" width="800" height="400" style="width:100%; height:auto; max-width:800px; aspect-ratio:800/400"></canvas>
+                </div>
+                <div class="graph-controls">
+                    <button data-func="linear" class="active">y = x</button>
+                    <button data-func="quadratic">y = x²</button>
+                    <button data-func="cubic">y = x³</button>
+                    <button data-func="sin">y = sin(x)</button>
+                    <button data-func="cos">y = cos(x)</button>
+                    <button data-func="exp">y = eˣ</button>
+                    <button data-func="log">y = ln(x)</button>
+                    <button data-func="reciprocal">y = 1/x</button>
+                </div>
+                <div class="graph-param" id="paramControl" style="display: none;">
+                    <label>k = <input type="number" id="paramK" value="1" step="0.5"></label>
+                    <label>b = <input type="number" id="paramB" value="0" step="0.5"></label>
+                </div>
+            </div>
+
+            <!-- ========== 1. ПРЕОБРАЗОВАНИЯ ГРАФИКОВ ========== -->
+            <h2>1. Преобразования графиков</h2>
+            
+            <h3>Перенос (сдвиг)</h3>
             <div class="formula-block">
-                <div class="formula-item">y = f(x) + a &nbsp;→&nbsp; сдвиг вдоль <strong>Oy</strong> на a</div>
-                <div class="formula-item">y = f(x − a) &nbsp;→&nbsp; сдвиг вдоль <strong>Ox</strong> на a</div>
-                <div class="formula-item">y = k·f(x) &nbsp;→&nbsp; растяжение вдоль <strong>Oy</strong> в k раз (k>1), сжатие (0&lt;k&lt;1)</div>
-                <div class="formula-item">y = f(kx) &nbsp;→&nbsp; сжатие вдоль <strong>Ox</strong> в k раз (k>1), растяжение (0&lt;k&lt;1)</div>
-                <div class="formula-item">y = −f(x) &nbsp;→&nbsp; симметрия относительно <strong>Ox</strong></div>
-                <div class="formula-item">y = f(−x) &nbsp;→&nbsp; симметрия относительно <strong>Oy</strong></div>
-                <div class="formula-item">y = −f(−x) &nbsp;→&nbsp; симметрия относительно <strong>начала координат</strong></div>
-                <div class="formula-item">y = |f(x)| &nbsp;→&nbsp; часть графика при f(x) ≥ 0 остаётся, при f(x) &lt; 0 отражается вверх</div>
+                <div class="formula-item">y = f(x) + a &nbsp;→&nbsp; сдвиг вдоль Oy на a</div>
+                <div class="formula-item">y = f(x - a) &nbsp;→&nbsp; сдвиг вдоль Ox на a</div>
+            </div>
+
+            <h3>Растяжение/сжатие</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = k f(x) &nbsp;→&nbsp; растяжение вдоль Oy в k раз при k>1, сжатие при 0&lt;k&lt;1</div>
+                <div class="formula-item">y = f(kx) &nbsp;→&nbsp; сжатие вдоль Ox в k раз при k>1, растяжение при 0&lt;k&lt;1</div>
+            </div>
+
+            <h3>Отражение (симметрия)</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = -f(x) &nbsp;→&nbsp; симметрия относительно Ox</div>
+                <div class="formula-item">y = f(-x) &nbsp;→&nbsp; симметрия относительно Oy</div>
+                <div class="formula-item">y = -f(-x) &nbsp;→&nbsp; симметрия относительно начала координат</div>
+            </div>
+
+            <h3>Модуль</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = |f(x)| &nbsp;→&nbsp; часть графика при f(x) ≥ 0 остаётся, при f(x) &lt; 0 отражается вверх относительно Ox</div>
                 <div class="formula-item">y = f(|x|) &nbsp;→&nbsp; график при x ≥ 0 остаётся, при x &lt; 0 строится симметрично относительно Oy</div>
             </div>
 
-            <!-- Основные элементарные функции -->
-            <h2>🔹 Основные элементарные функции</h2>
+            <!-- ========== 2. ЛИНЕЙНАЯ ФУНКЦИЯ ========== -->
+            <h2>2. Линейная функция</h2>
             <div class="formula-block">
-                <div class="formula-item"><strong>Линейная:</strong> y = kx + b — прямая, k = tgα, b — пересечение с Oy</div>
-                <div class="formula-item"><strong>Квадратичная:</strong> y = ax² + bx + c, a≠0. Вершина: x₀ = −b/(2a), y₀ = c − b²/(4a)</div>
-                <div class="formula-item"><strong>Степенная:</strong> y = xⁿ. Чётная при чётном n, нечётная при нечётном n</div>
-                <div class="formula-item"><strong>Показательная:</strong> y = aˣ (a>0, a≠1). При a>1 — возрастает, при 0&lt;a&lt;1 — убывает. Горизонтальная асимптота y=0</div>
-                <div class="formula-item"><strong>Логарифмическая:</strong> y = log_a x (a>0, a≠1). При a>1 — возрастает, при 0&lt;a&lt;1 — убывает. Вертикальная асимптота x=0</div>
+                <div class="formula-item">y = kx + b</div>
+                <div class="formula-item">k = tg α &nbsp;— угловой коэффициент</div>
+                <div class="formula-item">b &nbsp;— точка пересечения с Oy (0; b)</div>
             </div>
 
-            <!-- Тригонометрические функции -->
-            <h2>🔹 Тригонометрические функции</h2>
+            <!-- ========== 3. КВАДРАТИЧНАЯ ФУНКЦИЯ ========== -->
+            <h2>3. Квадратичная функция</h2>
             <div class="formula-block">
-                <div class="formula-item"><strong>sin x:</strong> D=R, E=[−1;1], T=2π, нечётная</div>
-                <div class="formula-item"><strong>cos x:</strong> D=R, E=[−1;1], T=2π, чётная</div>
-                <div class="formula-item"><strong>tan x:</strong> D≠π/2+πn, E=R, T=π, нечётная, верт. асимптоты x=π/2+πn</div>
-                <div class="formula-item"><strong>cot x:</strong> D≠πn, E=R, T=π, нечётная, верт. асимптоты x=πn</div>
+                <div class="formula-item">y = ax² + bx + c, a ≠ 0</div>
+                <div class="formula-item">x₀ = -b/(2a) &nbsp;— вершина (абсцисса)</div>
+                <div class="formula-item">y₀ = c - b²/(4a) &nbsp;— вершина (ордината)</div>
+                <div class="formula-item">D = b² - 4ac</div>
+                <div class="formula-item">x₁,₂ = (-b ± √D)/(2a) &nbsp;— корни при D ≥ 0</div>
+                <div class="formula-item">y = a(x - x₀)² + y₀ &nbsp;— канонический вид</div>
             </div>
 
-            <!-- Обратные тригонометрические функции -->
-            <h2>🔹 Обратные тригонометрические функции</h2>
+            <!-- ========== 4. СТЕПЕННАЯ ФУНКЦИЯ ========== -->
+            <h2>4. Степенная функция</h2>
             <div class="formula-block">
-                <div class="formula-item"><strong>arcsin x:</strong> D=[−1;1], E=[−π/2;π/2], нечётная</div>
-                <div class="formula-item"><strong>arccos x:</strong> D=[−1;1], E=[0;π]</div>
-                <div class="formula-item"><strong>arctan x:</strong> D=R, E=(−π/2;π/2), нечётная, горизонтальные асимптоты y=±π/2</div>
-                <div class="formula-item"><strong>arccot x:</strong> D=R, E=(0;π)</div>
+                <div class="formula-item">y = xⁿ, n ∈ Z</div>
+                <div class="formula-item">y = x^{2k} &nbsp;— чётная, возрастает при x>0, убывает при x&lt;0</div>
+                <div class="formula-item">y = x^{2k+1} &nbsp;— нечётная, возрастает на R</div>
+                <div class="formula-item">y = x^{-2k} &nbsp;— чётная, убывает при x>0, возрастает при x&lt;0</div>
+                <div class="formula-item">y = x^{-(2k+1)} &nbsp;— нечётная, убывает на (-∞;0) ∪ (0;+∞)</div>
+                <div class="formula-item">y = x^{1/n} = ⁿ√x &nbsp;— обратная к y = xⁿ</div>
             </div>
 
-            <!-- Гиперболические функции -->
-            <h2>🔹 Гиперболические функции</h2>
+            <!-- ========== 5. ПОКАЗАТЕЛЬНАЯ ФУНКЦИЯ ========== -->
+            <h2>5. Показательная функция</h2>
             <div class="formula-block">
-                <div class="formula-item">sh x = (eˣ − e⁻ˣ)/2, D=R, E=R, нечётная</div>
-                <div class="formula-item">ch x = (eˣ + e⁻ˣ)/2, D=R, E=[1;+∞), чётная</div>
-                <div class="formula-item">th x = sh x / ch x = (eˣ − e⁻ˣ)/(eˣ + e⁻ˣ), D=R, E=(−1;1), нечётная, горизонтальные асимптоты y=±1</div>
+                <div class="formula-item">y = aˣ, a > 0, a ≠ 1</div>
+                <div class="formula-item">y = eˣ &nbsp;— натуральная</div>
+                <div class="formula-item">При a > 1: возрастает, lim_{x→-∞} aˣ = 0, lim_{x→+∞} aˣ = +∞</div>
+                <div class="formula-item">При 0 &lt; a &lt; 1: убывает, lim_{x→-∞} aˣ = +∞, lim_{x→+∞} aˣ = 0</div>
+                <div class="formula-item">Горизонтальная асимптота: y = 0</div>
+                <div class="formula-item">Пересечение с Oy: (0; 1)</div>
             </div>
 
-            <!-- Асимптоты -->
-            <h2>🔹 Асимптоты</h2>
+            <!-- ========== 6. ЛОГАРИФМИЧЕСКАЯ ФУНКЦИЯ ========== -->
+            <h2>6. Логарифмическая функция</h2>
             <div class="formula-block">
-                <div class="formula-item"><strong>Вертикальные:</strong> x = a, если lim_{x→a±} f(x) = ±∞</div>
-                <div class="formula-item"><strong>Горизонтальные:</strong> y = b, если lim_{x→±∞} f(x) = b</div>
-                <div class="formula-item"><strong>Наклонные:</strong> y = kx + b, где k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) − kx)</div>
+                <div class="formula-item">y = log_a x, a > 0, a ≠ 1</div>
+                <div class="formula-item">y = ln x &nbsp;— натуральный</div>
+                <div class="formula-item">y = lg x &nbsp;— десятичный</div>
+                <div class="formula-item">При a > 1: возрастает, lim_{x→0⁺} log_a x = -∞, lim_{x→+∞} log_a x = +∞</div>
+                <div class="formula-item">При 0 &lt; a &lt; 1: убывает, lim_{x→0⁺} log_a x = +∞, lim_{x→+∞} log_a x = -∞</div>
+                <div class="formula-item">Вертикальная асимптота: x = 0</div>
+                <div class="formula-item">Пересечение с Ox: (1; 0)</div>
             </div>
 
-            <!-- Чётность и нечётность -->
-            <h2>🔹 Чётность и нечётность</h2>
+            <!-- ========== 7. ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
+            <h2>7. Тригонометрические функции</h2>
+            
+            <h3>Синус</h3>
             <div class="formula-block">
-                <div class="formula-item"><strong>Чётная:</strong> f(−x) = f(x) — симметрия относительно Oy</div>
-                <div class="formula-item"><strong>Нечётная:</strong> f(−x) = −f(x) — симметрия относительно начала координат</div>
+                <div class="formula-item">y = sin x</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: [-1; 1]</div>
+                <div class="formula-item">Период: T = 2π</div>
+                <div class="formula-item">Нули: x = πn, n ∈ Z</div>
+                <div class="formula-item">Максимумы: x = π/2 + 2πn, y = 1</div>
+                <div class="formula-item">Минимумы: x = -π/2 + 2πn, y = -1</div>
+                <div class="formula-item">Нечётная: sin(-x) = -sin x</div>
             </div>
 
-            <!-- Периодичность -->
-            <h2>🔹 Периодичность</h2>
+            <h3>Косинус</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = cos x</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: [-1; 1]</div>
+                <div class="formula-item">Период: T = 2π</div>
+                <div class="formula-item">Нули: x = π/2 + πn, n ∈ Z</div>
+                <div class="formula-item">Максимумы: x = 2πn, y = 1</div>
+                <div class="formula-item">Минимумы: x = π + 2πn, y = -1</div>
+                <div class="formula-item">Чётная: cos(-x) = cos x</div>
+            </div>
+
+            <h3>Тангенс</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = tan x</div>
+                <div class="formula-item">Область определения: x ≠ π/2 + πn, n ∈ Z</div>
+                <div class="formula-item">Область значений: R</div>
+                <div class="formula-item">Период: T = π</div>
+                <div class="formula-item">Нули: x = πn</div>
+                <div class="formula-item">Вертикальные асимптоты: x = π/2 + πn</div>
+                <div class="formula-item">Нечётная: tan(-x) = -tan x</div>
+            </div>
+
+            <h3>Котангенс</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = cot x</div>
+                <div class="formula-item">Область определения: x ≠ πn, n ∈ Z</div>
+                <div class="formula-item">Область значений: R</div>
+                <div class="formula-item">Период: T = π</div>
+                <div class="formula-item">Нули: x = π/2 + πn</div>
+                <div class="formula-item">Вертикальные асимптоты: x = πn</div>
+                <div class="formula-item">Нечётная: cot(-x) = -cot x</div>
+            </div>
+
+            <!-- ========== 8. ОБРАТНЫЕ ТРИГОНОМЕТРИЧЕСКИЕ ФУНКЦИИ ========== -->
+            <h2>8. Обратные тригонометрические функции</h2>
+            
+            <h3>Арксинус</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = arcsin x</div>
+                <div class="formula-item">Область определения: [-1; 1]</div>
+                <div class="formula-item">Область значений: [-π/2; π/2]</div>
+                <div class="formula-item">Нечётная: arcsin(-x) = -arcsin x</div>
+            </div>
+
+            <h3>Арккосинус</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = arccos x</div>
+                <div class="formula-item">Область определения: [-1; 1]</div>
+                <div class="formula-item">Область значений: [0; π]</div>
+                <div class="formula-item">arccos(-x) = π - arccos x</div>
+            </div>
+
+            <h3>Арктангенс</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = arctan x</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: (-π/2; π/2)</div>
+                <div class="formula-item">Горизонтальные асимптоты: y = π/2 (x → +∞), y = -π/2 (x → -∞)</div>
+                <div class="formula-item">Нечётная: arctan(-x) = -arctan x</div>
+            </div>
+
+            <h3>Арккотангенс</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = arccot x</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: (0; π)</div>
+                <div class="formula-item">Горизонтальные асимптоты: y = π (x → -∞), y = 0 (x → +∞)</div>
+                <div class="formula-item">arccot(-x) = π - arccot x</div>
+            </div>
+
+            <!-- ========== 9. ГИПЕРБОЛИЧЕСКИЕ ФУНКЦИИ ========== -->
+            <h2>9. Гиперболические функции</h2>
+            
+            <h3>Гиперболический синус</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = sh x = (eˣ - e⁻ˣ)/2</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: R</div>
+                <div class="formula-item">Нечётная: sh(-x) = -sh x</div>
+            </div>
+
+            <h3>Гиперболический косинус</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = ch x = (eˣ + e⁻ˣ)/2</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: [1; +∞)</div>
+                <div class="formula-item">Чётная: ch(-x) = ch x</div>
+            </div>
+
+            <h3>Гиперболический тангенс</h3>
+            <div class="formula-block">
+                <div class="formula-item">y = th x = sh x / ch x = (eˣ - e⁻ˣ)/(eˣ + e⁻ˣ)</div>
+                <div class="formula-item">Область определения: R</div>
+                <div class="formula-item">Область значений: (-1; 1)</div>
+                <div class="formula-item">Горизонтальные асимптоты: y = 1 (x → +∞), y = -1 (x → -∞)</div>
+                <div class="formula-item">Нечётная: th(-x) = -th x</div>
+            </div>
+
+            <!-- ========== 10. АСИМПТОТЫ ========== -->
+            <h2>10. Асимптоты</h2>
+            
+            <h3>Вертикальные</h3>
+            <div class="formula-block">
+                <div class="formula-item">lim_{x→a⁺} f(x) = ±∞ или lim_{x→a⁻} f(x) = ±∞ → прямая x = a</div>
+            </div>
+
+            <h3>Горизонтальные</h3>
+            <div class="formula-block">
+                <div class="formula-item">lim_{x→+∞} f(x) = b → y = b</div>
+                <div class="formula-item">lim_{x→-∞} f(x) = b → y = b</div>
+            </div>
+
+            <h3>Наклонные</h3>
+            <div class="formula-block">
+                <div class="formula-item">k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) - kx) → прямая y = kx + b</div>
+            </div>
+
+            <!-- ========== 11. ЧЁТНОСТЬ И НЕЧЁТНОСТЬ ========== -->
+            <h2>11. Чётность и нечётность</h2>
+            <div class="formula-block">
+                <div class="formula-item">Чётная: f(-x) = f(x) — симметрия относительно Oy</div>
+                <div class="formula-item">Нечётная: f(-x) = -f(x) — симметрия относительно начала координат</div>
+            </div>
+
+            <!-- ========== 12. ПЕРИОДИЧНОСТЬ ========== -->
+            <h2>12. Периодичность</h2>
             <div class="formula-block">
                 <div class="formula-item">f(x + T) = f(x), T > 0 — наименьший положительный период</div>
                 <div class="formula-item">sin x, cos x, sec x, csc x: T = 2π</div>
@@ -91,46 +340,186 @@
         </nav>
     </div>
 
-    <!-- Падающие цифры (опционально) -->
-    <div class="falling-symbols" id="falling-symbols"></div>
+    <!-- Скрипт для построения графиков -->
     <script>
-        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim'];
-        function random(min,max){return min+Math.random()*(max-min);}
-        function createFallingSymbols(){
-            const container=document.getElementById('falling-symbols');
-            if(!container) return;
-            const symbolsPerSide=Math.floor(window.innerWidth/90)+12;
-            const totalSymbols=symbolsPerSide*2;
-            for(let i=0;i<totalSymbols;i++){
-                const symbol=document.createElement('div');
-                symbol.className='symbol';
-                const isLeft=i<symbolsPerSide;
-                if(isLeft){
-                    symbol.classList.add('left');
-                    symbol.style.left=random(0,15)+'%';
-                }else{
-                    symbol.classList.add('right');
-                    symbol.style.left=random(85,100)+'%';
-                }
-                symbol.textContent=symbols[Math.floor(Math.random()*symbols.length)];
-                symbol.style.animationDelay=random(0,20)+'s';
-                symbol.style.animationDuration=random(8,20)+'s';
-                symbol.style.fontSize=random(0.9,1.6)+'rem';
-                symbol.style.top=random(-20,0)+'vh';
-                if(Math.random()<0.25) symbol.classList.add('glowing');
-                if(!symbol.classList.contains('glowing')) symbol.style.opacity=random(0.2,0.5);
-                container.appendChild(symbol);
+        const canvas = document.getElementById('functionGraph');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.clientWidth;
+        let height = canvas.clientHeight;
+        
+        function resizeCanvas() {
+            width = canvas.clientWidth;
+            height = canvas.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+            drawGraph(currentFunc, currentK, currentB);
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Настройки осей
+        let xMin = -5, xMax = 5, yMin = -3, yMax = 3;
+        let currentFunc = 'linear';
+        let currentK = 1;
+        let currentB = 0;
+        
+        function toScreenX(x) {
+            return ((x - xMin) / (xMax - xMin)) * width;
+        }
+        
+        function toScreenY(y) {
+            return height - ((y - yMin) / (yMax - yMin)) * height;
+        }
+        
+        function drawAxes() {
+            ctx.beginPath();
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            
+            // Ось X
+            const y0 = toScreenY(0);
+            ctx.moveTo(0, y0);
+            ctx.lineTo(width, y0);
+            ctx.stroke();
+            
+            // Ось Y
+            const x0 = toScreenX(0);
+            ctx.moveTo(x0, 0);
+            ctx.lineTo(x0, height);
+            ctx.stroke();
+            
+            // Стрелки
+            ctx.fillStyle = '#888';
+            // Стрелка X
+            ctx.beginPath();
+            ctx.moveTo(width-10, y0-4);
+            ctx.lineTo(width, y0);
+            ctx.lineTo(width-10, y0+4);
+            ctx.fill();
+            // Стрелка Y
+            ctx.beginPath();
+            ctx.moveTo(x0-4, 10);
+            ctx.lineTo(x0, 0);
+            ctx.lineTo(x0+4, 10);
+            ctx.fill();
+            
+            // Подписи осей
+            ctx.font = '12px "Segoe UI"';
+            ctx.fillStyle = '#aaa';
+            ctx.fillText('x', width-15, y0-5);
+            ctx.fillText('y', x0+8, 15);
+            
+            // Деления
+            for (let x = -5; x <= 5; x++) {
+                if (Math.abs(x) < 0.1) continue;
+                const screenX = toScreenX(x);
+                ctx.beginPath();
+                ctx.moveTo(screenX, y0-3);
+                ctx.lineTo(screenX, y0+3);
+                ctx.stroke();
+                ctx.fillText(x, screenX-5, y0-5);
+            }
+            for (let y = -3; y <= 3; y++) {
+                if (Math.abs(y) < 0.1) continue;
+                const screenY = toScreenY(y);
+                ctx.beginPath();
+                ctx.moveTo(x0-3, screenY);
+                ctx.lineTo(x0+3, screenY);
+                ctx.stroke();
+                ctx.fillText(y, x0+8, screenY+3);
             }
         }
-        createFallingSymbols();
-        let resizeTimeout;
-        window.addEventListener('resize',function(){
-            clearTimeout(resizeTimeout);
-            resizeTimeout=setTimeout(function(){
-                const container=document.getElementById('falling-symbols');
-                if(container){container.innerHTML='';createFallingSymbols();}
-            },500);
+        
+        function getY(x, func, k, b) {
+            switch(func) {
+                case 'linear': return k*x + b;
+                case 'quadratic': return x*x;
+                case 'cubic': return x*x*x;
+                case 'sin': return Math.sin(x);
+                case 'cos': return Math.cos(x);
+                case 'exp': return Math.exp(x);
+                case 'log': return x > 0 ? Math.log(x) : NaN;
+                case 'reciprocal': return Math.abs(x) < 0.01 ? NaN : 1/x;
+                default: return x;
+            }
+        }
+        
+        function drawGraph(func, k, b) {
+            ctx.clearRect(0, 0, width, height);
+            drawAxes();
+            
+            ctx.beginPath();
+            ctx.strokeStyle = '#bb86fc';
+            ctx.lineWidth = 2.5;
+            
+            let firstPoint = true;
+            for (let px = 0; px <= width; px++) {
+                const x = xMin + (px / width) * (xMax - xMin);
+                const y = getY(x, func, k, b);
+                
+                if (isNaN(y) || Math.abs(y) > 100) {
+                    firstPoint = true;
+                    continue;
+                }
+                
+                const screenX = px;
+                const screenY = toScreenY(y);
+                
+                if (screenY < 0 || screenY > height) {
+                    firstPoint = true;
+                    continue;
+                }
+                
+                if (firstPoint) {
+                    ctx.moveTo(screenX, screenY);
+                    firstPoint = false;
+                } else {
+                    ctx.lineTo(screenX, screenY);
+                }
+            }
+            ctx.stroke();
+        }
+        
+        // Обработчики кнопок
+        const buttons = document.querySelectorAll('.graph-controls button');
+        const paramControl = document.getElementById('paramControl');
+        const paramK = document.getElementById('paramK');
+        const paramB = document.getElementById('paramB');
+        
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFunc = btn.dataset.func;
+                
+                if (currentFunc === 'linear') {
+                    paramControl.style.display = 'flex';
+                    currentK = parseFloat(paramK.value);
+                    currentB = parseFloat(paramB.value);
+                } else {
+                    paramControl.style.display = 'none';
+                    currentK = 1;
+                    currentB = 0;
+                }
+                drawGraph(currentFunc, currentK, currentB);
+            });
         });
+        
+        paramK.addEventListener('input', () => {
+            if (currentFunc === 'linear') {
+                currentK = parseFloat(paramK.value);
+                drawGraph(currentFunc, currentK, currentB);
+            }
+        });
+        
+        paramB.addEventListener('input', () => {
+            if (currentFunc === 'linear') {
+                currentB = parseFloat(paramB.value);
+                drawGraph(currentFunc, currentK, currentB);
+            }
+        });
+        
+        resizeCanvas();
     </script>
 </body>
 </html>
