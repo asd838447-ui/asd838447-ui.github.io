@@ -1,3 +1,4 @@
+/* ========== Базовые стили ========== */
 * {
     margin: 0;
     padding: 0;
@@ -17,14 +18,17 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
     background-color: #1e1e1e;
-    border-radius: 16px;
-    padding: 30px 35px;
+    border-radius: 24px;
+    padding: 35px 40px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
 }
 
+/* Заголовки */
 h1, h2, h3 {
     color: #ffffff;
     font-weight: 500;
@@ -33,12 +37,29 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 2.2rem;
-    border-bottom: 2px solid #bb86fc;
-    padding-bottom: 10px;
+    font-size: 2rem;
+    border-bottom: 3px solid #bb86fc;
+    padding-bottom: 12px;
     margin-bottom: 25px;
 }
 
+h2 {
+    font-size: 1.6rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #bb86fc;
+    border-left: 4px solid #bb86fc;
+    padding-left: 15px;
+}
+
+h3 {
+    font-size: 1.3rem;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: #d0b0ff;
+}
+
+/* Ссылки */
 a {
     color: #bb86fc;
     text-decoration: none;
@@ -51,6 +72,7 @@ a:hover {
     border-bottom-color: #bb86fc;
 }
 
+/* Список билетов на главной */
 .ticket-list {
     list-style: none;
     margin-top: 20px;
@@ -58,20 +80,22 @@ a:hover {
 
 .ticket-list li {
     margin: 12px 0;
-    padding: 10px 15px;
+    padding: 12px 18px;
     background-color: #2a2a2a;
-    border-radius: 12px;
-    transition: transform 0.1s, background-color 0.2s;
+    border-radius: 14px;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    border-left: 3px solid #bb86fc;
 }
 
 .ticket-list li:hover {
     background-color: #333;
-    transform: translateX(5px);
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(187, 134, 252, 0.2);
 }
 
 .ticket-list a {
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     border-bottom: none;
     color: #e0e0e0;
 }
@@ -80,8 +104,9 @@ a:hover {
     color: #ffffff;
 }
 
+/* Навигация внизу билета */
 .bottom-nav {
-    margin-top: 40px;
+    margin-top: 45px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -91,27 +116,29 @@ a:hover {
 }
 
 .bottom-nav a {
-    font-size: 1.1rem;
+    font-size: 1rem;
     border: 1px solid #444;
     padding: 8px 20px;
     border-radius: 40px;
     background-color: #2a2a2a;
     color: #e0e0e0;
     border-bottom: none;
-    transition: background-color 0.2s, border-color 0.2s;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
 .bottom-nav a:hover {
     background-color: #bb86fc;
     color: #121212;
     border-color: #bb86fc;
+    transform: scale(1.02);
 }
 
+/* Контент билета */
 .content {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     background-color: #2a2a2a;
-    padding: 20px 25px;
-    border-radius: 16px;
+    padding: 25px 30px;
+    border-radius: 20px;
     margin: 25px 0;
     border-left: 5px solid #bb86fc;
 }
@@ -121,35 +148,66 @@ a:hover {
 }
 
 .content ul, .content ol {
-    margin-left: 1.5em;
+    margin-left: 1.8em;
     margin-bottom: 1em;
 }
 
+.content li {
+    margin: 8px 0;
+}
+
+/* Блоки для формул (билеты 20, 21) */
+.formula-block {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    border: 1px solid #3a3a3a;
+    transition: all 0.2s;
+}
+
+.formula-block:hover {
+    border-color: #bb86fc;
+    box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
+}
+
+.formula-item {
+    font-family: 'Courier New', 'Fira Code', monospace;
+    font-size: 1rem;
+    padding: 8px 0;
+    border-bottom: 1px solid #3a3a3a;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.formula-item:last-child {
+    border-bottom: none;
+}
+
+.formula-item strong {
+    color: #bb86fc;
+}
+
+/* Формулы внутри обычного текста */
 .content .formula {
     font-family: 'Courier New', monospace;
     background-color: #1e1e1e;
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 8px;
     color: #ffb86b;
+    display: inline-block;
+    margin: 5px 0;
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 20px 15px;
-    }
-    h1 {
-        font-size: 1.8rem;
-    }
-    .bottom-nav {
-        flex-direction: column;
-        align-items: center;
-    }
-    .bottom-nav a {
-        width: 100%;
-        text-align: center;
-    }
+/* Горизонтальная линия */
+hr {
+    margin: 25px 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #bb86fc, transparent);
 }
-/* ========== Падающие цифры и формулы (только по краям) ========== */
+
+/* ========== Падающие цифры (только по краям) ========== */
 .falling-symbols {
     position: fixed;
     top: 0;
@@ -172,19 +230,16 @@ a:hover {
     animation: fall linear infinite;
 }
 
-/* Символы только слева (0-15%) */
 .symbol.left {
     left: 0;
     right: auto;
 }
 
-/* Символы только справа (85-100%) */
 .symbol.right {
     left: auto;
     right: 0;
 }
 
-/* Светящиеся символы */
 .symbol.glowing {
     color: rgba(187, 134, 252, 0.8);
     text-shadow: 0 0 8px rgba(187, 134, 252, 0.6), 0 0 12px rgba(187, 134, 252, 0.4);
@@ -207,11 +262,196 @@ a:hover {
     }
 }
 
+/* ========== Кнопки "Формулы" и "Графики" ========== */
+.formula-button, .graph-button {
+    position: fixed;
+    bottom: 30px;
+    background: linear-gradient(135deg, #bb86fc, #9b59b6);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+}
+
+.formula-button {
+    right: 30px;
+}
+
+.graph-button {
+    right: 170px;
+}
+
+.formula-button:hover, .graph-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(187, 134, 252, 0.6);
+}
+
+/* Затемнение фона */
+.panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1002;
+    display: none;
+    backdrop-filter: blur(3px);
+}
+
+/* Общий стиль для панелей */
+.formula-panel, .graph-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 550px;
+    height: 100%;
+    background: #1e1e1e;
+    z-index: 1003;
+    overflow-y: auto;
+    transition: right 0.4s ease-out;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-left: 3px solid #bb86fc;
+}
+
+.formula-panel.open, .graph-panel.open {
+    right: 0;
+}
+
+.formula-panel h2, .graph-panel h2 {
+    color: #bb86fc;
+    border-bottom: 2px solid #bb86fc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.formula-panel h3, .graph-panel h3 {
+    color: #bb86fc;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #bb86fc;
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+    color: #dbb2ff;
+}
+
+/* ========== Адаптация для мобильных устройств ========== */
 @media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+    
+    .container {
+        padding: 20px 18px;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    h3 {
+        font-size: 1.1rem;
+    }
+    
+    .content {
+        padding: 18px 20px;
+    }
+    
+    .bottom-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .bottom-nav a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .ticket-list li {
+        padding: 10px 14px;
+    }
+    
+    .ticket-list a {
+        font-size: 1rem;
+    }
+    
+    .formula-panel, .graph-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .formula-button, .graph-button {
+        bottom: 20px;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    
+    .formula-button {
+        right: 20px;
+    }
+    
+    .graph-button {
+        right: 130px;
+    }
+    
     .symbol {
         font-size: 0.9rem;
     }
 }
-        font-size: 0.9rem;
-    }
+
+/* ========== Дополнительные улучшения ========== */
+/* Скроллбар для панелей */
+.formula-panel::-webkit-scrollbar, .graph-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.formula-panel::-webkit-scrollbar-track, .graph-panel::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+}
+
+.formula-panel::-webkit-scrollbar-thumb, .graph-panel::-webkit-scrollbar-thumb {
+    background: #bb86fc;
+    border-radius: 4px;
+}
+
+.formula-panel::-webkit-scrollbar-thumb:hover, .graph-panel::-webkit-scrollbar-thumb:hover {
+    background: #dbb2ff;
+}
+
+/* Выделение кода */
+pre, code {
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #ffb86b;
 }
