@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 20. Формулы для решения задач</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Билет 20. Формулы для решения задач</h1>
+
+        <div class="content">
+            <h2>🔹 Эквивалентности (при x → 0)</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">sin x ∼ x</div>
+                <div class="formula-item">arcsin x ∼ x</div>
+                <div class="formula-item">tan x ∼ x</div>
+                <div class="formula-item">arctan x ∼ x</div>
+                <div class="formula-item">eˣ − 1 ∼ x</div>
+                <div class="formula-item">ln(1 + x) ∼ x</div>
+                <div class="formula-item">aˣ − 1 ∼ x·ln a</div>
+                <div class="formula-item">(1 + x)ᵏ − 1 ∼ kx</div>
+                <div class="formula-item">1 − cos x ∼ x²/2</div>
+                <div class="formula-item">sh x ∼ x</div>
+                <div class="formula-item">th x ∼ x</div>
+                <div class="formula-item">ch x − 1 ∼ x²/2</div>
+            </div>
+
+            <h2>🔹 Обобщённые эквивалентности (при u(x) → 0)</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">sinᵇ u ∼ uᵇ</div>
+                <div class="formula-item">arcsinᵇ u ∼ uᵇ</div>
+                <div class="formula-item">tanᵇ u ∼ uᵇ</div>
+                <div class="formula-item">arctanᵇ u ∼ uᵇ</div>
+                <div class="formula-item">(eᵘ − 1)ᵇ ∼ uᵇ</div>
+                <div class="formula-item">lnᵇ(1 + u) ∼ uᵇ</div>
+                <div class="formula-item">(1 + u)ᵏ − 1 ∼ k·u</div>
+                <div class="formula-item">1 − cosᵇ u ∼ (b/2)·u²</div>
+                <div class="formula-item">shᵇ u ∼ uᵇ</div>
+                <div class="formula-item">thᵇ u ∼ uᵇ</div>
+            </div>
+
+            <h2>🔹 Ряды Тейлора (при x → 0)</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">eˣ = 1 + x + x²/2! + x³/3! + o(x³)</div>
+                <div class="formula-item">sin x = x − x³/3! + x⁵/5! − x⁷/7! + o(x⁷)</div>
+                <div class="formula-item">cos x = 1 − x²/2! + x⁴/4! − x⁶/6! + o(x⁶)</div>
+                <div class="formula-item">tan x = x + x³/3 + 2x⁵/15 + o(x⁵)</div>
+                <div class="formula-item">arcsin x = x + x³/6 + 3x⁵/40 + o(x⁵)</div>
+                <div class="formula-item">arctan x = x − x³/3 + x⁵/5 − x⁷/7 + o(x⁷)</div>
+                <div class="formula-item">ln(1 + x) = x − x²/2 + x³/3 − x⁴/4 + o(x⁴)</div>
+                <div class="formula-item">(1 + x)ᵅ = 1 + αx + α(α−1)x²/2! + o(x²)</div>
+                <div class="formula-item">sh x = x + x³/3! + x⁵/5! + x⁷/7! + o(x⁷)</div>
+                <div class="formula-item">ch x = 1 + x²/2! + x⁴/4! + x⁶/6! + o(x⁶)</div>
+                <div class="formula-item">th x = x − x³/3 + 2x⁵/15 − 17x⁷/315 + o(x⁷)</div>
+            </div>
+
+            <h2>🔹 Производные элементарных функций</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">(xⁿ)' = n·xⁿ⁻¹</div>
+                <div class="formula-item">(sin x)' = cos x</div>
+                <div class="formula-item">(cos x)' = −sin x</div>
+                <div class="formula-item">(tan x)' = 1/cos²x = 1 + tan²x</div>
+                <div class="formula-item">(cot x)' = −1/sin²x = −(1 + cot²x)</div>
+                <div class="formula-item">(eˣ)' = eˣ</div>
+                <div class="formula-item">(aˣ)' = aˣ·ln a</div>
+                <div class="formula-item">(ln x)' = 1/x</div>
+                <div class="formula-item">(log_a x)' = 1/(x·ln a)</div>
+                <div class="formula-item">(arcsin x)' = 1/√(1−x²)</div>
+                <div class="formula-item">(arccos x)' = −1/√(1−x²)</div>
+                <div class="formula-item">(arctan x)' = 1/(1+x²)</div>
+                <div class="formula-item">(arccot x)' = −1/(1+x²)</div>
+                <div class="formula-item">(sh x)' = ch x</div>
+                <div class="formula-item">(ch x)' = sh x</div>
+                <div class="formula-item">(th x)' = 1/ch²x</div>
+            </div>
+
+            <h2>🔹 Первый и второй замечательные пределы</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">lim_{x→0} sin x / x = 1</div>
+                <div class="formula-item">lim_{x→0} (1 + x)^{1/x} = e</div>
+                <div class="formula-item">lim_{x→∞} (1 + 1/x)ˣ = e</div>
+            </div>
+
+            <h2>🔹 Тригонометрические тождества</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">sin²x + cos²x = 1</div>
+                <div class="formula-item">1 + tan²x = 1/cos²x</div>
+                <div class="formula-item">1 + cot²x = 1/sin²x</div>
+                <div class="formula-item">sin(α ± β) = sinα·cosβ ± cosα·sinβ</div>
+                <div class="formula-item">cos(α ± β) = cosα·cosβ ∓ sinα·sinβ</div>
+                <div class="formula-item">sin2x = 2 sinx·cosx</div>
+                <div class="formula-item">cos2x = cos²x − sin²x = 2cos²x − 1 = 1 − 2sin²x</div>
+                <div class="formula-item">sin²x = (1 − cos2x)/2</div>
+                <div class="formula-item">cos²x = (1 + cos2x)/2</div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket19.html">← Предыдущий билет (19)</a>
+            <a href="index.html">📋 К списку билетов</a>
+            <a href="ticket21.html">→ Следующий билет (21)</a>
+        </nav>
+    </div>
+</body>
+</html>
