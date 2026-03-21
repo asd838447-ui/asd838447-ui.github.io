@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 21. Формулы для построения графиков</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Билет 21. Формулы для построения графиков функций</h1>
+
+        <div class="content">
+            <h2>🔹 Преобразования графиков</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">y = f(x) + a &nbsp;→&nbsp; сдвиг вдоль Oy на a</div>
+                <div class="formula-item">y = f(x − a) &nbsp;→&nbsp; сдвиг вдоль Ox на a</div>
+                <div class="formula-item">y = k·f(x) &nbsp;→&nbsp; растяжение вдоль Oy в k раз (k>1), сжатие (0&lt;k&lt;1)</div>
+                <div class="formula-item">y = f(kx) &nbsp;→&nbsp; сжатие вдоль Ox в k раз (k>1), растяжение (0&lt;k&lt;1)</div>
+                <div class="formula-item">y = −f(x) &nbsp;→&nbsp; симметрия относительно Ox</div>
+                <div class="formula-item">y = f(−x) &nbsp;→&nbsp; симметрия относительно Oy</div>
+                <div class="formula-item">y = −f(−x) &nbsp;→&nbsp; симметрия относительно начала координат</div>
+                <div class="formula-item">y = |f(x)| &nbsp;→&nbsp; часть графика при f(x) ≥ 0 остаётся, при f(x) &lt; 0 отражается вверх</div>
+                <div class="formula-item">y = f(|x|) &nbsp;→&nbsp; график при x ≥ 0 остаётся, при x &lt; 0 строится симметрично относительно Oy</div>
+            </div>
+
+            <h2>🔹 Основные элементарные функции</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item"><strong>Линейная:</strong> y = kx + b — прямая, k = tgα, b — пересечение с Oy</div>
+                <div class="formula-item"><strong>Квадратичная:</strong> y = ax² + bx + c, a≠0. Вершина: x₀ = −b/(2a), y₀ = c − b²/(4a)</div>
+                <div class="formula-item"><strong>Степенная:</strong> y = xⁿ. Чётная при чётном n, нечётная при нечётном n</div>
+                <div class="formula-item"><strong>Показательная:</strong> y = aˣ (a>0, a≠1). При a>1 — возрастает, при 0&lt;a&lt;1 — убывает. Горизонтальная асимптота y=0</div>
+                <div class="formula-item"><strong>Логарифмическая:</strong> y = log_a x (a>0, a≠1). При a>1 — возрастает, при 0&lt;a&lt;1 — убывает. Вертикальная асимптота x=0</div>
+            </div>
+
+            <h2>🔹 Тригонометрические функции</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item"><strong>sin x:</strong> D=R, E=[−1;1], T=2π, нечётная</div>
+                <div class="formula-item"><strong>cos x:</strong> D=R, E=[−1;1], T=2π, чётная</div>
+                <div class="formula-item"><strong>tan x:</strong> D≠π/2+πn, E=R, T=π, нечётная, верт. асимптоты x=π/2+πn</div>
+                <div class="formula-item"><strong>cot x:</strong> D≠πn, E=R, T=π, нечётная, верт. асимптоты x=πn</div>
+            </div>
+
+            <h2>🔹 Обратные тригонометрические функции</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item"><strong>arcsin x:</strong> D=[−1;1], E=[−π/2;π/2], нечётная</div>
+                <div class="formula-item"><strong>arccos x:</strong> D=[−1;1], E=[0;π]</div>
+                <div class="formula-item"><strong>arctan x:</strong> D=R, E=(−π/2;π/2), нечётная, горизонтальные асимптоты y=±π/2</div>
+                <div class="formula-item"><strong>arccot x:</strong> D=R, E=(0;π)</div>
+            </div>
+
+            <h2>🔹 Гиперболические функции</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">sh x = (eˣ − e⁻ˣ)/2, D=R, E=R, нечётная</div>
+                <div class="formula-item">ch x = (eˣ + e⁻ˣ)/2, D=R, E=[1;+∞), чётная</div>
+                <div class="formula-item">th x = sh x / ch x = (eˣ − e⁻ˣ)/(eˣ + e⁻ˣ), D=R, E=(−1;1), нечётная, горизонтальные асимптоты y=±1</div>
+            </div>
+
+            <h2>🔹 Асимптоты</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item"><strong>Вертикальные:</strong> x = a, если lim_{x→a±} f(x) = ±∞</div>
+                <div class="formula-item"><strong>Горизонтальные:</strong> y = b, если lim_{x→±∞} f(x) = b</div>
+                <div class="formula-item"><strong>Наклонные:</strong> y = kx + b, где k = lim_{x→±∞} f(x)/x, b = lim_{x→±∞} (f(x) − kx)</div>
+            </div>
+
+            <h2>🔹 Чётность и нечётность</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item"><strong>Чётная:</strong> f(−x) = f(x) — симметрия относительно Oy</div>
+                <div class="formula-item"><strong>Нечётная:</strong> f(−x) = −f(x) — симметрия относительно начала координат</div>
+            </div>
+
+            <h2>🔹 Периодичность</h2>
+            <div class="formula-block" style="background:#2a2a2a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <div class="formula-item">f(x + T) = f(x), T > 0 — наименьший положительный период</div>
+                <div class="formula-item">sin x, cos x, sec x, csc x: T = 2π</div>
+                <div class="formula-item">tan x, cot x: T = π</div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket20.html">← Предыдущий билет (20)</a>
+            <a href="index.html">📋 К списку билетов</a>
+        </nav>
+    </div>
+</body>
+</html>
