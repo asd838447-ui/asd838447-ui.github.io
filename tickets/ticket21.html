@@ -2,291 +2,225 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 Билет 21: Конструктор графиков функций — уровень БОГ</title>
-    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
-    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎓 Билет 21: График функций — ПРОСТО и РАБОТАЕТ</title>
     <style>
         :root {
+            --bg: #0d0d1a;
+            --card: #1a1a2e;
+            --input: #252540;
             --primary: #bb86fc;
-            --primary-dark: #9b59b6;
-            --secondary: #ffb86b;
-            --bg-dark: #0f0f1a;
-            --bg-card: #1a1a2e;
-            --bg-input: #252540;
+            --accent: #00d9a5;
+            --warning: #ffb86b;
+            --error: #ff6b6b;
             --text: #f0f0ff;
             --text-dim: #aaa;
-            --error: #ff6b6b;
-            --success: #00d9a5;
-            --warning: #ffd93d;
-            --shadow: 0 8px 32px rgba(187, 134, 252, 0.25);
-            --border-radius: 24px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
-
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 100%);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
+            -webkit-text-size-adjust: 100%;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
-        /* ===== HEADER ===== */
-        .page-header {
+        /* HEADER */
+        .header {
             text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, var(--bg-card), #1e1e3f);
-            border-radius: var(--border-radius);
+            padding: 25px 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--card), #232345);
+            border-radius: 20px;
             border: 1px solid var(--primary);
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
         }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(187,134,252,0.1) 0%, transparent 70%);
-            animation: pulse 8s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            position: relative;
-            z-index: 2;
         }
-
-        .subtitle {
-            font-size: 1.2rem;
+        
+        .header p {
             color: var(--text-dim);
-            max-width: 800px;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            max-width: 700px;
             margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
-        .glowing {
-            text-shadow: 0 0 10px rgba(187, 134, 252, 0.7);
-            color: var(--primary);
-            font-weight: 600;
-        }
+        .glow { color: var(--primary); font-weight: 600; }
 
-        /* ===== FORMULA INPUT SECTION ===== */
-        .formula-section {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 30px;
+        /* FORMULA INPUT */
+        .input-section {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid #3a3a6e;
-            box-shadow: var(--shadow);
         }
-
-        .section-title {
+        
+        .input-row {
             display: flex;
-            align-items: center;
             gap: 12px;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary-dark);
-            padding-bottom: 10px;
-        }
-
-        .formula-input-group {
-            display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            align-items: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-
-        .formula-input-wrapper {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-        }
-
+        
         .formula-input {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 1.3rem;
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 18px;
+            font-size: 1.1rem;
             font-family: 'Courier New', monospace;
-            background: var(--bg-input);
+            background: var(--input);
             border: 2px solid #4a4a7e;
-            border-radius: 16px;
+            border-radius: 14px;
             color: var(--text);
-            transition: var(--transition);
+            transition: 0.2s;
         }
-
+        
         .formula-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(187, 134, 252, 0.3);
+            box-shadow: 0 0 0 3px rgba(187,134,252,0.3);
         }
-
+        
         .formula-input.error {
             border-color: var(--error);
-            animation: shake 0.5s;
+            animation: shake 0.3s;
         }
-
+        
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25%, 75% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
         }
-
-        .input-hint {
-            position: absolute;
-            bottom: -25px;
-            left: 0;
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        .input-hint.error {
-            color: var(--error);
-        }
-
+        
         .btn {
-            padding: 14px 28px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--primary), #9b59b6);
             color: white;
             border: none;
-            border-radius: 16px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(187,134,252,0.4); }
+        .btn:active { transform: translateY(0); }
+        
+        .btn-secondary { background: linear-gradient(135deg, #4a4a7e, #3a3a6e); }
+        .btn-success { background: linear-gradient(135deg, var(--accent), #00b894); }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #e6b800); color: #1a1a2e; }
+
+        .hint {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+            min-height: 20px;
+        }
+        
+        .hint.error { color: var(--error); }
+        .hint.success { color: var(--accent); }
+
+        /* EXAMPLES */
+        .examples {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(187, 134, 252, 0.6);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #4a4a7e, #3a3a6e);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #00b894);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #e6b800);
-            color: #1a1a2e;
-        }
-
-        /* ===== EXAMPLES GRID ===== */
-        .examples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .example-card {
-            background: var(--bg-input);
-            padding: 12px 16px;
+        
+        .example {
+            padding: 10px 16px;
+            background: var(--input);
             border-radius: 12px;
             cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid transparent;
-            text-align: center;
             font-family: monospace;
             font-size: 0.95rem;
+            transition: 0.2s;
+            border: 1px solid transparent;
         }
-
-        .example-card:hover {
+        
+        .example:hover {
             border-color: var(--primary);
-            transform: translateY(-3px);
             background: #2a2a4a;
+            transform: translateY(-2px);
         }
-
-        .example-card .label {
+        
+        .example .label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
-        /* ===== GRAPH AREA ===== */
-        .graph-container {
+        /* GRAPH AREA */
+        .graph-wrapper {
             display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
-
-        @media (max-width: 900px) {
-            .graph-container {
-                grid-template-columns: 1fr;
-            }
+        
+        @media (min-width: 900px) {
+            .graph-wrapper { grid-template-columns: 1fr 280px; }
         }
-
-        .graph-canvas-wrapper {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 20px;
+        
+        .canvas-box {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 15px;
             border: 1px solid #3a3a6e;
-            box-shadow: var(--shadow);
-            position: relative;
-            min-height: 400px;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
         }
-
-        #mainCanvas {
+        
+        #graph {
             width: 100%;
-            height: 400px;
+            height: 350px;
             background: #0a0a1a;
             border-radius: 16px;
             display: block;
-            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .graph-msg {
+            text-align: center;
+            color: var(--text-dim);
+            margin-top: 12px;
+            min-height: 22px;
+            font-size: 0.95rem;
         }
 
-        .graph-controls {
+        /* CONTROLS */
+        .controls {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
+        
         .control-card {
-            background: var(--bg-card);
+            background: var(--card);
             border-radius: 16px;
-            padding: 18px;
+            padding: 16px;
             border: 1px solid #3a3a6e;
         }
-
+        
         .control-card h4 {
             color: var(--primary);
             margin-bottom: 12px;
@@ -295,1096 +229,1093 @@
             align-items: center;
             gap: 8px;
         }
-
-        .zoom-controls {
+        
+        .zoom-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
-
+        
         .zoom-btn {
             flex: 1;
-            min-width: 60px;
+            min-width: 50px;
             padding: 10px;
-            background: var(--bg-input);
+            background: var(--input);
             border: 1px solid #4a4a7e;
             border-radius: 10px;
             color: var(--text);
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            transition: 0.2s;
         }
-
-        .zoom-btn:hover {
-            background: #3a3a5e;
-            border-color: var(--primary);
-        }
-
-        .layers-list {
-            max-height: 200px;
-            overflow-y: auto;
+        
+        .zoom-btn:hover { background: #3a3a5e; border-color: var(--primary); }
+        
+        .range-info {
+            font-size: 0.85rem;
+            color: var(--text-dim);
             margin-top: 10px;
+            text-align: center;
         }
 
-        .layer-item {
+        /* LAYERS */
+        .layers-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 8px;
+        }
+        
+        .layer {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px;
-            background: var(--bg-input);
-            border-radius: 8px;
+            padding: 8px 10px;
+            background: var(--input);
+            border-radius: 10px;
             margin-bottom: 8px;
             font-size: 0.9rem;
         }
-
-        .layer-color {
-            width: 20px;
-            height: 20px;
+        
+        .layer-dot {
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             border: 2px solid white;
+            flex-shrink: 0;
         }
-
+        
+        .layer-formula {
+            flex: 1;
+            font-family: monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
         .layer-remove {
-            margin-left: auto;
             background: var(--error);
             color: white;
             border: none;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* ===== THEORY SECTION ===== */
-        .theory-section {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 30px;
+        /* THEORY */
+        .theory {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid #3a3a6e;
-            box-shadow: var(--shadow);
         }
-
+        
+        .theory h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .theory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
-
+        
         .theory-card {
-            background: var(--bg-input);
-            border-radius: 16px;
-            padding: 20px;
+            background: var(--input);
+            border-radius: 14px;
+            padding: 15px;
             border-left: 4px solid var(--primary);
         }
-
+        
         .theory-card h4 {
-            color: var(--secondary);
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-        }
-
-        .formula-display {
-            font-family: 'Courier New', monospace;
-            background: #1e1e3f;
-            padding: 10px 16px;
-            border-radius: 10px;
-            margin: 10px 0;
+            color: var(--accent);
+            margin-bottom: 10px;
             font-size: 1.1rem;
-            color: var(--secondary);
         }
-
-        .key-point {
+        
+        .formula-box {
+            font-family: monospace;
+            background: #1e1e3f;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin: 8px 0;
+            color: var(--warning);
+            font-size: 1rem;
+        }
+        
+        .fact {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            margin: 8px 0;
+            gap: 8px;
+            margin: 6px 0;
             font-size: 0.95rem;
         }
-
-        .key-point::before {
+        
+        .fact::before {
             content: "•";
             color: var(--primary);
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 1;
+            margin-top: -2px;
         }
 
-        /* ===== TUTORIAL MODE ===== */
-        .tutorial-overlay {
+        /* TUTORIAL */
+        .tutorial {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 15, 26, 0.95);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13,13,26,0.95);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             padding: 20px;
         }
-
-        .tutorial-content {
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 600px;
+        
+        .tutorial.active { display: flex; }
+        
+        .tutorial-box {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
             width: 100%;
             border: 2px solid var(--primary);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: var(--shadow);
         }
-
-        .tutorial-step {
-            display: none;
-        }
-
-        .tutorial-step.active {
-            display: block;
-            animation: fadeIn 0.4s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tutorial-step h3 {
+        
+        .tutorial h3 {
             color: var(--primary);
             margin-bottom: 15px;
             font-size: 1.4rem;
         }
-
-        .tutorial-step p {
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-        }
-
-        .tutorial-nav {
+        
+        .tutorial p { margin-bottom: 18px; font-size: 1.05rem; }
+        
+        .tutorial-steps {
             display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-        }
-
-        .progress-dots {
-            display: flex;
-            gap: 8px;
             justify-content: center;
-            margin-top: 15px;
+            gap: 8px;
+            margin: 20px 0;
         }
-
-        .progress-dot {
+        
+        .step-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background: #4a4a7e;
-            transition: var(--transition);
+            transition: 0.2s;
         }
-
-        .progress-dot.active {
+        
+        .step-dot.active {
             background: var(--primary);
-            transform: scale(1.2);
+            transform: scale(1.3);
+        }
+        
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
         }
 
-        /* ===== FOOTER & NAV ===== */
-        .bottom-nav {
+        /* FOOTER */
+        .footer {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            padding: 25px;
+            gap: 15px;
+            padding: 20px;
             flex-wrap: wrap;
         }
-
+        
         .nav-link {
-            padding: 12px 24px;
-            background: var(--bg-card);
-            border-radius: 16px;
+            padding: 12px 20px;
+            background: var(--card);
+            border-radius: 14px;
             color: var(--text);
             text-decoration: none;
             font-weight: 500;
-            transition: var(--transition);
+            transition: 0.2s;
             border: 1px solid #3a3a6e;
         }
-
+        
         .nav-link:hover {
-            background: var(--primary-dark);
+            background: var(--primary);
             border-color: var(--primary);
             transform: translateY(-2px);
         }
 
-        /* ===== UTILITIES ===== */
+        /* UTILS */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
-        .mt-20 { margin-top: 20px; }
+        .mt-15 { margin-top: 15px; }
         .mb-10 { margin-bottom: 10px; }
         .flex { display: flex; }
         .items-center { align-items: center; }
-        .gap-10 { gap: 10px; }
+        .gap-8 { gap: 8px; }
         
-        /* ===== TOOLTIP ===== */
-        [data-tooltip] {
-            position: relative;
-            cursor: help;
-        }
-        
-        [data-tooltip]::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            background: #1e1e3f;
-            color: var(--text);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 100;
-            border: 1px solid var(--primary);
-            box-shadow: var(--shadow);
-        }
-        
-        [data-tooltip]:hover::after {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* ===== ANIMATIONS FOR LEARNING ===== */
-        .highlight {
-            animation: highlightPulse 2s infinite;
-        }
-        
-        @keyframes highlightPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(187, 134, 252, 0.4); }
-            50% { box-shadow: 0 0 0 12px rgba(187, 134, 252, 0); }
-        }
-
-        /* ===== MOBILE OPTIMIZATION ===== */
+        /* MOBILE */
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .formula-input { font-size: 1.1rem; padding: 14px 16px; }
-            .btn { padding: 12px 20px; font-size: 1rem; }
-            #mainCanvas { height: 300px; }
-            .graph-container { gap: 15px; }
-            .control-card { padding: 15px; }
+            .input-row { flex-direction: column; }
+            .btn { width: 100%; }
+            #graph { height: 300px; }
+            .zoom-row { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ===== HEADER ===== -->
-        <header class="page-header">
-            <h1>🎓 Билет 21: Конструктор графиков функций</h1>
-            <p class="subtitle">
-                <span class="glowing">Вводите любые формулы</span> — получайте мгновенную визуализацию, 
-                изучайте теорию в контексте, экспортируйте результаты. 
-                Даже если вы видите это впервые — вы разберётесь за 2 минуты.
-            </p>
-        </header>
+<div class="container">
+    <!-- HEADER -->
+    <header class="header">
+        <h1>🎓 Билет 21: График функций</h1>
+        <p>
+            <span class="glow">Введите формулу</span> → получите график + теорию. 
+            Работает без интернета. Понятно даже новичку.
+        </p>
+    </header>
 
-        <!-- ===== FORMULA INPUT ===== -->
-        <section class="formula-section">
-            <h2 class="section-title">🧮 Введите формулу функции</h2>
-            
-            <div class="formula-input-group">
-                <div class="formula-input-wrapper">
-                    <input type="text" id="formulaInput" class="formula-input" 
-                           placeholder="Например: 2*sin(x) + 0.5*x^2" value="sin(x)">
-                    <div id="inputHint" class="input-hint">Поддерживаются: +, -, *, /, ^, sin, cos, tan, log, ln, exp, sqrt, abs</div>
-                </div>
-                <button id="plotBtn" class="btn">
-                    📈 Построить график
-                </button>
-                <button id="addLayerBtn" class="btn btn-secondary">
-                    ➕ Добавить слой
-                </button>
-            </div>
+    <!-- FORMULA INPUT -->
+    <section class="input-section">
+        <div class="input-row">
+            <input type="text" id="formula" class="formula-input" 
+                   placeholder="Пример: 2*sin(x) + x^2" value="sin(x)" autocomplete="off">
+            <button id="plotBtn" class="btn">📈 Построить</button>
+            <button id="addLayerBtn" class="btn btn-secondary">➕ Слой</button>
+        </div>
+        <div id="hint" class="hint">
+            Поддерживается: + - * / ^ sin cos tan log ln exp sqrt abs | Переменная: <b>x</b>
+        </div>
+        
+        <div class="examples">
+            <div class="example" data-f="x^2">x² <span class="label">Парабола</span></div>
+            <div class="example" data-f="sin(x)">sin(x) <span class="label">Синус</span></div>
+            <div class="example" data-f="cos(x)">cos(x) <span class="label">Косинус</span></div>
+            <div class="example" data-f="exp(-x^2)">e⁻ˣ² <span class="label">Колокол</span></div>
+            <div class="example" data-f="log(x)/log(10)">lg(x) <span class="label">Логарифм</span></div>
+            <div class="example" data-f="1/x">1/x <span class="label">Гипербола</span></div>
+            <div class="example" data-f="abs(x)">|x| <span class="label">Модуль</span></div>
+            <div class="example" data-f="x^3-3*x">x³-3x <span class="label">Кубическая</span></div>
+        </div>
+    </section>
 
-            <div class="examples-grid">
-                <div class="example-card" data-formula="x^2">
-                    x²
-                    <span class="label">Парабола</span>
+    <!-- GRAPH + CONTROLS -->
+    <div class="graph-wrapper">
+        <div class="canvas-box">
+            <canvas id="graph"></canvas>
+            <div id="graphMsg" class="graph-msg"></div>
+        </div>
+        
+        <div class="controls">
+            <!-- Zoom -->
+            <div class="control-card">
+                <h4>🔍 Масштаб</h4>
+                <div class="zoom-row">
+                    <button class="zoom-btn" id="zoomIn">+</button>
+                    <button class="zoom-btn" id="zoomOut">−</button>
+                    <button class="zoom-btn" id="zoomReset">⟲</button>
+                    <button class="zoom-btn" id="panBtn" title="Режим перемещения">✋</button>
                 </div>
-                <div class="example-card" data-formula="sin(x)">
-                    sin(x)
-                    <span class="label">Синус</span>
+                <div class="range-info">
+                    X: [<span id="xMin">-10</span>; <span id="xMax">10</span>] &nbsp;|&nbsp; 
+                    Y: [<span id="yMin">-5</span>; <span id="yMax">5</span>]
                 </div>
-                <div class="example-card" data-formula="exp(-x^2)">
-                    e^(-x²)
-                    <span class="label">Гауссова кривая</span>
-                </div>
-                <div class="example-card" data-formula="log(x)/ln(10)">
-                    lg(x)
-                    <span class="label">Десятичный логарифм</span>
-                </div>
-                <div class="example-card" data-formula="abs(x)">
-                    |x|
-                    <span class="label">Модуль</span>
-                </div>
-                <div class="example-card" data-formula="1/x">
-                    1/x
-                    <span class="label">Гипербола</span>
-                </div>
-                <div class="example-card" data-formula="x^3 - 3*x">
-                    x³ - 3x
-                    <span class="label">Кубическая</span>
-                </div>
-                <div class="example-card" data-formula="sin(x)*cos(x)">
-                    sin(x)·cos(x)
-                    <span class="label">Произведение</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== GRAPH AREA ===== -->
-        <div class="graph-container">
-            <div class="graph-canvas-wrapper">
-                <canvas id="mainCanvas"></canvas>
-                <div id="graphMessage" class="text-center" style="color: var(--text-dim); margin-top: 15px; min-height: 24px;"></div>
             </div>
             
-            <div class="graph-controls">
-                <!-- Zoom Controls -->
-                <div class="control-card">
-                    <h4>🔍 Масштаб</h4>
-                    <div class="zoom-controls">
-                        <button class="zoom-btn" id="zoomIn">+</button>
-                        <button class="zoom-btn" id="zoomOut">−</button>
-                        <button class="zoom-btn" id="zoomReset">⟲</button>
-                        <button class="zoom-btn" id="panMode" data-tooltip="Перетаскивание графика">✋</button>
-                    </div>
-                    <div style="margin-top: 12px; font-size: 0.9rem; color: var(--text-dim);">
-                        X: [<span id="xRange">-10</span>; <span id="xRangeMax">10</span>] &nbsp;|&nbsp; 
-                        Y: [<span id="yRange">-5</span>; <span id="yRangeMax">5</span>]
-                    </div>
-                </div>
-
-                <!-- Layers -->
-                <div class="control-card">
-                    <h4>🎨 Слои графиков</h4>
-                    <div id="layersList" class="layers-list">
-                        <!-- Layers will be added here dynamically -->
-                    </div>
-                    <button id="clearLayersBtn" class="btn btn-warning" style="margin-top: 10px; width: 100%;">
-                        🗑️ Очистить все
-                    </button>
-                </div>
-
-                <!-- Export -->
-                <div class="control-card">
-                    <h4>📤 Экспорт</h4>
-                    <button id="exportPngBtn" class="btn btn-success" style="width: 100%; margin-bottom: 10px;">
-                        💾 Скачать как PNG
-                    </button>
-                    <button id="copyLinkBtn" class="btn btn-secondary" style="width: 100%;">
-                        🔗 Скопировать ссылку
-                    </button>
-                </div>
-
-                <!-- Tutorial Toggle -->
-                <div class="control-card">
-                    <button id="startTutorialBtn" class="btn" style="width: 100%;">
-                        🎓 Запустить обучение (2 мин)
-                    </button>
-                </div>
+            <!-- Layers -->
+            <div class="control-card">
+                <h4>🎨 Слои</h4>
+                <div id="layersList" class="layers-list"></div>
+                <button id="clearBtn" class="btn btn-warning mt-15" style="width:100%">🗑️ Очистить</button>
+            </div>
+            
+            <!-- Export -->
+            <div class="control-card">
+                <h4>📤 Сохранить</h4>
+                <button id="exportBtn" class="btn btn-success" style="width:100%; margin-bottom:10px">💾 PNG</button>
+                <button id="linkBtn" class="btn btn-secondary" style="width:100%">🔗 Ссылка</button>
+            </div>
+            
+            <!-- Tutorial -->
+            <div class="control-card">
+                <button id="tutorialBtn" class="btn" style="width:100%">🎓 Обучение (1 мин)</button>
             </div>
         </div>
-
-        <!-- ===== THEORY SECTION ===== -->
-        <section class="theory-section">
-            <h2 class="section-title">📚 Теория в контексте</h2>
-            <p style="margin-bottom: 20px; color: var(--text-dim);">
-                Изучайте свойства функций не по учебнику, а <span class="glowing">на живом примере</span>. 
-                Измените формулу выше — и теория обновится автоматически!
-            </p>
-            
-            <div class="theory-grid">
-                <div class="theory-card">
-                    <h4>🔹 Область определения</h4>
-                    <p>Множество значений <span class="glowing">x</span>, при которых функция имеет смысл.</p>
-                    <div class="formula-display" id="domainDisplay">D(f) = ℝ</div>
-                    <div class="key-point">Для <code>1/x</code>: x ≠ 0</div>
-                    <div class="key-point">Для <code>√x</code>: x ≥ 0</div>
-                    <div class="key-point">Для <code>log(x)</code>: x > 0</div>
-                </div>
-                
-                <div class="theory-card">
-                    <h4>🔹 Область значений</h4>
-                    <p>Множество всех возможных результатов <span class="glowing">y = f(x)</span>.</p>
-                    <div class="formula-display" id="rangeDisplay">E(f) = ℝ</div>
-                    <div class="key-point"><code>sin(x)</code>: [-1; 1]</div>
-                    <div class="key-point"><code>x²</code>: [0; +∞)</div>
-                    <div class="key-point"><code>e^x</code>: (0; +∞)</div>
-                </div>
-                
-                <div class="theory-card">
-                    <h4>🔹 Асимптоты</h4>
-                    <p>Прямые, к которым график неограниченно приближается.</p>
-                    <div class="key-point"><b>Вертикальная:</b> x = a, если f(x)→±∞ при x→a</div>
-                    <div class="key-point"><b>Горизонтальная:</b> y = b, если f(x)→b при x→±∞</div>
-                    <div class="key-point"><b>Наклонная:</b> y = kx + m, где k = lim f(x)/x</div>
-                </div>
-                
-                <div class="theory-card">
-                    <h4>🔹 Чётность и периодичность</h4>
-                    <div class="key-point"><b>Чётная:</b> f(-x) = f(x) → симметрия относительно Oy</div>
-                    <div class="key-point"><b>Нечётная:</b> f(-x) = -f(x) → симметрия относительно начала</div>
-                    <div class="key-point"><b>Периодическая:</b> f(x+T) = f(x), T — период</div>
-                    <div class="key-point"><code>sin(x), cos(x)</code>: T = 2π &nbsp;|&nbsp; <code>tan(x)</code>: T = π</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== TUTORIAL OVERLAY ===== -->
-        <div id="tutorialOverlay" class="tutorial-overlay">
-            <div class="tutorial-content">
-                <div class="tutorial-step active" data-step="1">
-                    <h3>👋 Привет! Давайте познакомимся</h3>
-                    <p>Это не просто график — это <span class="glowing">ваш личный математический конструктор</span>.</p>
-                    <p>За 2 минуты вы научитесь:</p>
-                    <ul style="margin-left: 20px; margin-bottom: 20px;">
-                        <li>Вводить любые формулы</li>
-                        <li>Менять масштаб и сравнивать функции</li>
-                        <li>Понимать свойства «на лету»</li>
-                    </ul>
-                    <p><b>Нажмите «Далее» — начнём!</b></p>
-                    <div class="tutorial-nav">
-                        <button class="btn btn-secondary" id="tutorialSkip">Пропустить</button>
-                        <button class="btn" id="tutorialNext1">Далее →</button>
-                    </div>
-                    <div class="progress-dots">
-                        <div class="progress-dot active"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="tutorial-step" data-step="2">
-                    <h3>🧮 Шаг 1: Введите формулу</h3>
-                    <p>В поле выше напишите, например: <span class="formula-display">2*x + 1</span></p>
-                    <p>Или кликните на любой пример ниже — формула подставится автоматически!</p>
-                    <p><b>Попробуйте сейчас:</b> введите <code>3*sin(x)</code> и нажмите «Построить график»</p>
-                    <div class="formula-display highlight" style="margin: 15px 0;">3*sin(x)</div>
-                    <div class="tutorial-nav">
-                        <button class="btn btn-secondary" id="tutorialBack2">← Назад</button>
-                        <button class="btn" id="tutorialNext2">Я попробовал! Далее →</button>
-                    </div>
-                    <div class="progress-dots">
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot active"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="tutorial-step" data-step="3">
-                    <h3>🔍 Шаг 2: Исследуйте график</h3>
-                    <p>• <b>Колёсико мыши</b> — приблизить/отдалить</p>
-                    <p>• <b>Перетаскивание</b> — сдвинуть график</p>
-                    <p>• <b>Кнопки +/−</b> — точный зум</p>
-                    <p>• <b>Добавьте второй слой</b> — сравните две функции!</p>
-                    <p><b>Попробуйте:</b> добавьте слой с формулой <code>cos(x)</code></p>
-                    <div class="tutorial-nav">
-                        <button class="btn btn-secondary" id="tutorialBack3">← Назад</button>
-                        <button class="btn" id="tutorialNext3">Понял! Далее →</button>
-                    </div>
-                    <div class="progress-dots">
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot active"></div>
-                        <div class="progress-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="tutorial-step" data-step="4">
-                    <h3>🎉 Вы готовы!</h3>
-                    <p>Теперь вы можете:</p>
-                    <ul style="margin-left: 20px; margin-bottom: 20px;">
-                        <li>✅ Строить любые функции</li>
-                        <li>✅ Анализировать их свойства</li>
-                        <li>✅ Экспортировать результаты</li>
-                        <li>✅ Учить математику через практику</li>
-                    </ul>
-                    <p class="glowing" style="font-size: 1.1rem; margin: 15px 0;">
-                        💡 Совет: сохраняйте интересные конфигурации через «Скопировать ссылку»
-                    </p>
-                    <div class="tutorial-nav">
-                        <button class="btn btn-secondary" id="tutorialBack4">← Назад</button>
-                        <button class="btn btn-success" id="tutorialFinish">🚀 Начать исследовать!</button>
-                    </div>
-                    <div class="progress-dots">
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot active"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== FOOTER NAV ===== -->
-        <nav class="bottom-nav">
-            <a href="ticket20.html" class="nav-link">← Предыдущий билет (20)</a>
-            <a href="../index.html" class="nav-link">📋 К списку билетов</a>
-            <a href="ticket22.html" class="nav-link">Следующий билет (22) →</a>
-        </nav>
     </div>
 
-    <script>
-        // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
-        const canvas = document.getElementById('mainCanvas');
-        const ctx = canvas.getContext('2d');
-        let scale = { x: 40, y: 40 }; // пикселей на единицу
-        let offset = { x: 0, y: 0 }; // сдвиг центра
-        let isPanning = false;
-        let lastMouse = { x: 0, y: 0 };
-        let layers = []; // [{formula, color, visible}]
-        const colors = ['#bb86fc', '#00d9a5', '#ffb86b', '#ff6b6b', '#4dabf7', '#9775fa'];
-        let currentColorIndex = 0;
+    <!-- THEORY -->
+    <section class="theory">
+        <h3>📚 Теория под вашу формулу</h3>
+        <div class="theory-grid">
+            <div class="theory-card">
+                <h4>🔹 Область определения</h4>
+                <div class="formula-box" id="domain">D(f) = ℝ</div>
+                <div class="fact">Для <code>1/x</code>: x ≠ 0</div>
+                <div class="fact">Для <code>√x</code>: x ≥ 0</div>
+                <div class="fact">Для <code>log(x)</code>: x > 0</div>
+            </div>
+            <div class="theory-card">
+                <h4>🔹 Область значений</h4>
+                <div class="formula-box" id="range">E(f) = ℝ</div>
+                <div class="fact"><code>sin(x)</code>: [-1; 1]</div>
+                <div class="fact"><code>x²</code>: [0; +∞)</div>
+                <div class="fact"><code>eˣ</code>: (0; +∞)</div>
+            </div>
+            <div class="theory-card">
+                <h4>🔹 Свойства</h4>
+                <div class="fact"><b>Чётная:</b> f(-x)=f(x) → симметрия Oy</div>
+                <div class="fact"><b>Нечётная:</b> f(-x)=-f(x) → симметрия начала</div>
+                <div class="fact"><b>Период:</b> sin/cos: 2π, tan: π</div>
+            </div>
+            <div class="theory-card">
+                <h4>🔹 Асимптоты</h4>
+                <div class="fact"><b>Вертикальная:</b> x=a, если f→±∞</div>
+                <div class="fact"><b>Горизонтальная:</b> y=b, если f→b при x→±∞</div>
+                <div class="fact"><b>Наклонная:</b> y=kx+m, k=lim f(x)/x</div>
+            </div>
+        </div>
+    </section>
 
-        // ===== ИНИЦИАЛИЗАЦИЯ =====
-        function init() {
-            resizeCanvas();
-            setupEventListeners();
-            loadFromURL();
-            plotDefault();
-            updateTheory();
-        }
+    <!-- TUTORIAL MODAL -->
+    <div id="tutorial" class="tutorial">
+        <div class="tutorial-box">
+            <div id="tStep1">
+                <h3>👋 Привет! Быстрый старт</h3>
+                <p>Здесь вы строите графики <span class="glow">без программирования</span>.</p>
+                <p><b>Что умеет:</b></p>
+                <ul style="margin-left:20px; margin-bottom:15px">
+                    <li>Любые формулы: <code>2*x+1</code>, <code>sin(x)*x</code></li>
+                    <li>Зум колёсиком или кнопками</li>
+                    <li>Несколько графиков одновременно</li>
+                    <li>Теория меняется под вашу функцию</li>
+                </ul>
+                <div class="tutorial-nav">
+                    <button class="btn btn-secondary" id="tSkip">Пропустить</button>
+                    <button class="btn" id="tNext1">Далее →</button>
+                </div>
+                <div class="tutorial-steps">
+                    <div class="step-dot active"></div><div class="step-dot"></div>
+                    <div class="step-dot"></div><div class="step-dot"></div>
+                </div>
+            </div>
+            
+            <div id="tStep2" class="hidden">
+                <h3>🧮 Шаг 1: Введите формулу</h3>
+                <p>Напишите в поле: <span class="formula-box">3*sin(x)</span></p>
+                <p>Или кликните на пример выше → формула подставится.</p>
+                <p>Нажмите <b>«Построить»</b> или Enter.</p>
+                <div class="tutorial-nav">
+                    <button class="btn btn-secondary" id="tBack2">← Назад</button>
+                    <button class="btn" id="tNext2">Я попробовал! →</button>
+                </div>
+                <div class="tutorial-steps">
+                    <div class="step-dot"></div><div class="step-dot active"></div>
+                    <div class="step-dot"></div><div class="step-dot"></div>
+                </div>
+            </div>
+            
+            <div id="tStep3" class="hidden">
+                <h3>🔍 Шаг 2: Исследуйте</h3>
+                <p>• <b>Колёсико</b> — зум</p>
+                <p>• <b>Перетаскивание</b> — сдвиг</p>
+                <p>• <b>«+ Слой»</b> — добавить второй график</p>
+                <p>Попробуйте добавить <code>cos(x)</code> поверх <code>sin(x)</code>!</p>
+                <div class="tutorial-nav">
+                    <button class="btn btn-secondary" id="tBack3">← Назад</button>
+                    <button class="btn" id="tNext3">Понял! →</button>
+                </div>
+                <div class="tutorial-steps">
+                    <div class="step-dot"></div><div class="step-dot"></div>
+                    <div class="step-dot active"></div><div class="step-dot"></div>
+                </div>
+            </div>
+            
+            <div id="tStep4" class="hidden">
+                <h3>🎉 Готово!</h3>
+                <p>Теперь вы можете:</p>
+                <ul style="margin-left:20px; margin-bottom:15px">
+                    <li>✅ Строить любые функции</li>
+                    <li>✅ Анализировать свойства</li>
+                    <li>✅ Сохранять результат</li>
+                    <li>✅ Учить математику на практике</li>
+                </ul>
+                <p class="glow" style="margin:15px 0">💡 Совет: делитесь ссылками на конфигурации!</p>
+                <div class="tutorial-nav">
+                    <button class="btn btn-secondary" id="tBack4">← Назад</button>
+                    <button class="btn btn-success" id="tFinish">🚀 Начать!</button>
+                </div>
+                <div class="tutorial-steps">
+                    <div class="step-dot"></div><div class="step-dot"></div>
+                    <div class="step-dot"></div><div class="step-dot active"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function resizeCanvas() {
-            const wrapper = canvas.parentElement;
-            canvas.width = wrapper.clientWidth;
-            canvas.height = wrapper.clientHeight;
-            redraw();
-        }
+    <!-- FOOTER -->
+    <footer class="footer">
+        <a href="ticket20.html" class="nav-link">← Билет 20</a>
+        <a href="../index.html" class="nav-link">📋 Все билеты</a>
+        <a href="ticket22.html" class="nav-link">Билет 22 →</a>
+    </footer>
+</div>
 
-        // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
-        function setupEventListeners() {
-            // Formula input
-            document.getElementById('formulaInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') plotCurrentFormula();
-            });
+<script>
+// ===== ВСТРОЕННЫЙ ПАРСЕР ФОРМУЛ (без внешних зависимостей) =====
+const Parser = {
+    // Разрешённые функции
+    funcs: {
+        sin: Math.sin, cos: Math.cos, tan: Math.tan,
+        asin: Math.asin, acos: Math.acos, atan: Math.atan,
+        log: Math.log, ln: Math.log, log10: (x)=>Math.log(x)/Math.LN10,
+        exp: Math.exp, sqrt: Math.sqrt, abs: Math.abs,
+        sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh
+    },
+    
+    // Токенизация
+    tokenize(expr) {
+        const tokens = [];
+        let i = 0, s = expr.replace(/\s+/g, '').toLowerCase();
+        
+        while (i < s.length) {
+            const c = s[i];
             
-            document.getElementById('plotBtn').addEventListener('click', plotCurrentFormula);
-            document.getElementById('addLayerBtn').addEventListener('click', addLayerFromInput);
-            
-            // Examples
-            document.querySelectorAll('.example-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const formula = card.dataset.formula;
-                    document.getElementById('formulaInput').value = formula;
-                    document.getElementById('inputHint').textContent = '✓ Формула подставлена. Нажмите "Построить график"';
-                    document.getElementById('inputHint').className = 'input-hint';
-                });
-            });
-            
-            // Zoom controls
-            document.getElementById('zoomIn').addEventListener('click', () => zoom(1.25));
-            document.getElementById('zoomOut').addEventListener('click', () => zoom(0.8));
-            document.getElementById('zoomReset').addEventListener('click', resetView);
-            document.getElementById('panMode').addEventListener('click', togglePanMode);
-            
-            // Layers
-            document.getElementById('clearLayersBtn').addEventListener('click', clearLayers);
-            
-            // Export
-            document.getElementById('exportPngBtn').addEventListener('click', exportAsPng);
-            document.getElementById('copyLinkBtn').addEventListener('click', copyConfigLink);
-            
-            // Tutorial
-            document.getElementById('startTutorialBtn').addEventListener('click', startTutorial);
-            setupTutorialHandlers();
-            
-            // Canvas interactions
-            canvas.addEventListener('wheel', handleWheel, { passive: false });
-            canvas.addEventListener('mousedown', handleMouseDown);
-            canvas.addEventListener('mousemove', handleMouseMove);
-            canvas.addEventListener('mouseup', handleMouseUp);
-            canvas.addEventListener('mouseleave', handleMouseUp);
-            
-            // Resize
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                updateRangeDisplay();
-            });
-        }
-
-        // ===== ПЛОТТИНГ =====
-        function plotCurrentFormula() {
-            const input = document.getElementById('formulaInput');
-            const formula = input.value.trim();
-            const hint = document.getElementById('inputHint');
-            
-            if (!formula) {
-                showInputError('Введите формулу');
-                return;
+            // Число
+            if (/\d/.test(c) || (c === '.' && /\d/.test(s[i+1]))) {
+                let num = '';
+                while (i < s.length && /[\d.]/.test(s[i])) num += s[i++];
+                tokens.push({ type: 'num', value: parseFloat(num) });
+                continue;
             }
             
-            try {
-                // Проверка синтаксиса
-                math.evaluate(formula.replace(/x/g, '0'));
-                
-                // Добавляем как новый слой или обновляем первый
-                if (layers.length === 0 || !layers[0].isTemporary) {
-                    addLayer(formula, colors[currentColorIndex % colors.length]);
-                    currentColorIndex++;
+            // Переменная
+            if (c === 'x') {
+                tokens.push({ type: 'var', value: 'x' });
+                i++;
+                continue;
+            }
+            
+            // Функция
+            if (/[a-z]/.test(c)) {
+                let name = '';
+                while (i < s.length && /[a-z]/.test(s[i])) name += s[i++];
+                if (this.funcs[name]) {
+                    tokens.push({ type: 'func', value: name });
                 } else {
-                    layers[0].formula = formula;
+                    throw new Error(`Неизвестная функция: ${name}`);
                 }
-                
-                input.classList.remove('error');
-                hint.textContent = '✓ График построен!';
-                hint.className = 'input-hint';
-                hint.style.color = 'var(--success)';
-                
-                redraw();
-                updateTheory();
-                updateLayersList();
-                
-            } catch (err) {
-                showInputError(`Ошибка: ${getFriendlyError(err.message)}`);
-                console.error('Plot error:', err);
+                continue;
+            }
+            
+            // Операторы и скобки
+            if ('+-*/^()'.includes(c)) {
+                tokens.push({ type: c, value: c });
+                i++;
+                continue;
+            }
+            
+            throw new Error(`Недопустимый символ: '${c}'`);
+        }
+        return tokens;
+    },
+    
+    // Парсинг в обратную польскую запись (алгоритм сортировочной станции)
+    toRPN(tokens) {
+        const output = [], stack = [];
+        const prec = { '+':1, '-':1, '*':2, '/':2, '^':3 };
+        const rightAssoc = { '^': true };
+        
+        for (const t of tokens) {
+            if (t.type === 'num' || t.type === 'var') {
+                output.push(t);
+            } else if (t.type === 'func') {
+                stack.push(t);
+            } else if (t.type in prec) {
+                while (stack.length) {
+                    const top = stack[stack.length-1];
+                    if (top.type === 'func' || 
+                        (top.type in prec && 
+                         ((rightAssoc[t.type] && prec[t.type] < prec[top.type]) ||
+                          (!rightAssoc[t.type] && prec[t.type] <= prec[top.type])))) {
+                        output.push(stack.pop());
+                    } else break;
+                }
+                stack.push(t);
+            } else if (t.value === '(') {
+                stack.push(t);
+            } else if (t.value === ')') {
+                while (stack.length && stack[stack.length-1].value !== '(') {
+                    output.push(stack.pop());
+                }
+                if (!stack.length) throw new Error('Незакрытая скобка');
+                stack.pop(); // убрать '('
+                // Если сверху функция — вытолкнуть её
+                if (stack.length && stack[stack.length-1].type === 'func') {
+                    output.push(stack.pop());
+                }
             }
         }
-
-        function showInputError(message) {
-            const input = document.getElementById('formulaInput');
-            const hint = document.getElementById('inputHint');
-            input.classList.add('error');
-            hint.textContent = message;
-            hint.className = 'input-hint error';
-            setTimeout(() => {
-                input.classList.remove('error');
-                hint.className = 'input-hint';
-                hint.style.color = '';
-            }, 3000);
+        
+        while (stack.length) {
+            const t = stack.pop();
+            if (t.value === '(' || t.value === ')') {
+                throw new Error('Ошибка в скобках');
+            }
+            output.push(t);
         }
+        return output;
+    },
+    
+    // Вычисление
+    compile(expr) {
+        const tokens = this.tokenize(expr);
+        const rpn = this.toRPN(tokens);
+        
+        return function(x) {
+            const stack = [];
+            for (const t of rpn) {
+                if (t.type === 'num') {
+                    stack.push(t.value);
+                } else if (t.type === 'var') {
+                    stack.push(x);
+                } else if (t.type === 'func') {
+                    const a = stack.pop();
+                    const fn = Parser.funcs[t.value];
+                    const r = fn(a);
+                    if (!isFinite(r)) throw new Error('Значение вне диапазона');
+                    stack.push(r);
+                } else if (t.type in ['+', '-', '*', '/', '^']) {
+                    const b = stack.pop(), a = stack.pop();
+                    let r;
+                    switch(t.type) {
+                        case '+': r = a + b; break;
+                        case '-': r = a - b; break;
+                        case '*': r = a * b; break;
+                        case '/': 
+                            if (b === 0) throw new Error('Деление на ноль');
+                            r = a / b; break;
+                        case '^': r = Math.pow(a, b); break;
+                    }
+                    if (!isFinite(r)) throw new Error('Переполнение');
+                    stack.push(r);
+                }
+            }
+            if (stack.length !== 1) throw new Error('Ошибка вычисления');
+            return stack[0];
+        };
+    }
+};
 
-        function getFriendlyError(message) {
-            const errors = {
-                'Unexpected': 'Незакрытая скобка или неверный синтаксис',
-                'Undefined': 'Неизвестная функция или переменная',
-                'Value domain': 'Значение вне области определения (например, логарифм от отрицательного)',
-                'divide by zero': 'Деление на ноль'
+// ===== ГРАФИЧЕСКИЙ ДВИЖОК =====
+const Graph = {
+    canvas: null,
+    ctx: null,
+    scale: { x: 40, y: 40 },
+    offset: { x: 0, y: 0 },
+    isPanning: false,
+    lastPos: { x: 0, y: 0 },
+    layers: [],
+    colors: ['#bb86fc', '#00d9a5', '#ffb86b', '#ff6b6b', '#4dabf7', '#9775fa'],
+    colorIdx: 0,
+    
+    init(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.resize();
+        this.bindEvents();
+        this.plot('sin(x)', this.colors[0]);
+        this.updateLayersUI();
+        this.updateTheory();
+    },
+    
+    resize() {
+        const rect = this.canvas.parentElement.getBoundingClientRect();
+        this.canvas.width = rect.width - 30;
+        this.canvas.height = 350;
+        this.redraw();
+    },
+    
+    bindEvents() {
+        // Кнопки
+        document.getElementById('zoomIn').onclick = () => this.zoom(1.25);
+        document.getElementById('zoomOut').onclick = () => this.zoom(0.8);
+        document.getElementById('zoomReset').onclick = () => this.resetView();
+        document.getElementById('panBtn').onclick = () => this.togglePan();
+        document.getElementById('clearBtn').onclick = () => this.clearLayers();
+        document.getElementById('exportBtn').onclick = () => this.exportPNG();
+        document.getElementById('linkBtn').onclick = () => this.copyLink();
+        
+        // Формула
+        const input = document.getElementById('formula');
+        document.getElementById('plotBtn').onclick = () => this.plotFromInput();
+        document.getElementById('addLayerBtn').onclick = () => this.addLayerFromInput();
+        input.onkeypress = e => { if (e.key === 'Enter') this.plotFromInput(); };
+        
+        // Примеры
+        document.querySelectorAll('.example').forEach(el => {
+            el.onclick = () => {
+                input.value = el.dataset.f;
+                this.hint('✓ Формула подставлена. Нажмите "Построить"', 'success');
             };
-            for (const [key, val] of Object.entries(errors)) {
-                if (message.includes(key)) return val;
+        });
+        
+        // Canvas: зум и пан
+        this.canvas.onwheel = e => {
+            e.preventDefault();
+            const rect = this.canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            this.zoom(e.deltaY > 0 ? 0.9 : 1.1, mx, my);
+        };
+        
+        this.canvas.onmousedown = e => {
+            if (this.isPanning) {
+                this.lastPos = { x: e.offsetX, y: e.offsetY };
+                this.canvas.style.cursor = 'grabbing';
             }
-            return message;
-        }
-
-        function addLayer(formula, color) {
-            layers.push({
-                formula,
-                color,
-                visible: true,
-                isTemporary: false
-            });
-        }
-
-        function addLayerFromInput() {
-            const formula = document.getElementById('formulaInput').value.trim();
-            if (formula) {
-                addLayer(formula, colors[currentColorIndex % colors.length]);
-                currentColorIndex++;
-                redraw();
-                updateLayersList();
-                updateTheory();
+        };
+        
+        this.canvas.onmousemove = e => {
+            if (this.isPanning && e.buttons === 1) {
+                const dx = e.offsetX - this.lastPos.x;
+                const dy = e.offsetY - this.lastPos.y;
+                this.offset.x -= dx / this.scale.x;
+                this.offset.y += dy / this.scale.y;
+                this.lastPos = { x: e.offsetX, y: e.offsetY };
+                this.redraw();
+                this.updateRangeDisplay();
             }
-        }
-
-        function clearLayers() {
-            if (confirm('Удалить все графики?')) {
-                layers = [];
-                redraw();
-                updateLayersList();
-                updateTheory();
+        };
+        
+        this.canvas.onmouseup = () => {
+            if (this.isPanning) this.canvas.style.cursor = 'crosshair';
+        };
+        
+        this.canvas.onmouseleave = () => {
+            if (this.isPanning) this.canvas.style.cursor = 'crosshair';
+        };
+        
+        // Touch events для мобильных
+        let touchStart = null;
+        this.canvas.ontouchstart = e => {
+            if (e.touches.length === 1) {
+                touchStart = { 
+                    x: e.touches[0].clientX, 
+                    y: e.touches[0].clientY,
+                    offsetX: this.offset.x,
+                    offsetY: this.offset.y
+                };
+            } else if (e.touches.length === 2) {
+                // Пинч для зума
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                touchStart = { 
+                    dist: Math.sqrt(dx*dx + dy*dy),
+                    scale: this.scale.x,
+                    centerX: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+                    centerY: (e.touches[0].clientY + e.touches[1].clientY) / 2
+                };
             }
-        }
-
-        // ===== ОТРИСОВКА =====
-        function redraw() {
-            if (!ctx) return;
-            
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            // Очистка
-            ctx.fillStyle = '#0a0a1a';
-            ctx.fillRect(0, 0, width, height);
-            
-            // Сетка
-            drawGrid();
-            
-            // Оси
-            drawAxes();
-            
-            // Графики
-            layers.filter(l => l.visible).forEach(layer => {
-                drawFunction(layer.formula, layer.color);
-            });
-            
-            updateRangeDisplay();
-        }
-
-        function drawGrid() {
-            ctx.strokeStyle = '#2a2a4a';
-            ctx.lineWidth = 0.5;
-            
-            // Вертикальные линии
-            const xStart = Math.floor((-offset.x * scale.x) / scale.x / 10) * 10;
-            for (let x = xStart; x < xStart + width/scale.x + 10; x += 1) {
-                const screenX = toScreenX(x);
-                ctx.beginPath();
-                ctx.moveTo(screenX, 0);
-                ctx.lineTo(screenX, canvas.height);
-                ctx.stroke();
+        };
+        
+        this.canvas.ontouchmove = e => {
+            e.preventDefault();
+            if (e.touches.length === 1 && touchStart && !touchStart.dist) {
+                const dx = e.touches[0].clientX - touchStart.x;
+                const dy = e.touches[0].clientY - touchStart.y;
+                this.offset.x = touchStart.offsetX - dx / this.scale.x;
+                this.offset.y = touchStart.offsetY + dy / this.scale.y;
+                this.redraw();
+                this.updateRangeDisplay();
+            } else if (e.touches.length === 2 && touchStart && touchStart.dist) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const factor = dist / touchStart.dist;
+                const rect = this.canvas.getBoundingClientRect();
+                const mx = touchStart.centerX - rect.left;
+                const my = touchStart.centerY - rect.top;
+                this.zoom(factor, mx, my, true);
             }
-            
-            // Горизонтальные линии
-            const yStart = Math.floor((-offset.y * scale.y) / scale.y / 10) * 10;
-            for (let y = yStart; y < yStart + height/scale.y + 10; y += 1) {
-                const screenY = toScreenY(y);
-                ctx.beginPath();
-                ctx.moveTo(0, screenY);
-                ctx.lineTo(canvas.width, screenY);
-                ctx.stroke();
-            }
+        };
+        
+        this.canvas.ontouchend = () => { touchStart = null; };
+        
+        window.onresize = () => { this.resize(); this.updateRangeDisplay(); };
+    },
+    
+    // Координаты
+    toScreenX(x) { return (x + this.offset.x) * this.scale.x; },
+    toScreenY(y) { return this.canvas.height - (y + this.offset.y) * this.scale.y; },
+    toDataX(px) { return px / this.scale.x - this.offset.x; },
+    toDataY(py) { return (this.canvas.height - py) / this.scale.y - this.offset.y; },
+    
+    // Зум
+    zoom(factor, cx = this.canvas.width/2, cy = this.canvas.height/2, isTouch = false) {
+        const dx = this.toDataX(cx);
+        const dy = this.toDataY(cy);
+        this.scale.x = Math.max(5, Math.min(500, this.scale.x * factor));
+        this.scale.y = this.scale.x; // одинаковый масштаб по осям
+        this.offset.x = dx - cx / this.scale.x;
+        this.offset.y = dy - (this.canvas.height - cy) / this.scale.y;
+        this.redraw();
+        this.updateRangeDisplay();
+    },
+    
+    resetView() {
+        this.scale = { x: 40, y: 40 };
+        this.offset = { x: 0, y: 0 };
+        this.redraw();
+        this.updateRangeDisplay();
+    },
+    
+    togglePan() {
+        this.isPanning = !this.isPanning;
+        this.canvas.style.cursor = this.isPanning ? 'grab' : 'crosshair';
+        document.getElementById('panBtn').style.background = this.isPanning ? 'var(--primary)' : '';
+    },
+    
+    // Отрисовка
+    redraw() {
+        const { ctx, canvas } = this;
+        const w = canvas.width, h = canvas.height;
+        
+        // Фон
+        ctx.fillStyle = '#0a0a1a';
+        ctx.fillRect(0, 0, w, h);
+        
+        // Сетка
+        ctx.strokeStyle = '#2a2a4a';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        for (let x = Math.floor(this.toDataX(0)) - 20; x <= Math.ceil(this.toDataX(w)) + 20; x++) {
+            const sx = this.toScreenX(x);
+            ctx.moveTo(sx, 0); ctx.lineTo(sx, h);
         }
-
-        function drawAxes() {
-            ctx.strokeStyle = '#666';
-            ctx.lineWidth = 2;
-            
-            // Ось X
-            const y0 = toScreenY(0);
-            ctx.beginPath();
-            ctx.moveTo(0, y0);
-            ctx.lineTo(canvas.width, y0);
-            ctx.stroke();
-            
-            // Ось Y
-            const x0 = toScreenX(0);
-            ctx.beginPath();
-            ctx.moveTo(x0, 0);
-            ctx.lineTo(x0, canvas.height);
-            ctx.stroke();
-            
-            // Подписи
-            ctx.fillStyle = '#888';
-            ctx.font = '12px monospace';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'top';
-            
-            for (let x = -10; x <= 10; x += 2) {
-                if (x === 0) continue;
-                const sx = toScreenX(x);
-                ctx.fillText(x.toString(), sx, y0 + 5);
-            }
-            
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'middle';
-            for (let y = -5; y <= 5; y += 1) {
-                if (y === 0) continue;
-                const sy = toScreenY(y);
-                ctx.fillText(y.toString(), x0 - 8, sy);
-            }
+        for (let y = Math.floor(this.toDataY(h)) - 20; y <= Math.ceil(this.toDataY(0)) + 20; y++) {
+            const sy = this.toScreenY(y);
+            ctx.moveTo(0, sy); ctx.lineTo(w, sy);
         }
-
-        function drawFunction(formula, color) {
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 2.5;
-            ctx.beginPath();
-            
-            let first = true;
-            const step = 1 / scale.x; // шаг по экрану
-            
-            for (let px = 0; px <= canvas.width; px += 2) {
-                const x = toDataX(px);
+        ctx.stroke();
+        
+        // Оси
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const y0 = this.toScreenY(0), x0 = this.toScreenX(0);
+        ctx.moveTo(0, y0); ctx.lineTo(w, y0);
+        ctx.moveTo(x0, 0); ctx.lineTo(x0, h);
+        ctx.stroke();
+        
+        // Подписи осей
+        ctx.fillStyle = '#888';
+        ctx.font = '11px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        for (let x = -15; x <= 15; x += 2) {
+            if (x === 0) continue;
+            const sx = this.toScreenX(x);
+            if (sx > 20 && sx < w - 20) ctx.fillText(x, sx, y0 + 5);
+        }
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let y = -10; y <= 10; y++) {
+            if (y === 0) continue;
+            const sy = this.toScreenY(y);
+            if (sy > 20 && sy < h - 20) ctx.fillText(y, x0 - 8, sy);
+        }
+        
+        // Графики
+        this.layers.forEach(layer => {
+            if (!layer.visible) return;
+            this.drawFunction(layer.formula, layer.color);
+        });
+    },
+    
+    drawFunction(formula, color) {
+        const { ctx, canvas } = this;
+        const fn = Parser.compile(formula);
+        
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        
+        let first = true, lastY = null;
+        
+        for (let px = 0; px <= canvas.width; px += 1) {
+            const x = this.toDataX(px);
+            try {
+                let y = fn(x);
+                if (!isFinite(y) || Math.abs(y) > 1e8) { first = true; continue; }
                 
-                try {
-                    // Создаём безопасную функцию
-                    const expr = math.parse(formula);
-                    const fn = expr.compile();
-                    let y = fn.evaluate({ x: x });
-                    
-                    if (typeof y !== 'number' || !isFinite(y) || Math.abs(y) > 1e10) {
-                        first = true;
-                        continue;
-                    }
-                    
-                    const py = toScreenY(y);
-                    
-                    // Пропускаем точки вне экрана
-                    if (py < -50 || py > canvas.height + 50) {
-                        first = true;
-                        continue;
-                    }
-                    
-                    if (first) {
-                        ctx.moveTo(px, py);
-                        first = false;
-                    } else {
-                        // Прерываем при разрывах
-                        const prevY = toDataY(py);
-                        if (Math.abs(y - prevY) > 10) {
-                            ctx.stroke();
-                            ctx.beginPath();
-                            ctx.moveTo(px, py);
-                            first = true;
-                        } else {
-                            ctx.lineTo(px, py);
-                        }
-                    }
-                } catch (e) {
+                const py = this.toScreenY(y);
+                
+                // Пропуск вне экрана
+                if (py < -100 || py > canvas.height + 100) { first = true; continue; }
+                
+                // Разрыв при скачке
+                if (lastY !== null && Math.abs(py - lastY) > 100) {
+                    ctx.stroke();
+                    ctx.beginPath();
                     first = true;
                 }
-            }
-            ctx.stroke();
-        }
-
-        // ===== КООРДИНАТЫ =====
-        function toScreenX(x) { return (x + offset.x) * scale.x; }
-        function toScreenY(y) { return canvas.height - (y + offset.y) * scale.y; }
-        function toDataX(px) { return px / scale.x - offset.x; }
-        function toDataY(py) { return (canvas.height - py) / scale.y - offset.y; }
-
-        // ===== ЗУМ И ПАН =====
-        function zoom(factor, centerX = canvas.width/2, centerY = canvas.height/2) {
-            const dataX = toDataX(centerX);
-            const dataY = toDataY(centerY);
-            
-            scale.x *= factor;
-            scale.y *= factor;
-            
-            // Корректируем сдвиг, чтобы точка под курсором осталась на месте
-            offset.x = dataX - centerX / scale.x;
-            offset.y = dataY - (canvas.height - centerY) / scale.y;
-            
-            redraw();
-        }
-
-        function resetView() {
-            scale = { x: 40, y: 40 };
-            offset = { x: 0, y: 0 };
-            redraw();
-        }
-
-        function togglePanMode() {
-            isPanning = !isPanning;
-            canvas.style.cursor = isPanning ? 'grab' : 'crosshair';
-            document.getElementById('panMode').style.background = isPanning ? 'var(--primary)' : '';
-        }
-
-        function handleWheel(e) {
-            e.preventDefault();
-            const factor = e.deltaY > 0 ? 0.9 : 1.1;
-            zoom(factor, e.offsetX, e.offsetY);
-        }
-
-        function handleMouseDown(e) {
-            if (isPanning) {
-                lastMouse = { x: e.offsetX, y: e.offsetY };
-                canvas.style.cursor = 'grabbing';
-            }
-        }
-
-        function handleMouseMove(e) {
-            if (isPanning && e.buttons === 1) {
-                const dx = e.offsetX - lastMouse.x;
-                const dy = e.offsetY - lastMouse.y;
                 
-                offset.x -= dx / scale.x;
-                offset.y += dy / scale.y;
+                if (first) { ctx.moveTo(px, py); first = false; }
+                else { ctx.lineTo(px, py); }
                 
-                lastMouse = { x: e.offsetX, y: e.offsetY };
-                redraw();
-            }
-        }
-
-        function handleMouseUp() {
-            if (isPanning) {
-                canvas.style.cursor = 'grab';
-            }
-        }
-
-        // ===== СЛОИ =====
-        function updateLayersList() {
-            const container = document.getElementById('layersList');
-            container.innerHTML = '';
-            
-            layers.forEach((layer, index) => {
-                const item = document.createElement('div');
-                item.className = 'layer-item';
-                item.innerHTML = `
-                    <div class="layer-color" style="background: ${layer.color}"></div>
-                    <span style="flex:1; font-family:monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                        ${layer.formula}
-                    </span>
-                    <button class="layer-remove" data-index="${index}">×</button>
-                `;
-                container.appendChild(item);
-            });
-            
-            // Обработчики удаления
-            container.querySelectorAll('.layer-remove').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    layers.splice(index, 1);
-                    redraw();
-                    updateLayersList();
-                    updateTheory();
-                });
-            });
-        }
-
-        // ===== ТЕОРИЯ =====
-        function updateTheory() {
-            if (layers.length === 0) return;
-            
-            const formula = layers[0].formula.toLowerCase();
-            const domainEl = document.getElementById('domainDisplay');
-            const rangeEl = document.getElementById('rangeDisplay');
-            
-            // Простая эвристика для демонстрации
-            if (formula.includes('1/x') || formula.includes('/x')) {
-                domainEl.textContent = 'D(f) = ℝ \\ {0}';
-                rangeEl.textContent = 'E(f) = ℝ \\ {0}';
-            } else if (formula.includes('sqrt') || formula.includes('√')) {
-                domainEl.textContent = 'D(f) = [0; +∞)';
-                rangeEl.textContent = 'E(f) = [0; +∞)';
-            } else if (formula.includes('log') || formula.includes('ln')) {
-                domainEl.textContent = 'D(f) = (0; +∞)';
-                rangeEl.textContent = 'E(f) = ℝ';
-            } else if (formula.includes('sin') || formula.includes('cos')) {
-                domainEl.textContent = 'D(f) = ℝ';
-                rangeEl.textContent = 'E(f) = [-A; A] (A — амплитуда)';
-            } else if (formula.includes('x^2') || formula.includes('x²')) {
-                domainEl.textContent = 'D(f) = ℝ';
-                rangeEl.textContent = 'E(f) = [y₀; +∞), где y₀ — вершина';
-            } else {
-                domainEl.textContent = 'D(f) = ℝ (если нет ограничений)';
-                rangeEl.textContent = 'E(f) зависит от вида функции';
-            }
-        }
-
-        // ===== ЭКСПОРТ =====
-        function exportAsPng() {
-            const link = document.createElement('a');
-            link.download = `graph-${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        }
-
-        function copyConfigLink() {
-            const config = {
-                layers: layers.map(l => ({ formula: l.formula, color: l.color })),
-                view: { scale, offset }
-            };
-            const json = btoa(encodeURIComponent(JSON.stringify(config)));
-            const url = `${location.origin}${location.pathname}?config=${json}`;
-            
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = document.getElementById('copyLinkBtn');
-                const original = btn.innerHTML;
-                btn.innerHTML = '✓ Скопировано!';
-                btn.classList.add('btn-success');
-                setTimeout(() => {
-                    btn.innerHTML = original;
-                    btn.classList.remove('btn-success');
-                }, 2000);
-            });
-        }
-
-        function loadFromURL() {
-            const params = new URLSearchParams(location.search);
-            const configStr = params.get('config');
-            if (!configStr) return;
-            
-            try {
-                const config = JSON.parse(decodeURIComponent(atob(configStr)));
-                if (config.layers) {
-                    layers = config.layers.map(l => ({ ...l, visible: true, isTemporary: false }));
-                }
-                if (config.view) {
-                    scale = config.view.scale || scale;
-                    offset = config.view.offset || offset;
-                }
+                lastY = py;
             } catch (e) {
-                console.warn('Failed to load config:', e);
+                first = true;
+                lastY = null;
             }
         }
-
-        function plotDefault() {
-            if (layers.length === 0) {
-                addLayer('sin(x)', colors[0]);
-                redraw();
-                updateLayersList();
+        ctx.stroke();
+    },
+    
+    // Работа со слоями
+    plotFromInput() {
+        const input = document.getElementById('formula');
+        const formula = input.value.trim();
+        if (!formula) { this.hint('Введите формулу', 'error'); return; }
+        
+        try {
+            // Проверка синтаксиса
+            Parser.compile(formula)(0);
+            
+            // Добавляем или обновляем слой
+            if (this.layers.length === 0 || !this.layers[0].isTemp) {
+                this.plot(formula, this.colors[this.colorIdx % this.colors.length]);
+                this.colorIdx++;
+            } else {
+                this.layers[0].formula = formula;
             }
-        }
-
-        function updateRangeDisplay() {
-            const xMin = toDataX(0).toFixed(1);
-            const xMax = toDataX(canvas.width).toFixed(1);
-            const yMin = toDataY(canvas.height).toFixed(1);
-            const yMax = toDataY(0).toFixed(1);
             
-            document.getElementById('xRange').textContent = xMin;
-            document.getElementById('xRangeMax').textContent = xMax;
-            document.getElementById('yRange').textContent = yMin;
-            document.getElementById('yRangeMax').textContent = yMax;
-        }
-
-        // ===== ОБУЧЕНИЕ =====
-        function startTutorial() {
-            document.getElementById('tutorialOverlay').style.display = 'flex';
-            showStep(1);
-        }
-
-        function showStep(n) {
-            document.querySelectorAll('.tutorial-step').forEach(s => s.classList.remove('active'));
-            document.querySelector(`.tutorial-step[data-step="${n}"]`).classList.add('active');
+            input.classList.remove('error');
+            this.hint('✓ График построен!', 'success');
+            this.redraw();
+            this.updateLayersUI();
+            this.updateTheory();
             
-            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i + 1 === n);
-            });
+        } catch (err) {
+            input.classList.add('error');
+            this.hint('Ошибка: ' + this.friendlyError(err.message), 'error');
+            setTimeout(() => input.classList.remove('error'), 2000);
         }
-
-        function setupTutorialHandlers() {
-            // Navigation
-            document.getElementById('tutorialNext1').onclick = () => showStep(2);
-            document.getElementById('tutorialBack2').onclick = () => showStep(1);
-            document.getElementById('tutorialNext2').onclick = () => showStep(3);
-            document.getElementById('tutorialBack3').onclick = () => showStep(2);
-            document.getElementById('tutorialNext3').onclick = () => showStep(4);
-            document.getElementById('tutorialBack4').onclick = () => showStep(3);
-            
-            // Skip/Finish
-            document.getElementById('tutorialSkip').onclick = 
-            document.getElementById('tutorialFinish').onclick = () => {
-                document.getElementById('tutorialOverlay').style.display = 'none';
+    },
+    
+    addLayerFromInput() {
+        const formula = document.getElementById('formula').value.trim();
+        if (formula) {
+            this.plot(formula, this.colors[this.colorIdx % this.colors.length]);
+            this.colorIdx++;
+            this.redraw();
+            this.updateLayersUI();
+            this.updateTheory();
+        }
+    },
+    
+    plot(formula, color) {
+        this.layers.push({ formula, color, visible: true, isTemp: false });
+    },
+    
+    clearLayers() {
+        if (confirm('Удалить все графики?')) {
+            this.layers = [];
+            this.redraw();
+            this.updateLayersUI();
+            this.updateTheory();
+        }
+    },
+    
+    updateLayersUI() {
+        const container = document.getElementById('layersList');
+        container.innerHTML = '';
+        
+        this.layers.forEach((layer, i) => {
+            const div = document.createElement('div');
+            div.className = 'layer';
+            div.innerHTML = `
+                <div class="layer-dot" style="background:${layer.color}"></div>
+                <span class="layer-formula">${layer.formula}</span>
+                <button class="layer-remove" data-i="${i}">×</button>
+            `;
+            container.appendChild(div);
+        });
+        
+        container.querySelectorAll('.layer-remove').forEach(btn => {
+            btn.onclick = (e) => {
+                const i = parseInt(e.target.dataset.i);
+                this.layers.splice(i, 1);
+                this.redraw();
+                this.updateLayersUI();
+                this.updateTheory();
             };
-            
-            // Close on outside click
-            document.getElementById('tutorialOverlay').addEventListener('click', (e) => {
-                if (e.target.id === 'tutorialOverlay') {
-                    document.getElementById('tutorialOverlay').style.display = 'none';
-                }
-            });
+        });
+    },
+    
+    // Теория
+    updateTheory() {
+        if (!this.layers.length) return;
+        const f = this.layers[0].formula.toLowerCase();
+        const dom = document.getElementById('domain');
+        const rng = document.getElementById('range');
+        
+        if (f.includes('1/x') || f.includes('/x')) {
+            dom.textContent = 'D(f) = ℝ \\ {0}';
+            rng.textContent = 'E(f) = ℝ \\ {0}';
+        } else if (f.includes('sqrt') || f.includes('√')) {
+            dom.textContent = 'D(f) = [0; +∞)';
+            rng.textContent = 'E(f) = [0; +∞)';
+        } else if (f.includes('log') || f.includes('ln')) {
+            dom.textContent = 'D(f) = (0; +∞)';
+            rng.textContent = 'E(f) = ℝ';
+        } else if (f.includes('sin') || f.includes('cos')) {
+            dom.textContent = 'D(f) = ℝ';
+            rng.textContent = 'E(f) = [-A; A]';
+        } else if (f.includes('x^2') || f.includes('x²')) {
+            dom.textContent = 'D(f) = ℝ';
+            rng.textContent = 'E(f) = [y₀; +∞)';
+        } else if (f.includes('tan') || f.includes('tg')) {
+            dom.textContent = 'D(f): x ≠ π/2 + πn';
+            rng.textContent = 'E(f) = ℝ';
+        } else {
+            dom.textContent = 'D(f) = ℝ';
+            rng.textContent = 'E(f) зависит от функции';
         }
+    },
+    
+    // Утилиты
+    hint(msg, type) {
+        const el = document.getElementById('hint');
+        el.textContent = msg;
+        el.className = 'hint ' + (type || '');
+        if (type) setTimeout(() => { el.className = 'hint'; }, 3000);
+    },
+    
+    friendlyError(msg) {
+        const map = {
+            'Незакрытая': 'Незакрытая скобка',
+            'Неизвестная': 'Неизвестная функция',
+            'Деление на ноль': 'Деление на ноль',
+            'Недопустимый': 'Недопустимый символ',
+            'Значение вне': 'Значение вне области определения'
+        };
+        for (const [k, v] of Object.entries(map)) {
+            if (msg.includes(k)) return v;
+        }
+        return msg;
+    },
+    
+    updateRangeDisplay() {
+        const x1 = this.toDataX(0).toFixed(1);
+        const x2 = this.toDataX(this.canvas.width).toFixed(1);
+        const y1 = this.toDataY(this.canvas.height).toFixed(1);
+        const y2 = this.toDataY(0).toFixed(1);
+        document.getElementById('xMin').textContent = x1;
+        document.getElementById('xMax').textContent = x2;
+        document.getElementById('yMin').textContent = y1;
+        document.getElementById('yMax').textContent = y2;
+    },
+    
+    exportPNG() {
+        const link = document.createElement('a');
+        link.download = `graph-${Date.now()}.png`;
+        link.href = this.canvas.toDataURL('image/png');
+        link.click();
+    },
+    
+    copyLink() {
+        const config = {
+            layers: this.layers.map(l => ({ f: l.formula, c: l.color })),
+            view: { s: this.scale.x, ox: this.offset.x, oy: this.offset.y }
+        };
+        const json = btoa(encodeURIComponent(JSON.stringify(config)));
+        const url = location.origin + location.pathname + '?c=' + json;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = document.getElementById('linkBtn');
+            const old = btn.innerHTML;
+            btn.innerHTML = '✓ Скопировано!';
+            setTimeout(() => btn.innerHTML = old, 2000);
+        });
+    },
+    
+    loadFromURL() {
+        const params = new URLSearchParams(location.search);
+        const c = params.get('c');
+        if (!c) return;
+        try {
+            const cfg = JSON.parse(decodeURIComponent(atob(c)));
+            if (cfg.layers) {
+                this.layers = cfg.layers.map(l => ({ 
+                    formula: l.f, color: l.c, visible: true, isTemp: false 
+                }));
+            }
+            if (cfg.view) {
+                this.scale = { x: cfg.view.s, y: cfg.view.s };
+                this.offset = { x: cfg.view.ox, y: cfg.view.oy };
+            }
+            this.redraw();
+            this.updateLayersUI();
+            this.updateTheory();
+            this.updateRangeDisplay();
+        } catch (e) { console.warn('Load error:', e); }
+    }
+};
 
-        // ===== ЗАПУСК =====
-        window.addEventListener('load', init);
-    </script>
+// ===== ОБУЧЕНИЕ =====
+const Tutorial = {
+    show(n) {
+        document.querySelectorAll('.tutorial-box > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById('tStep' + n).classList.remove('hidden');
+        document.querySelectorAll('.step-dot').forEach((d, i) => {
+            d.classList.toggle('active', i + 1 === n);
+        });
+    },
+    start() {
+        document.getElementById('tutorial').classList.add('active');
+        this.show(1);
+    },
+    hide() {
+        document.getElementById('tutorial').classList.remove('active');
+    },
+    init() {
+        document.getElementById('tutorialBtn').onclick = () => this.start();
+        document.getElementById('tSkip').onclick = 
+        document.getElementById('tFinish').onclick = () => this.hide();
+        
+        document.getElementById('tNext1').onclick = () => this.show(2);
+        document.getElementById('tBack2').onclick = () => this.show(1);
+        document.getElementById('tNext2').onclick = () => this.show(3);
+        document.getElementById('tBack3').onclick = () => this.show(2);
+        document.getElementById('tNext3').onclick = () => this.show(4);
+        document.getElementById('tBack4').onclick = () => this.show(3);
+        
+        document.getElementById('tutorial').onclick = (e) => {
+            if (e.target.id === 'tutorial') this.hide();
+        };
+    }
+};
+
+// ===== ЗАПУСК =====
+window.onload = () => {
+    Graph.init('graph');
+    Graph.loadFromURL();
+    Tutorial.init();
+    
+    // Авто-подсказка при фокусе
+    document.getElementById('formula').onfocus = function() {
+        if (this.value === 'sin(x)') this.select();
+    };
+};
+</script>
 </body>
 </html>
