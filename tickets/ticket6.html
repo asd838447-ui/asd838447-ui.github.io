@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 6. Бесконечно большие и бесконечно малые последовательности</title>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+      MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Билет 6. Бесконечно большие и бесконечно малые последовательности, их примеры, свойства. Предел суммы, разности, произведения и частного двух числовых последовательностей.</h1>
+
+        <div class="content">
+
+            <hr>
+
+            <h2>1. Бесконечно малые последовательности (БМП)</h2>
+            <p><strong>Определение.</strong> Последовательность \( \{\alpha_n\} \) называется <em>бесконечно малой</em>, если её предел равен нулю. Формально:</p>
+            <div class="formula-block">\[ \forall\varepsilon > 0\ \exists N_\varepsilon \in \mathbb{N} : \forall n > N_\varepsilon \Rightarrow |\alpha_n| < \varepsilon \]</div>
+            <p><strong>Примеры:</strong></p>
+            <ul>
+                <li>\( \alpha_n = 1/n \) — основной пример БМП.</li>
+                <li>\( \alpha_n = (-1)^n / n \) — знакочередующаяся БМП.</li>
+                <li>\( \alpha_n = 1/2^n \) или \( \alpha_n = q^n \) при \( |q| < 1 \).</li>
+            </ul>
+
+            <h3>Свойства бесконечно малых последовательностей</h3>
+            <ul>
+                <li><strong>Связь с пределом:</strong> Число \( a \) является пределом последовательности \( \{x_n\} \) тогда и только тогда, когда разность \( \alpha_n = x_n - a \) является БМП, то есть \( x_n = a + \alpha_n \), где \( \alpha_n \to 0 \).</li>
+                <li><strong>Сумма БМП:</strong> Сумма конечного числа БМП есть БМП.
+                    <p><em>Доказательство:</em> Пусть \( \alpha_n \to 0 \) и \( \beta_n \to 0 \). Для произвольного \( \varepsilon > 0 \) найдутся номера \( N_1 \) и \( N_2 \), такие что \( |\alpha_n| < \varepsilon/2 \) для \( n > N_1 \) и \( |\beta_n| < \varepsilon/2 \) для \( n > N_2 \). Тогда для всех \( n > \max(N_1, N_2) \) по неравенству треугольника: \( |\alpha_n + \beta_n| \leq |\alpha_n| + |\beta_n| < \varepsilon/2 + \varepsilon/2 = \varepsilon \). ∎</p>
+                </li>
+                <li><strong>Произведение БМП на ограниченную последовательность:</strong> Произведение БМП на ограниченную последовательность является БМП.
+                    <p><em>Доказательство:</em> Пусть \( \alpha_n \to 0 \), а \( \{y_n\} \) ограничена: \( |y_n| \leq C \). Для \( \varepsilon > 0 \) возьмём номер \( N \) такой, что \( |\alpha_n| < \varepsilon/C \). Тогда для \( n > N \): \( |\alpha_n y_n| = |\alpha_n|\cdot|y_n| < (\varepsilon/C)\cdot C = \varepsilon \). ∎</p>
+                </li>
+            </ul>
+
+            <hr>
+
+            <h2>2. Бесконечно большие последовательности (ББП)</h2>
+            <p><strong>Определение.</strong> Последовательность \( \{x_n\} \) называется <em>бесконечно большой</em>, если для любого \( E > 0 \) найдётся номер \( N_E \), такой что для всех \( n > N_E \) выполняется \( |x_n| > E \):</p>
+            <div class="formula-block">\[ \forall E > 0\ \exists N_E \in \mathbb{N} : \forall n > N_E \Rightarrow |x_n| > E \]</div>
+            <ul>
+                <li>Если \( x_n > E \) — говорят, что \( \lim x_n = +\infty \).</li>
+                <li>Если \( x_n < -E \) — говорят, что \( \lim x_n = -\infty \).</li>
+            </ul>
+            <p><strong>Примеры:</strong></p>
+            <ul>
+                <li>\( x_n = n \) (стремится к \( +\infty \)).</li>
+                <li>\( x_n = (-1)^n \cdot n \) (стремится к \( \infty \) без знака, члены колеблются).</li>
+            </ul>
+            <p><strong>Связь БМП и ББП:</strong> Если \( \{\alpha_n\} \) — БМП и все \( \alpha_n \neq 0 \), то \( \{1/\alpha_n\} \) является ББП. И наоборот: если \( \{x_n\} \) — ББП, то \( \{1/x_n\} \) — БМП.</p>
+            <p><strong>Важное отличие:</strong> Любая ББП неограничена, но не всякая неограниченная последовательность является ББП.</p>
+            <p><em>Пример:</em> \( x_n = n\cdot(1 - (-1)^n) \) принимает значения \( 0, 2, 0, 4, 0, 6, \dots \) — она неограничена, но не ББП, так как бесконечно много её членов равны нулю.</p>
+
+            <hr>
+
+            <h2>3. Арифметические свойства пределов</h2>
+            <p>Пусть \( \lim a_n = a \) и \( \lim b_n = b \). Тогда:</p>
+
+            <h3>А) Предел суммы и разности</h3>
+            <div class="formula-block">\[ \lim_{n\to\infty}(a_n \pm b_n) = a \pm b \]</div>
+            <p><em>Доказательство:</em> Запишем \( a_n = a + \alpha_n,\; b_n = b + \beta_n \), где \( \alpha_n, \beta_n \to 0 \). Тогда \( (a_n + b_n) = (a + b) + (\alpha_n + \beta_n) \). Сумма двух БМП есть БМП, значит предел суммы равен \( a + b \). ∎</p>
+
+            <h3>Б) Предел произведения</h3>
+            <div class="formula-block">\[ \lim_{n\to\infty}(a_n \cdot b_n) = a \cdot b \]</div>
+            <p><em>Доказательство:</em> \( a_n \cdot b_n = (a + \alpha_n)(b + \beta_n) = ab + a\beta_n + b\alpha_n + \alpha_n\beta_n \). Рассмотрим слагаемые:</p>
+            <ul>
+                <li>\( ab \) — константа.</li>
+                <li>\( a\beta_n \) — БМП (константа \( a \) умноженная на БМП \( \beta_n \)).</li>
+                <li>\( b\alpha_n \) — БМП (константа \( b \) умноженная на БМП \( \alpha_n \)).</li>
+                <li>\( \alpha_n\beta_n \) — БМП (произведение двух БМП).</li>
+            </ul>
+            <p>Сумма трёх БМП является БМП. Значит, \( \lim(a_n b_n) = ab \). ∎</p>
+
+            <h3>В) Предел частного</h3>
+            <div class="formula-block">\[ \lim_{n\to\infty}\frac{a_n}{b_n} = \frac{a}{b}, \quad b \neq 0 \]</div>
+            <p><em>Доказательство:</em> Достаточно доказать, что \( \lim(1/b_n) = 1/b \), а затем применить свойство произведения. Рассмотрим разность:</p>
+            <div class="formula-block">\[ \left|\frac{1}{b_n} - \frac{1}{b}\right| = \left|\frac{b - b_n}{b \cdot b_n}\right| = |\beta_n| \cdot \frac{1}{|b \cdot b_n|} \]</div>
+            <p>Нужно показать, что \( \{1/|b \cdot b_n|\} \) ограничена. Так как \( b \neq 0 \), по лемме о сохранении знака начиная с некоторого номера \( N \) все \( |b_n| > |b|/2 \). Тогда:</p>
+            <div class="formula-block">\[ \frac{1}{|b \cdot b_n|} < \frac{1}{|b| \cdot |b|/2} = \frac{2}{|b|^2} \]</div>
+            <p>Это константа, значит последовательность ограничена. Произведение БМП на ограниченную величину есть БМП, следовательно \( \lim(1/b_n) = 1/b \). Итого:</p>
+            <div class="formula-block">\[ \lim\frac{a_n}{b_n} = \lim\!\left(a_n \cdot \frac{1}{b_n}\right) = a \cdot \frac{1}{b} = \frac{a}{b} \quad \text{∎} \]</div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket5.html">← Предыдущий билет (5)</a>
+            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket7.html">→ Следующий билет (7)</a>
+        </nav>
+    </div>
+
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim','dx','dy','≈','≠','≤','≥','→','↗','↘','x²','y³','n!','(n+1)','1/n','ε','δ'];
+        function random(min, max) { return min + Math.random() * (max - min); }
+        function createFallingSymbols() {
+            const container = document.getElementById('falling-symbols');
+            if (!container) return;
+            const symbolsPerSide = Math.floor(window.innerWidth / 80) + 12;
+            for (let i = 0; i < symbolsPerSide * 2; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                const isLeft = i < symbolsPerSide;
+                if (isLeft) { symbol.classList.add('left'); symbol.style.left = random(0, 15) + '%'; }
+                else { symbol.classList.add('right'); symbol.style.left = random(85, 100) + '%'; }
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.animationDelay = random(0, 20) + 's';
+                symbol.style.animationDuration = random(8, 20) + 's';
+                symbol.style.fontSize = random(0.9, 1.6) + 'rem';
+                symbol.style.top = random(-20, 0) + 'vh';
+                if (Math.random() < 0.25) symbol.classList.add('glowing');
+                if (!symbol.classList.contains('glowing')) symbol.style.opacity = random(0.2, 0.5);
+                container.appendChild(symbol);
+            }
+        }
+        createFallingSymbols();
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('falling-symbols');
+                if (container) { container.innerHTML = ''; createFallingSymbols(); }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
