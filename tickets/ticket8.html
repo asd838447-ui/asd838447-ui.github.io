@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 8. Подпоследовательности, теорема Больцано-Вейерштрасса</title>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+      MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Билет 8. Подпоследовательности, примеры. Теорема Больцано-Вейерштрасса. Утверждение о пределе подпоследовательности сходящейся последовательности.</h1>
+
+        <div class="content">
+
+            <hr>
+
+            <h2>1. Подпоследовательности: определение и примеры</h2>
+            <p><strong>Определение.</strong> Подпоследовательностью последовательности \( \{x_n\} \) называется последовательность, составленная из элементов \( \{x_n\} \) в том же порядке, но с индексами \( n_k \), образующими строго возрастающую последовательность натуральных чисел: \( n_1 < n_2 < n_3 < \dots < n_k < \dots \)</p>
+            <p>Формально подпоследовательность записывается как \( \{x_{n_k}\} \). Индекс \( k \) — порядковый номер элемента в новой подпоследовательности, а \( n_k \) — его номер в исходной.</p>
+
+            <h3>Примеры:</h3>
+            <ul>
+                <li><strong>Последовательность обратных чисел:</strong> \( x_n = 1/n = \{1, 1/2, 1/3, \dots\} \). Если взять только чётные индексы (\( n_k = 2k \)), получим подпоследовательность \( \{x_{2k}\} = \{1/2, 1/4, 1/6, \dots\} \).</li>
+                <li><strong>Мигающая последовательность:</strong> \( x_n = (-1)^n = \{-1, 1, -1, 1, \dots\} \). Здесь выделяются две подпоследовательности:
+                    <ul>
+                        <li>С нечётными индексами: \( x_{2k-1} = \{-1, -1, -1, \dots\} \to -1 \).</li>
+                        <li>С чётными индексами: \( x_{2k} = \{1, 1, 1, \dots\} \to 1 \).</li>
+                    </ul>
+                </li>
+                <li><strong>Тригонометрическая последовательность:</strong> \( x_n = \cos(\pi n/4) \). Подпоследовательность \( x_{8k} = \cos(2\pi k) = 1 \to 1 \). Из неё можно выделить частичные пределы, стремящиеся к разным числам.</li>
+            </ul>
+
+            <hr>
+
+            <h2>2. Утверждение о пределе подпоследовательности сходящейся последовательности</h2>
+            <p><strong>Теорема.</strong> Если последовательность \( \{x_n\} \) сходится к пределу \( a \), то любая её подпоследовательность \( \{x_{n_k}\} \) также сходится к \( a \).</p>
+
+            <p><em>Доказательство:</em></p>
+            <ol>
+                <li>Пусть \( \lim x_n = a \). По определению предела, для любого \( \varepsilon > 0 \) найдётся \( N_\varepsilon \), такой что для всех \( n > N_\varepsilon \): \( |x_n - a| < \varepsilon \).</li>
+                <li>Рассмотрим подпоследовательность \( \{x_{n_k}\} \). Индексы \( n_k \) строго возрастают (\( n_1 < n_2 < \dots \)) и являются натуральными числами, поэтому \( n_k \geq k \) для любого \( k \).</li>
+                <li>Возьмём тот же номер \( N_\varepsilon \). Если \( k > N_\varepsilon \), то \( n_k \geq k > N_\varepsilon \).</li>
+                <li>Значит, \( n_k > N_\varepsilon \), и для элемента \( x_{n_k} \) выполняется условие из пункта 1: \( |x_{n_k} - a| < \varepsilon \).</li>
+                <li>По определению предела: \( \lim_{k\to\infty} x_{n_k} = a \). ∎</li>
+            </ol>
+
+            <hr>
+
+            <h2>3. Теорема Больцано-Вейерштрасса</h2>
+            <p>Эта теорема — один из «столпов» математического анализа. Она гарантирует, что в ограниченной последовательности всегда есть «сгущение» элементов.</p>
+
+            <p><strong>Теорема.</strong> Если последовательность \( \{x_n\} \) <strong>ограничена</strong> (\( |x_n| \leq C \) для всех \( n \)), то из неё всегда можно выделить <strong>сходящуюся подпоследовательность</strong>.</p>
+
+            <h3>Доказательство (метод деления отрезка пополам):</h3>
+            <ol>
+                <li>Пусть \( \{x_n\} \) ограничена. Все члены лежат в некотором замкнутом отрезке \( I_0 = [-C, C] \).</li>
+                <li>Разделим \( I_0 \) пополам точкой \( c = (-C+C)/2 \). Получим два отрезка: левый и правый.</li>
+                <li>В последовательности бесконечно много членов, поэтому хотя бы в одном из двух отрезков содержится бесконечно много членов \( \{x_n\} \). Обозначим его \( I_1 = [a_1, b_1] \). Его длина \( b_1 - a_1 = C \) (в два раза меньше исходного).</li>
+                <li>Повторяем процедуру: разделим \( I_1 \) пополам и выберем половину с бесконечно многими членами — получим \( I_2 \). Продолжая, строим убывающую систему вложенных отрезков \( I_0 \supset I_1 \supset I_2 \supset \dots \)</li>
+                <li>Длина каждого отрезка стремится к нулю: \( d(I_k) = 2C/2^k \to 0 \) при \( k \to \infty \) — система стягивающаяся.</li>
+                <li>По теореме Кантора, существует единственная точка \( \gamma \), принадлежащая всем отрезкам.</li>
+                <li>Строим подпоследовательность \( \{x_{n_k}\} \): в \( I_k \) содержится бесконечно много членов, поэтому можно выбрать \( x_{n_k} \in I_k \) так, что \( n_k > n_{k-1} \).</li>
+                <li>Так как \( x_{n_k} \in I_k \) и \( \gamma \in I_k \), то \( |x_{n_k} - \gamma| \leq b_k - a_k = 2C/2^k \to 0 \).</li>
+                <li>По теореме о зажатой последовательности: \( \lim_{k\to\infty} x_{n_k} = \gamma \). Сходящаяся подпоследовательность найдена. ∎</li>
+            </ol>
+
+            <p><em>Важное замечание:</em> Если последовательность неограничена, из неё тоже можно выделить подпоследовательность, но стремящуюся к \( \pm\infty \), что не является сходимостью в классическом смысле.</p>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket7.html">← Предыдущий билет (7)</a>
+            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket9.html">→ Следующий билет (9)</a>
+        </nav>
+    </div>
+
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim','dx','dy','≈','≠','≤','≥','→','↗','↘','x²','y³','n!','(n+1)','1/n','ε','δ'];
+        function random(min, max) { return min + Math.random() * (max - min); }
+        function createFallingSymbols() {
+            const container = document.getElementById('falling-symbols');
+            if (!container) return;
+            const symbolsPerSide = Math.floor(window.innerWidth / 80) + 12;
+            for (let i = 0; i < symbolsPerSide * 2; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                const isLeft = i < symbolsPerSide;
+                if (isLeft) { symbol.classList.add('left'); symbol.style.left = random(0, 15) + '%'; }
+                else { symbol.classList.add('right'); symbol.style.left = random(85, 100) + '%'; }
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.animationDelay = random(0, 20) + 's';
+                symbol.style.animationDuration = random(8, 20) + 's';
+                symbol.style.fontSize = random(0.9, 1.6) + 'rem';
+                symbol.style.top = random(-20, 0) + 'vh';
+                if (Math.random() < 0.25) symbol.classList.add('glowing');
+                if (!symbol.classList.contains('glowing')) symbol.style.opacity = random(0.2, 0.5);
+                container.appendChild(symbol);
+            }
+        }
+        createFallingSymbols();
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('falling-symbols');
+                if (container) { container.innerHTML = ''; createFallingSymbols(); }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 5. Предел последовательности, свойства, теоремы о неравенствах</title>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+      MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Билет 5. Предел последовательности. Свойства сходящихся последовательностей. Лемма о знаке, теоремы о переходе к пределу в неравенстве и о зажатой последовательности.</h1>
+
+        <div class="content">
+
+            <hr>
+
+            <h2>1. Понятие числовой последовательности и её предела</h2>
+            <p><strong>Определение последовательности:</strong> Числовая последовательность — это упорядоченный бесконечный список чисел, где каждому натуральному числу \( n \in \mathbb{N} \) ставится в соответствие действительное число \( x_n \in \mathbb{R} \). Формально последовательность можно рассматривать как функцию \( f\colon \mathbb{N} \to \mathbb{R} \).</p>
+            <p><strong>Строгое определение предела (по Коши):</strong> Число \( a \) называется пределом последовательности \( \{x_n\} \), если для любого положительного числа \( \varepsilon > 0 \) существует такой номер \( N_\varepsilon \) (зависящий от \( \varepsilon \)), что для всех \( n \geq N_\varepsilon \) выполняется неравенство:</p>
+            <div class="formula-block">\[ |x_n - a| < \varepsilon \]</div>
+            <p><strong>Геометрический смысл:</strong> Неравенство \( |x_n - a| < \varepsilon \) равносильно двойному неравенству \( a - \varepsilon < x_n < a + \varepsilon \). Это означает, что все члены последовательности, начиная с номера \( N_\varepsilon \), попадают в \( \varepsilon \)-окрестность точки \( a \).</p>
+            <p><em>Важная эквивалентная формулировка:</em> число \( a \) является пределом, если <em>вне</em> любой сколь угодно малой \( \varepsilon \)-окрестности точки \( a \) лежит лишь конечное число элементов последовательности.</p>
+
+            <hr>
+
+            <h2>2. Свойства сходящихся последовательностей</h2>
+            <p>Сходящейся называется последовательность, имеющая конечный предел. Она обладает следующими фундаментальными свойствами:</p>
+
+            <h3>А) Единственность предела</h3>
+            <p><strong>Теорема:</strong> Если последовательность имеет предел, то он только один.</p>
+            <p><em>Доказательство (от противного):</em></p>
+            <ol>
+                <li>Предположим, что последовательность \( \{x_n\} \) имеет два различных предела: \( a_1 \) и \( a_2 \), причём \( a_1 \neq a_2 \). Пусть \( a_1 < a_2 \).</li>
+                <li>Выберем такое малое \( \varepsilon \), чтобы \( \varepsilon \)-окрестности этих точек не пересекались: \( \varepsilon = |a_2 - a_1| / 2 \).</li>
+                <li>По определению предела, почти все члены последовательности (все кроме конечного числа) должны лежать в окрестности \( U_\varepsilon(a_1) \).</li>
+                <li>Одновременно, почти все члены должны лежать в окрестности \( U_\varepsilon(a_2) \).</li>
+                <li>Поскольку окрестности не пересекаются, член последовательности не может находиться в обеих одновременно. Противоречие. Значит, предел единственен.</li>
+            </ol>
+
+            <h3>Б) Ограниченность</h3>
+            <p><strong>Теорема:</strong> Любая сходящаяся последовательность является ограниченной.</p>
+            <p><em>Доказательство:</em></p>
+            <ol>
+                <li>Пусть \( \lim x_n = a \). Возьмём в определении предела конкретное значение \( \varepsilon = 1 \).</li>
+                <li>Существует номер \( N \), такой что для всех \( n \geq N \) выполняется \( |x_n - a| < 1 \), то есть \( a - 1 < x_n < a + 1 \). «Хвост» последовательности ограничен.</li>
+                <li>Осталось конечное число первых элементов \( \{x_1, x_2, \dots, x_{N-1}\} \). Любое конечное множество ограничено своим максимумом и минимумом.</li>
+                <li>Объединяя оценки, найдём константу \( C \), ограничивающую все члены: \( |x_n| \leq C \). Последовательность ограничена.</li>
+            </ol>
+            <p><em>Важно:</em> обратное неверно — ограниченная последовательность (например, \( x_n = (-1)^n \)) не всегда сходится.</p>
+
+            <hr>
+
+            <h2>3. Лемма о сохранении знака</h2>
+            <p><strong>Формулировка:</strong> Если последовательность \( \{x_n\} \) сходится к ненулевому пределу \( a \neq 0 \), то начиная с некоторого номера все члены последовательности имеют тот же знак, что и \( a \).</p>
+            <p><em>Доказательство:</em></p>
+            <ol>
+                <li>Пусть \( \lim x_n = a \) и \( a > 0 \).</li>
+                <li>Выберем \( \varepsilon = a/2 \) (это положительное число).</li>
+                <li>Тогда существует номер \( n_0 \), такой что для всех \( n > n_0 \):
+                \[ |x_n - a| < \frac{a}{2} \implies a - \frac{a}{2} < x_n < a + \frac{a}{2} \implies \frac{a}{2} < x_n < \frac{3a}{2}. \]</li>
+                <li>Так как \( a/2 > 0 \), то и все \( x_n > 0 \) при \( n > n_0 \).</li>
+                <li>Аналогично доказывается для случая \( a < 0 \) (выбирается \( \varepsilon = |a|/2 \)).</li>
+            </ol>
+
+            <hr>
+
+            <h2>4. Теорема о предельном переходе в неравенстве</h2>
+            <p><strong>Формулировка:</strong> Если последовательности \( \{x_n\} \) и \( \{y_n\} \) сходятся к пределам \( a \) и \( b \) соответственно, и начиная с некоторого момента \( x_n \leq y_n \), то и для их пределов: \( a \leq b \).</p>
+            <p><em>Доказательство (от противного):</em></p>
+            <ol>
+                <li>Предположим обратное: \( a > b \).</li>
+                <li>Тогда \( a - b > 0 \). Выберем \( \varepsilon = (a - b)/2 \).</li>
+                <li>По определению предела:
+                    <ul>
+                        <li>Начиная с номера \( n_1 \), все \( x_n \) лежат в \( (a-\varepsilon,\, a+\varepsilon) \). В частности: \( x_n > a - \varepsilon = \dfrac{a+b}{2} \).</li>
+                        <li>Начиная с номера \( n_2 \), все \( y_n \) лежат в \( (b-\varepsilon,\, b+\varepsilon) \). В частности: \( y_n < b + \varepsilon = \dfrac{a+b}{2} \).</li>
+                    </ul>
+                </li>
+                <li>Для всех \( n > \max(n_1, n_2) \) одновременно: \( y_n < \dfrac{a+b}{2} < x_n \), то есть \( y_n < x_n \).</li>
+                <li>Это прямо противоречит условию \( x_n \leq y_n \). Следовательно, \( a \leq b \).</li>
+            </ol>
+            <p><em>Примечание:</em> даже если неравенство между членами было строгим (\( x_n < y_n \)), предел может быть нестрогим (например, \( 1/n > 0 \), но \( \lim 1/n = 0 \)).</p>
+
+            <hr>
+
+            <h2>5. Теорема о зажатой последовательности («о двух милиционерах»)</h2>
+            <p><strong>Формулировка:</strong> Пусть даны три последовательности \( \{x_n\} \), \( \{y_n\} \) и \( \{z_n\} \). Если \( x_n \leq y_n \leq z_n \) для всех достаточно больших \( n \), и крайние последовательности стремятся к одному пределу \( \lim x_n = \lim z_n = a \), то и средняя тоже: \( \lim y_n = a \).</p>
+            <p><em>Доказательство:</em></p>
+            <ol>
+                <li>Зафиксируем произвольное \( \varepsilon > 0 \).</li>
+                <li>Так как \( x_n \to a \), существует номер \( n_1 \), такой что для всех \( n > n_1 \): \( a - \varepsilon < x_n < a + \varepsilon \).</li>
+                <li>Так как \( z_n \to a \), существует номер \( n_2 \), такой что для всех \( n > n_2 \): \( a - \varepsilon < z_n < a + \varepsilon \).</li>
+                <li>Пусть \( n_0 \) — номер, с которого выполняется \( x_n \leq y_n \leq z_n \). Возьмём \( N = \max(n_1, n_2, n_0) \).</li>
+                <li>Тогда для всех \( n > N \) запишем цепочку:
+                \[ a - \varepsilon < x_n \leq y_n \leq z_n < a + \varepsilon. \]</li>
+                <li>Выбрасывая крайние части: \( a - \varepsilon < y_n < a + \varepsilon \), то есть \( |y_n - a| < \varepsilon \).</li>
+                <li>По определению предела: \( \lim y_n = a \). ∎</li>
+            </ol>
+            <p><strong>Геометрический смысл:</strong> Если две функции «зажимают» третью и обе стремятся к одной точке \( a \), то и зажатая между ними неизбежно стремится к ней же.</p>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket4.html">← Предыдущий билет (4)</a>
+            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket6.html">→ Следующий билет (6)</a>
+        </nav>
+    </div>
+
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim','dx','dy','≈','≠','≤','≥','→','↗','↘','x²','y³','n!','(n+1)','1/n','ε','δ'];
+        function random(min, max) { return min + Math.random() * (max - min); }
+        function createFallingSymbols() {
+            const container = document.getElementById('falling-symbols');
+            if (!container) return;
+            const symbolsPerSide = Math.floor(window.innerWidth / 80) + 12;
+            for (let i = 0; i < symbolsPerSide * 2; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                const isLeft = i < symbolsPerSide;
+                if (isLeft) { symbol.classList.add('left'); symbol.style.left = random(0, 15) + '%'; }
+                else { symbol.classList.add('right'); symbol.style.left = random(85, 100) + '%'; }
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.animationDelay = random(0, 20) + 's';
+                symbol.style.animationDuration = random(8, 20) + 's';
+                symbol.style.fontSize = random(0.9, 1.6) + 'rem';
+                symbol.style.top = random(-20, 0) + 'vh';
+                if (Math.random() < 0.25) symbol.classList.add('glowing');
+                if (!symbol.classList.contains('glowing')) symbol.style.opacity = random(0.2, 0.5);
+                container.appendChild(symbol);
+            }
+        }
+        createFallingSymbols();
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('falling-symbols');
+                if (container) { container.innerHTML = ''; createFallingSymbols(); }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

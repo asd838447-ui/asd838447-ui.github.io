@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 12. Функции, сюръективные, инъективные, биективные отображения, обратное отображение, композиция</title>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+      MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Билет 12. Функции (отображения). Сюръективные, инъективные, биективные отображения. Обратное отображение, композиция отображений. Способы задания отображений (функций).</h1>
+
+        <div class="content">
+
+            <hr>
+
+            <h2>1. Определение функции (отображения)</h2>
+            <p>Понятие функции — одно из центральных в математике. Оно описывает правило, по которому элементы одного множества соотносятся с элементами другого.</p>
+
+            <p><strong>Определение.</strong> Пусть даны два непустых множества \( X \) и \( Y \). Говорят, что на \( X \) задана <em>функция (отображение)</em> \( f \) со значениями в \( Y \), если каждому \( x \in X \) по некоторому правилу поставлен в соответствие единственный \( y \in Y \).</p>
+            <p>Символически: \( f\colon X \to Y \) или \( y = f(x) \).</p>
+            <ul>
+                <li>Множество \( X \) — <strong>область определения</strong>.</li>
+                <li>Элемент \( x \in X \) — <strong>аргумент</strong> (прообраз).</li>
+                <li>Элемент \( y = f(x) \) — <strong>значение функции</strong> в точке \( x \) (образ).</li>
+            </ul>
+            <p>Множество всех образов \( Y_f = f(X) = \{y \in Y \mid \exists\, x \in X : y = f(x)\} \) называется <strong>множеством значений</strong> функции, причём \( Y_f \subseteq Y \).</p>
+            <p><strong>Ключевое свойство:</strong> каждому \( x \) соответствует ровно один \( y \). Если одному аргументу соответствует несколько значений — это не функция.</p>
+
+            <hr>
+
+            <h2>2. Классификация отображений</h2>
+
+            <h3>Инъективное отображение (инъекция)</h3>
+            <p>Отображение \( f \) называется <em>инъективным</em>, если разным элементам из \( X \) всегда соответствуют разные элементы в \( Y \):</p>
+            <div class="formula-block">\[ \forall x_1, x_2 \in X,\; x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2) \]</div>
+            <p>Проще говоря: функция не «склеивает» разные точки. <em>Пример:</em> \( f(x) = x^3 \) на \( \mathbb{R} \).</p>
+
+            <h3>Сюръективное отображение (сюръекция)</h3>
+            <p>Отображение называется <em>сюръективным</em> («на»), если каждый элемент \( Y \) имеет хотя бы один прообраз — значит, \( Y_f = Y \):</p>
+            <div class="formula-block">\[ \forall y \in Y\; \exists x \in X : f(x) = y \]</div>
+            <p>Функция «закрывает» своими значениями всё множество \( Y \).</p>
+
+            <h3>Биективное отображение (биекция)</h3>
+            <p>Отображение <em>биективно</em>, если оно одновременно инъективно и сюръективно — идеальное соответствие «один к одному». В этом случае множества \( X \) и \( Y \) называются <em>равномощными</em>.</p>
+
+            <hr>
+
+            <h2>3. Обратное отображение</h2>
+            <p>Если \( f\colon X \to Y \) — биекция, для неё определяется <strong>обратное отображение</strong> \( f^{-1}\colon Y \to X \).</p>
+            <p><strong>Определение.</strong> Обратным называется правило, которое каждому \( y \in Y \) ставит в соответствие тот единственный \( x \in X \), для которого \( f(x) = y \):</p>
+            <div class="formula-block">\[ f^{-1}(y) = x \iff f(x) = y \]</div>
+            <p>Для существования \( f^{-1} \) необходима биективность: сюръективность гарантирует наличие прообраза, инъективность — его единственность. Если функция строго монотонна, она инъективна, что используется для обоснования существования обратных функций в анализе.</p>
+
+            <hr>
+
+            <h2>4. Композиция отображений</h2>
+            <p><strong>Композиция</strong> — последовательное применение двух отображений.</p>
+            <p><strong>Определение.</strong> Пусть \( f\colon X \to Y \) и \( g\colon Y \to Z \). <em>Композицией</em> называется отображение \( h\colon X \to Z \), действующее по правилу \( h(x) = g(f(x)) \). Обозначается \( h = g \circ f \).</p>
+            <p>Для возможности построения композиции область значений \( f \) должна входить в область определения \( g \). При дифференцировании таких функций применяется цепное правило.</p>
+
+            <hr>
+
+            <h2>5. Способы задания отображений</h2>
+            <ul>
+                <li><strong>Аналитический.</strong> Формулой: \( f(x) = x^2 + 4x + 6 \). Наиболее распространён в анализе.</li>
+                <li><strong>Словесный.</strong> Описание правила. Пример: «функция Дирихле равна 1 для рациональных и 0 для иррациональных чисел».</li>
+                <li><strong>Табличный.</strong> Перечисление пар аргумент–значение. Применяется для конечных множеств или в численных методах.</li>
+                <li><strong>Графический.</strong> Множество точек \( (x, f(x)) \) на плоскости.</li>
+                <li><strong>Параметрический.</strong> Аргумент и значение зависят от параметра \( t \): \( x = x(t),\; y = y(t) \).</li>
+                <li><strong>Неявный.</strong> Уравнение \( \Phi(x, y) = 0 \), не разрешённое относительно \( y \) (например, уравнение окружности).</li>
+                <li><strong>Последовательность.</strong> Можно рассматривать как функцию с областью определения \( \mathbb{N} \).</li>
+            </ul>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket11.html">← Предыдущий билет (11)</a>
+            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket13.html">→ Следующий билет (13)</a>
+        </nav>
+    </div>
+
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim','dx','dy','≈','≠','≤','≥','→','↗','↘','x²','y³','n!','(n+1)','1/n','ε','δ'];
+        function random(min, max) { return min + Math.random() * (max - min); }
+        function createFallingSymbols() {
+            const container = document.getElementById('falling-symbols');
+            if (!container) return;
+            const symbolsPerSide = Math.floor(window.innerWidth / 80) + 12;
+            for (let i = 0; i < symbolsPerSide * 2; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                const isLeft = i < symbolsPerSide;
+                if (isLeft) { symbol.classList.add('left'); symbol.style.left = random(0, 15) + '%'; }
+                else { symbol.classList.add('right'); symbol.style.left = random(85, 100) + '%'; }
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.animationDelay = random(0, 20) + 's';
+                symbol.style.animationDuration = random(8, 20) + 's';
+                symbol.style.fontSize = random(0.9, 1.6) + 'rem';
+                symbol.style.top = random(-20, 0) + 'vh';
+                if (Math.random() < 0.25) symbol.classList.add('glowing');
+                if (!symbol.classList.contains('glowing')) symbol.style.opacity = random(0.2, 0.5);
+                container.appendChild(symbol);
+            }
+        }
+        createFallingSymbols();
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('falling-symbols');
+                if (container) { container.innerHTML = ''; createFallingSymbols(); }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
