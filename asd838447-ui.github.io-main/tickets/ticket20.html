@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет 20. Формулы для решения задач</title>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+      MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Билет 20. Формулы для решения задач</h1>
+
+        <div class="content">
+            <!-- Эквивалентности -->
+            <h2>🔹 Эквивалентности (при \(x \to 0\))</h2>
+            <div class="formula-block">
+                <div class="formula-item">\(\sin x \sim x\)</div>
+                <div class="formula-item">\(\arcsin x \sim x\)</div>
+                <div class="formula-item">\(\tan x \sim x\)</div>
+                <div class="formula-item">\(\arctan x \sim x\)</div>
+                <div class="formula-item">\(e^x - 1 \sim x\)</div>
+                <div class="formula-item">\(\ln(1 + x) \sim x\)</div>
+                <div class="formula-item">\(a^x - 1 \sim x \ln a\)</div>
+                <div class="formula-item">\((1 + x)^k - 1 \sim kx\)</div>
+                <div class="formula-item">\(1 - \cos x \sim \frac{x^2}{2}\)</div>
+                <div class="formula-item">\(\sinh x \sim x\)</div>
+                <div class="formula-item">\(\tanh x \sim x\)</div>
+                <div class="formula-item">\(\cosh x - 1 \sim \frac{x^2}{2}\)</div>
+            </div>
+
+            <!-- Обобщённые эквивалентности -->
+            <h2>🔹 Обобщённые эквивалентности (при \(u(x) \to 0\))</h2>
+            <div class="formula-block">
+                <div class="formula-item">\(\sin^b u \sim u^b\)</div>
+                <div class="formula-item">\(\arcsin^b u \sim u^b\)</div>
+                <div class="formula-item">\(\tan^b u \sim u^b\)</div>
+                <div class="formula-item">\(\arctan^b u \sim u^b\)</div>
+                <div class="formula-item">\((e^u - 1)^b \sim u^b\)</div>
+                <div class="formula-item">\(\ln^b(1 + u) \sim u^b\)</div>
+                <div class="formula-item">\((1 + u)^k - 1 \sim k \cdot u\)</div>
+                <div class="formula-item">\(1 - \cos^b u \sim \frac{b}{2}u^2\)</div>
+                <div class="formula-item">\(\sinh^b u \sim u^b\)</div>
+                <div class="formula-item">\(\tanh^b u \sim u^b\)</div>
+            </div>
+
+            <!-- Ряды Тейлора -->
+            <h2>🔹 Ряды Тейлора (при \(x \to 0\))</h2>
+            <div class="formula-block">
+                <div class="formula-item">\(e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + o(x^3)\)</div>
+                <div class="formula-item">\(\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + o(x^7)\)</div>
+                <div class="formula-item">\(\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + o(x^6)\)</div>
+                <div class="formula-item">\(\tan x = x + \frac{x^3}{3} + \frac{2x^5}{15} + o(x^5)\)</div>
+                <div class="formula-item">\(\arcsin x = x + \frac{x^3}{6} + \frac{3x^5}{40} + o(x^5)\)</div>
+                <div class="formula-item">\(\arctan x = x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + o(x^7)\)</div>
+                <div class="formula-item">\(\ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + o(x^4)\)</div>
+                <div class="formula-item">\((1 + x)^\alpha = 1 + \alpha x + \frac{\alpha(\alpha-1)x^2}{2!} + o(x^2)\)</div>
+                <div class="formula-item">\(\sinh x = x + \frac{x^3}{3!} + \frac{x^5}{5!} + \frac{x^7}{7!} + o(x^7)\)</div>
+                <div class="formula-item">\(\cosh x = 1 + \frac{x^2}{2!} + \frac{x^4}{4!} + \frac{x^6}{6!} + o(x^6)\)</div>
+            </div>
+
+            <!-- Производные -->
+            <h2>🔹 Производные элементарных функций</h2>
+            <div class="formula-block">
+                <div class="formula-item">\((x^n)' = n \cdot x^{n-1}\)</div>
+                <div class="formula-item">\((\sin x)' = \cos x\)</div>
+                <div class="formula-item">\((\cos x)' = -\sin x\)</div>
+                <div class="formula-item">\((\tan x)' = \frac{1}{\cos^2x} = 1 + \tan^2x\)</div>
+                <div class="formula-item">\((\cot x)' = -\frac{1}{\sin^2x} = -(1 + \cot^2x)\)</div>
+                <div class="formula-item">\((e^x)' = e^x\)</div>
+                <div class="formula-item">\((a^x)' = a^x \cdot \ln a\)</div>
+                <div class="formula-item">\((\ln x)' = \frac{1}{x}\)</div>
+                <div class="formula-item">\((\log_a x)' = \frac{1}{x \cdot \ln a}\)</div>
+                <div class="formula-item">\((\arcsin x)' = \frac{1}{\sqrt{1-x^2}}\)</div>
+                <div class="formula-item">\((\arccos x)' = -\frac{1}{\sqrt{1-x^2}}\)</div>
+                <div class="formula-item">\((\arctan x)' = \frac{1}{1+x^2}\)</div>
+                <div class="formula-item">\((\sinh x)' = \cosh x\)</div>
+                <div class="formula-item">\((\cosh x)' = \sinh x\)</div>
+                <div class="formula-item">\((\tanh x)' = \frac{1}{\cosh^2x}\)</div>
+            </div>
+
+            <!-- Замечательные пределы -->
+            <h2>🔹 Первый и второй замечательные пределы</h2>
+            <div class="formula-block">
+                <div class="formula-item">\(\lim_{x \to 0} \frac{\sin x}{x} = 1\)</div>
+                <div class="formula-item">\(\lim_{x \to 0} (1 + x)^{1/x} = e\)</div>
+                <div class="formula-item">\(\lim_{x \to \infty} (1 + \frac{1}{x})^x = e\)</div>
+            </div>
+
+            <!-- Тригонометрия -->
+            <h2>🔹 Тригонометрические тождества</h2>
+            <div class="formula-block">
+                <div class="formula-item">\(\sin^2x + \cos^2x = 1\)</div>
+                <div class="formula-item">\(1 + \tan^2x = \frac{1}{\cos^2x}\)</div>
+                <div class="formula-item">\(1 + \cot^2x = \frac{1}{\sin^2x}\)</div>
+                <div class="formula-item">\(\sin(\alpha \pm \beta) = \sin\alpha \cos\beta \pm \cos\alpha \sin\beta\)</div>
+                <div class="formula-item">\(\cos(\alpha \pm \beta) = \cos\alpha \cos\beta \mp \sin\alpha \sin\beta\)</div>
+                <div class="formula-item">\(\sin 2x = 2 \sin x \cos x\)</div>
+                <div class="formula-item">\(\cos 2x = \cos^2x - \sin^2x = 2\cos^2x - 1 = 1 - 2\sin^2x\)</div>
+                <div class="formula-item">\(\sin^2x = \frac{1 - \cos 2x}{2}\)</div>
+                <div class="formula-item">\(\cos^2x = \frac{1 + \cos 2x}{2}\)</div>
+                <div class="formula-item">\(\tan 2x = \frac{2\tan x}{1 - \tan^2x}\)</div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="ticket19.html">← Предыдущий билет (19)</a>
+            <a href="../index.html">📋 К списку билетов</a>
+            <a href="ticket21.html">→ Следующий билет (21)</a>
+        </nav>
+    </div>
+
+
+    <div class="falling-symbols" id="falling-symbols"></div>
+    <script>
+        const symbols = ['0','1','2','3','4','5','6','7','8','9','π','e','∞','∑','∫','√','Δ','α','β','γ','sin','cos','tan','lim'];
+        function random(min,max){return min+Math.random()*(max-min);}
+        function createFallingSymbols(){
+            const container=document.getElementById('falling-symbols');
+            if(!container) return;
+            const symbolsPerSide=Math.floor(window.innerWidth/90)+12;
+            const totalSymbols=symbolsPerSide*2;
+            for(let i=0;i<totalSymbols;i++){
+                const symbol=document.createElement('div');
+                symbol.className='symbol';
+                const isLeft=i<symbolsPerSide;
+                if(isLeft){
+                    symbol.classList.add('left');
+                    symbol.style.left=random(0,15)+'%';
+                }else{
+                    symbol.classList.add('right');
+                    symbol.style.left=random(85,100)+'%';
+                }
+                symbol.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+                symbol.style.animationDelay=random(0,20)+'s';
+                symbol.style.animationDuration=random(8,20)+'s';
+                symbol.style.fontSize=random(0.9,1.6)+'rem';
+                symbol.style.top=random(-20,0)+'vh';
+                if(Math.random()<0.25) symbol.classList.add('glowing');
+                if(!symbol.classList.contains('glowing')) symbol.style.opacity=random(0.2,0.5);
+                container.appendChild(symbol);
+            }
+        }
+        createFallingSymbols();
+        let resizeTimeout;
+        window.addEventListener('resize',function(){
+            clearTimeout(resizeTimeout);
+            resizeTimeout=setTimeout(function(){
+                const container=document.getElementById('falling-symbols');
+                if(container){container.innerHTML='';createFallingSymbols();}
+            },500);
+        });
+    </script>
+</body>
+</html>
